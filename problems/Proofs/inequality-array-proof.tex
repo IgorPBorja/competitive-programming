@@ -1,0 +1,87 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+% imports 
+%Prefer 
+%\iff, \implies and \impliedby
+
+%Bibliography stuff
+%For adding hyperlinks
+\usepackage[hyphens]{url} % avoids too large urls by allowing line breaking at hyphens
+% (best loaded BEFORE hyperref)
+
+\usepackage{parskip} %avoid margins in the beginning of paragraphs
+%Math symbols
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Paper geometry
+\usepackage{geometry}
+\geometry{a4paper, margin = 1cm}
+%For adding images
+\usepackage{graphicx}
+%Defining floor symbols
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+%Fixing parenthesis sizes
+% \usepackage{physics} %use \qty before parenthesis % NOT DOWNLOADED YET
+%Adjustable margins
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist %allows you to create an environment \begin{changemargin}{x cm}{y cm} \end{changemargin} - where x is the adjust to left margin and y to the right margin 
+\usepackage{changepage}
+\newtheorem{theorem}{Teorema}[section] %Delimit "the numbered theorem" environment
+%the [section] counter establishes that counting resets every section, i.e second theorem in section 7 will be 7.2. 
+\newtheorem{lemma}{Lema}[section]
+\newtheorem{corollary}{Corolário}[theorem]
+\newtheorem{definition}{Definição}[section]
+\newtheorem{example}{Exemplo}[section]
+\usepackage{hyperref} %To be able to label lemmas and theorems with \label{} and automate the process of referring to them with \cref{} 
+%Names for referrencing
+\usepackage{cleveref}
+\crefname{lemma}{Lema}{Lemas}
+\crefname{theorem}{Teorema}{Teoremas}
+\crefname{corollary}{Corolário}{Corolários}
+\crefname{definition}{Definição}{Definições}
+\crefname{example}{Exemplo}{Exemplos}
+%Proof, solution, claim and case environments
+\newenvironment{proofenv}{\begin{adjustwidth}{0.25cm}{0.25cm}\begin{proof}[Prova]}{\end{proof}\end{adjustwidth}}
+\newenvironment{solutionenv}{\begin{adjustwidth}{0.25cm}{0.25cm}\begin{proof}[Solução]}{\end{proof}\end{adjustwidth}}
+\newenvironment{case}[1][1]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{Caso #1: }}{\end{adjustwidth}}
+%[1] is the first paramater (case num), [1] is its default value
+\newenvironment{claim}[1][1]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{Afirmação #1: }}{\end{adjustwidth}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\Bij}{\operatorname{Bij}} % default value = empty, for first parameter
+\newcommand{\sgn}{\operatorname{sgn}}
+\newenvironment{generic}[2]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{#1 #2: }}{\end{adjustwidth}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\emptyinner}[0]{\langle , \rangle}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\K}{\mathbb{K}}
+
+% NOT DOWNLOADED YET
+% \usepackage{algorithm}
+% \usepackage{algpseudocode}
+
+\begin{document}
+\section{Enunciado}
+O problema é o \textbf{1703F}, do contest 806 (Div4), da plataforma CodeForces, disponível em \url{https://codeforces.com/contest/1703/problem/F}
+
+\section{Solução (em C++)}
+
+\section{Demonstração}
+Defina por \(S\) o conjunto de índices \(S = \{i: a[i] < i\}\). Então temos que \((i, j)\) é um par válido, isto é, que satisfaz \(a[i] < i < a[j] < j\), se e só se \(i \in S, j \in S\) e \(i < a[j]\).
+
+Portanto, para cada \(j \in S\) temos que existem exatamente \(|\{i \in S: i < a[j]| = |S \cap \{1, \dotsc, a[j] - 1\}|\) pares válidos de índices em que o maior índice é \(j\). Segue que a resposta final é 
+\[\operatorname{ans} = \sum_{j \in S}|S \cap \{1, \dotsc, a[j] - 1\}|\]
+
+Considere a função característica \(f_S: \{1, \dotsc, n\} \to \{0,1\}\) dada por \(f_S^{-1}(0) = \{1, \dotsc, n\} \setminus S\) e \(f_S^{-1}(1) = S\). Assim, temos que
+\[|S \cap \{1, \dotsc, a[j] - 1\}| = \sum_{1 \leq i < a[j]}f_S(i)\]
+que é exatamente \(\operatorname{prefix\_sum}(b)[a[j] - 1]\) se \(a[j] > 1\), ou do contrário \(0\) (devido à soma vazia), em que \(b\) é o vetor caracerístico de \(S\). Denotemos essa função definida por partes por \(\sigma_b\).  
+
+Portanto, podemos computar \(b\) em \(O(n)\), podemos realizar a \(\operatorname{prefix\_sum}\) desse vetor também em \(O(n)\), e por fim, com todas essas informações, a resposta final 
+\[\operatorname{ans} = \sum_{j \in S}|S \cap \{1 \dotsc, a[j] - 1\}| = \sum_{1 \leq j \leq n}b[j]\sigma_b(a[j] - 1)\]
+pode ser computada em \(O(n)\).
+
+Assim, mostra-se que essa é uma solução correta e com complexidade linear \(O(n)\).
+\end{document}
