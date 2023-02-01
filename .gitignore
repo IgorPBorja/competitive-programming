@@ -2,3 +2,17 @@
 *.aux
 *.log
 *.out
+
+# .vscode config files
+.vscode
+
+# ignore extensionless files
+* 
+!*/
+!*.*
+#             Explanation:
+#             1: ignore all
+#             2: unignore everything in a directory 
+#             3: unignore everything with extension
+#             the 2 is important to be able to access the directories and 
+#             unignore the files that have extensions but are outside the root folder

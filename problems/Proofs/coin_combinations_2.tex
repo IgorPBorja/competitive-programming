@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+% imports 
+%Prefer 
+%\iff, \implies and \impliedby
+
+%Bibliography stuff
+%For adding hyperlinks
+\usepackage[hyphens]{url} % avoids too large urls by allowing line breaking at hyphens
+% (best loaded BEFORE hyperref)
+
+\usepackage{parskip} %avoid margins in the beginning of paragraphs
+%Math symbols
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Paper geometry
+\usepackage{geometry}
+\geometry{a4paper, margin = 1cm}
+%For adding images
+\usepackage{graphicx}
+%Defining floor symbols
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+%Fixing parenthesis sizes
+% \usepackage{physics} %use \qty before parenthesis % NOT DOWNLOADED YET
+%Adjustable margins
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist %allows you to create an environment \begin{changemargin}{x cm}{y cm} \end{changemargin} - where x is the adjust to left margin and y to the right margin 
+\usepackage{changepage}
+\newtheorem{theorem}{Teorema}[section] %Delimit "the numbered theorem" environment
+%the [section] counter establishes that counting resets every section, i.e second theorem in section 7 will be 7.2. 
+\newtheorem{lemma}{Lema}[section]
+\newtheorem{corollary}{Corolário}[theorem]
+\newtheorem{definition}{Definição}[section]
+\newtheorem{example}{Exemplo}[section]
+\usepackage{hyperref} %To be able to label lemmas and theorems with \label{} and automate the process of referring to them with \cref{} 
+%Names for referrencing
+\usepackage{cleveref}
+\crefname{lemma}{Lema}{Lemas}
+\crefname{theorem}{Teorema}{Teoremas}
+\crefname{corollary}{Corolário}{Corolários}
+\crefname{definition}{Definição}{Definições}
+\crefname{example}{Exemplo}{Exemplos}
+%Proof, solution, claim and case environments
+\newenvironment{proofenv}{\begin{adjustwidth}{0.25cm}{0.25cm}\begin{proof}[Prova]}{\end{proof}\end{adjustwidth}}
+\newenvironment{solutionenv}{\begin{adjustwidth}{0.25cm}{0.25cm}\begin{proof}[Solução]}{\end{proof}\end{adjustwidth}}
+\newenvironment{case}[1][1]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{Caso #1: }}{\end{adjustwidth}}
+%[1] is the first paramater (case num), [1] is its default value
+\newenvironment{claim}[1][1]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{Afirmação #1: }}{\end{adjustwidth}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\Bij}{\operatorname{Bij}} % default value = empty, for first parameter
+\newcommand{\sgn}{\operatorname{sgn}}
+\newenvironment{generic}[2]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{#1 #2: }}{\end{adjustwidth}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\emptyinner}[0]{\langle , \rangle}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\K}{\mathbb{K}}
+
+% NOT DOWNLOADED YET
+% \usepackage{algorithm}
+% \usepackage{algpseudocode}
+
+\begin{document}
+\section{Código em C++}
+
+
+\section{Demonstração}
+\begin{lemma}
+	Cada solução ordenada \((s_1, s_2, \dotsc, s_k)\) é unicamente representada por um vetor \((a_1, \dotsc, a_n)\), em que \(a_i\) é a quantidade de vezes que a moeda \(c[i]\) foi utilizada.
+\end{lemma}
+
+\begin{lemma}
+	Denote por \(C(i, j)\) a quantidade de combinações \((a_1, \dotsc, a_n)\) com soma \(j\) que usam apenas as moedas \(c[0], \dotsc, c[i]\), isto é, com \(a_{i+1} = \dotsc = a_n = 0\), e (extendendo essa definição) deixe \(C(-1, j)\) denotar a quantidade de combinações vazias com soma \(j\).
+
+	Então, após a \(i\)-ésima iteração, \(dp[j] = C(i, j)\). 
+\end{lemma}
+\begin{proofenv}
+	Primeiro, provamos a seguinte sub-invariante de loop:
+	\begin{lemma}
+		\textbf{Assuma} a hipótese de indução do lema principal, isto é, que temos inicialmente \(dp[j] = C(i, j)\) para todo \(0 \leq j \leq x\). Então, durante a \((i+1)\)-ésima iteração do loop externo, o seguinte é válido: para todo \(0 \leq w \leq x\) temos que antes da iteração \(w = w_0\) do loop interno, \(dp[j]\) representa quantas combinações de soma \(j\) há usando apenas as moedas \(c[0], \dotsc, c[i+1]\) para todo \(0 \leq j < w_0\).
+	\end{lemma}
+	\begin{proofenv}
+		Antes da primeira iteração \(w = c[i+1]\) do loop interno, temos que \(j < w \implies j < c[i+1]\), o que implica evidentemente que não há combinação com essa soma que use \(c[i+1]\). Dessa forma, temos que \(C(i + 1, j) = C(i, j) = dp[j]\), pela hipótse indutiva.
+
+		Por fim, suponha válido para \(w = w_0\). Toda combinação que usa as moedas \(c[0], \dotsc, c[i+1]\) é de duas formas: 
+		\begin{itemize}
+			\item \(a_{i+1} = 0\) (\(C(i, w_0 + 1)\) possibilidades)
+			\item \(a_{i+1} \geq 1\), e portanto a combinação obtida retirando uma repetição de \(c[i+1]\) é uma combinação válida de soma \(w_0 + 1 - c[i+1]\) usando as moedas \(c[0], \dotsc, c[i+1]\). Isso totaliza \(C(i + 1, w_0 + 1 - c[i+1]\).
+		\end{itemize}
+		Assim,
+		\[C(i + 1, w_0 + 1) = C(i, w_0 + 1) + C(i + 1, w_0 + 1 - c[i+1])\]
+		Uma vez que \(w_0 + 1 - c[i+1] \leq w_0\), pela hipótese indutiva desse sub-lema temos que nesse instante \(C(i+1, w_0 + 1 - c[i+1] = dp[w_0 + 1 - c[i+1]\). Por outro lado, temos que \(dp[w_0 + 1]\) não foi alterada até agora nesse loop interno, e portanto pela hipótese indutiva do lema principal \(dp[w_0 + 1] = C(i, w_0 + 1)\). Portanto, a ação do algoritmo é 
+		\[dp[w_0 + 1] \gets (dp[w_0 + 1] + dp[w_0 + 1 - c[i+1] = C(i, w_0 + 1) + C(i + 1, w_0 + 1 - c[i+1])\]
+		garantindo a manutenção da invariante descrita nesse sub-lema.
+	\end{proofenv}
+	Dessa forma, a invariante principal (i.e, do loop externo) segue com um simples argumento indutivo. A inicialização de \(dp[0] \gets 1\) e \(dp[j] \gets 0\) para todo \(j > 0\) garante que \(dp[j] = C(-1, j)\) para todo \(0 \leq j \leq x\). 
+
+	Assim, aplicando o lema anterior para \(i = -1\), demonstramos o caso base: a validade ao final da iteração \(i = 0\). Analogamente, o passo indutivo também segue da aplicação do lema anterior.
+
+\end{proofenv}
+
+\end{document}
