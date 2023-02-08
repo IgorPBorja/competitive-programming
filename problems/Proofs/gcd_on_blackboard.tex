@@ -1,0 +1,269 @@
+\documentclass{article}
+\input{templates.tex}
+
+\begin{document}
+\section{Introdução}
+Esse problema é o problema C do \emph{AtCoder Begginer Contest 125}, da plataforma de programação competitiva AtCoder. Disponível em: \url{https://atcoder.jp/contests/abc125/tasks/abc125_c}.
+
+\section{Solução: código em C++}\label{code-section}
+
+\begin{code}[C++]
+#include <bits/stdc++.h>
+using namespace std;
+    
+/*
+left[i] = gcd(a[0], ..., a[i-1])
+right[i] = gcd(a[i + 1], ..., a[n - 1])
+*/
+    
+int gcd(int a, int b){
+    int m, M;
+    while (a != 0 && b != 0){
+        m = min(a,b); 
+        M = max(a,b);
+            b = M % m;
+            a = m;
+    }
+        return max(a, b);
+}
+    
+void solve(){
+    int n;
+    cin >> n;
+    int a[n];
+    for (int i = 0; i < n; i++){
+        cin >> a[i];
+    }
+    int left[n], right[n];
+    left[0] = 0; right[n - 1] = 0;
+    for (int i = 1; i < n; i++){
+        left[i] = gcd(left[i - 1], a[i - 1]);
+    }
+    for (int i = n - 2; i >= 0; i--){
+        right[i] = gcd(right[i + 1], a[i + 1]);
+    }
+    
+    int ans = 0;
+    for (int i = 0; i < n; i++){
+        ans = max(ans, gcd(left[i], right[i]));
+    }
+    cout << ans;
+}
+\end{code}
+
+\section{Demonstração}
+
+\subsection{Lemas importantes sobre \emph{gcd}}
+\begin{theorem}\label{associativity}
+    A função \(\gcd: \N \to \N\) é associativa:
+    \[\gcd(a, \gcd(b, c)) = \gcd(\gcd(a, b), c)\]
+    Ademais, ela é simétrica em relação a seus argumentos: \(\gcd(a, b) = \gcd(b, a)\).
+\end{theorem}
+\begin{proof}[Prova]
+    Pelo Teorema Fundamental da Aritmética, temos
+    \begin{align*}
+        a = \prod_{1 \leq i \leq n}p_i^{\alpha_i} \\
+        b = \prod_{1 \leq i \leq n}p_i^{\beta_i} \\
+        c = \prod_{1 \leq i \leq n}p_i^{\gamma_i}
+    \end{align*}
+    em que \(p_1 < \dotsc, < p_n\) são os \(n\)-primeiros primos e um dos três expoentes \(\alpha_n, \beta_n, \gamma_n\) é diferente de \(0\). Assim o lema segue da \textbf{associatividade da função \(\boldsymbol{\min}\)}: 
+    \[\gcd(a, \gcd(b, c)) = \prod_{1 \leq i \leq n}p_i^{\min(\alpha_i, \min(\beta_i, \gamma_i))} = \prod_{1 \leq i \leq n}p_i^{\min(\min(\alpha_i, \beta_i), \gamma_i)} = \gcd(\gcd(a, b), c)\]
+    A associatividade da função \(\min\), por sua vez, pode ser provada analisando caso a caso dentre as possíveis ordenação de três números, e portanto sua demonstração é omitida aqui.
+\end{proof}
+
+
+Assim, podemos definir, para todo \(k \geq 2\), a função \(\gcd_k: \N^k \to \N\) definida recursivamente por 
+\begin{definition}\label{n-ary-gcd}
+    \[\gcd_{k+1}(a_1, \dotsc, a_{k+1}) = \gcd(\gcd_{k}(a_1, \dotsc, a_k), a_{k+1})\]    
+\end{definition}
+a qual denotaremos apenas por \(\gcd\), ficando a quantidade de parâmetros implícita.
+
+Como corolário, vale a seguinte generalização da associatividade:
+\begin{corollary}\label{complete-associativity}
+    Para todos \(1 \leq i < n\):
+    \[\gcd_n(a_1, \dotsc, a_n) = \gcd(\gcd_{i}(a_1, \dotsc, a_{i}),\ \gcd_{n-i}(a_{i+1}, \dotsc, a_n))\]
+    em que definimos \(\gcd_1(a) = a\).
+\end{corollary}
+\begin{proof}[Prova]
+    Provamos por indução sobre \(n - i\). O caso \(n - i = 1\) segue da própria \textbf{definição} de \(\gcd_n\). Além disso,
+    \begin{align*}
+        \gcd(
+            \gcd_i(a_1, \dotsc, a_i), 
+            \gcd_{n - i}(a_{i+1}, \dotsc, a_{n-i})
+        ) 
+        &\overset{\text{\cref{n-ary-gcd}}}{=} 
+        %%
+        \gcd(
+            \gcd(\gcd_{i-1}(a_1, \dotsc, a_{i-1}), a_i), \
+            \gcd_{n-i}(a_{i+1}, \dotsc, a_n)
+        )  
+        \\
+        &\overset{\text{\cref{associativity}}}{=} 
+        \gcd(
+            \gcd_{i-1}(a_1, \dotsc, a_{i-1}), \
+            \gcd(
+                a_i, 
+                \gcd_{n-i}(a_{i+1}, \dotsc, a_n)
+            )
+        )
+        \\
+        &=
+        \gcd(
+            \gcd_{i-1}(a_1, \dotsc, a_{i-1}),\
+            \gcd(
+                \gcd_{n-i}(a_{i+1}, \dotsc, a_{n}),\
+                a_i
+            )
+        )
+        \\ 
+        &\overset{\text{\cref{n-ary-gcd}}}{=} 
+        \gcd(
+            \gcd_{i-1}(a_1, \dotsc, a_{i-1}),\
+            \gcd_{n-i + 1}(a_{i+1}, \dotsc, a_n, a_i)
+        )
+    \end{align*} 
+    %% TODO prove that the order does not matter
+    porém, como a ordem dos argumentos de \(\gcd_k\) não importa, para qualquer \(k\) natural, então a expressão acima é simplesmente \(\gcd(
+        \gcd_{i-1}(a_1, \dotsc, a_{i-1}),\ 
+        \gcd_{n-i+1}(a_i,\dotsc,a_n)
+    )\). Ou seja, usando a hipótese de indução
+    \[\gcd_n(a_1, \dotsc, a_n) = \gcd(
+        \gcd_i(a_1, \dotsc, a_i), \
+        \gcd_{n-i}(a_{i+1}, \dotsc, a_n)
+    ) 
+    = 
+    \gcd(
+        \gcd_{i-1}(a_1, \dotsc, a_{i-1}),\ 
+        \gcd_{n-i+1}(a_i,\dotsc,a_n)
+    )\]     
+    provando o corolário por indução.
+\end{proof}
+
+\begin{lemma}\label{gcd-remainder}
+    Para todos \(a, b \in \N\), se \(b \neq 0\) e \(a \equiv r \mod b\) então
+    \[\gcd(a, b) = \gcd(r, b)\]
+\end{lemma}
+
+\begin{theorem}\label{gcd-algorithm-efficiency}
+    O seguinte algoritmo para calcular \(\gcd\) de dois números
+    
+    \begin{code}[C++]
+        int gcd(int a, int b){
+            while (a != 0 and b != 0){
+                int m = min(a,b);
+                int M = max(a, b);
+                a = M % m;
+                b = m;
+            }
+        return max(a, b);
+        }        
+    \end{code}
+
+    termina com o resultado correto em \(O(\log \min(a, b))\).
+\end{theorem}
+\begin{proof}[Prova: \textbf{Complexidade}]
+    Seja \(a_i, b_i\) os valores das variáveis após a 
+    \(i\)-ésima iteração, e \(a_0 = a, b_0 = b\) seus valores iniciais.
+
+    A partir da primeira iteração temos como invariante de loop
+    que \(a_i \leq b_i\), uma vez que \(a_i \gets M \mod m \leq m\) e \(b_i \gets m\). Assim, podemos supor sem perda de generalidade que \(a \leq b\) inicialmente (do contrário, basta \(1\) iteração para valer tal desigualdade).
+    
+    Após uma iteração temos \(a_{i+1} = b_i \bmod a_i\) e \(b_{i+1} = a_i\), e logo, após duas iterações temos que
+    \begin{align}
+        a_{i+2} &= a_i \bmod (b_i \bmod a_i) \\
+        b_{i+2} &= b_i \bmod a_i
+    \end{align}
+    Seja \(b_i = q_ia_i + r_i\). Então temos dois casos:
+    \begin{case}[1]
+        Se \(r_i \leq \frac{a_i}{2}\) então 
+        \[a_{i+2} = a_i \mod r_i < r_i \leq \frac{a_i}{2}\]
+    \end{case}
+    \begin{case}[2]
+        Se \(r_i > \frac{a_i}{2}\), então 
+        \[a_{i+2} = a_i \mod r_i = a_i - r_i < a_i - \frac{a_i}{2} = \frac{a_i}{2}\]        
+    \end{case}
+    De qualquer forma temos \(a_{i+2} \leq 2^{-1}a_i\). Logo, por indução
+    \[a_{2i} \leq 2^{-i}a_0\]
+
+    Como \(a_{2i}\) é um inteiro não-negativo, temos que \(i > \log_2(a_0)\) implica que \(a_{2i} < 1\), e portanto \(a_{2i} = 0\), o que faz que o algoritmo termine. Como supomos sem perda de generalidade \(a_0  \leq b_0\), isso mostra que o algoritmo termina em no máximo \(2(\log_2(a_0) + 1) = 2(\log_2(\min(a, b)) + 1)\) iterações, isto é, possui complexidade \(O(\log \min(a, b))\). 
+\end{proof}
+\begin{proof}[Prova: \textbf{Corretude}]
+    Precisamos mostrar apenas a seguinte invariante de loop: após \(i\)-ésima iteração
+    \[\gcd(a_i, b_i) = \gcd(a, b)\]
+
+    O caso inicial \(i = 0\) segue da definição dos termos iniciais da sequência, pois \(a_0 := a\) e \(b_0 := b\). Suponha, então, que existe \(i > 0\) tal que a invariante de loop segue válida para todo \(0 \leq j \leq i\). Conforme mostramos na parte anterior, e pela condição do loop while, temos \(0 < a_i \leq b_i\), e portanto
+    \[\gcd(a_{i+1}, b_{i+1}) = \gcd(b_i \bmod a_i, a_i) = \gcd(b_i, a_i) = \gcd(a_i, b_i)\]
+    pelo \cref{gcd-remainder}. Pela parte anterior da demonstração, após a iteração final \(i_0\) temos \(a_{i_0} = 0\) ou \(b_{i_0} = 0\), e portanto
+    \[\gcd(a, b) \overset{\text{invariante}}{=} \gcd(a_{i_0}, b_{i_0}) = \max(a_{i_0}, b_{i_0})\]
+    provando a corretude do algoritmo.    
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Demonstrando o algoritmo}
+
+\begin{theorem}\label{main-result-correctness}
+    O algoritmo da \cref{code-section} fornece a resposta correta em \(O(n \log M)\), onde \(M = \max(a[0], \dotsc, a[n-1])\).
+\end{theorem}
+
+\begin{proof}[Prova]
+    Temos que a resposta que deve ser fornecida, dado um vetor \(a[]\) de \(n\) inteiros positivos, é 
+    \[
+        S = \max_{b \in \mathbb{Z}_{\geq 0}}\max_{1 \leq i \leq n}\gcd(a[0], \dotsc, a[i-1], b, a[i+1], \dotsc, a[n-1])    
+    \]
+    Porém, temos que para todo \(b \geq 0\) inteiro:
+    \begin{align*}
+        \gcd(
+            a[0], \dotsc, a[i-1], b, a[i+1], \dotsc, a[n-1]
+        )  
+        &= \gcd(a[0], \dotsc, a[i-1], a[i+1], \dotsc, a[n-1], b)
+        \\
+        &\overset{\text{\cref{n-ary-gcd}}}{=} 
+        \gcd(
+            \gcd(a[0], \dotsc, a[i-1], a[i+1], \dotsc, a[n-1]),\ 
+            b
+        ) 
+        \\
+        &\leq 
+        \gcd(a[0], \dotsc, a[i-1], a[i+1], \dotsc, a[n-1])
+        \\ 
+        &\overset{\text{\cref{complete-associativity}}}{=}
+        \gcd(
+            \gcd(a[0], \dotsc, a[i-1]),\
+            \gcd(a[i+1], \dotsc, a[n-1])
+        )
+    \end{align*}
+    com \textbf{caso de igualdade quando, por exemplo}, \(b = \gcd(a[0], \dotsc, a[i-1], a[i+1], \dotsc, a[n-1])\). 
+
+    Assim, podemos definir os seguintes vetores \(L[n], \ R[n]\):
+    \begin{align*}
+        L[0] &= 0 \\
+        L[i + 1] &= \gcd(L[i], a[i]) \\
+        \\
+        R[n - 1] &= 0 \\
+        R[i - 1] &= \gcd(R[i], a[i])
+    \end{align*}
+    e pela associatividade (\cref{associativity}) teremos
+    \begin{align*}
+        L[i] = \gcd(a[0], \dotsc, a[i - 1]) \\
+        R[i] = \gcd(a[n - 1], \dotsc, a[n - i])
+    \end{align*}
+
+    Ademais, novamente pelo \cref{associativity}, podemos calcular ambos os vetor em \(O(n) \cdot O(\gcd) = O(n\log M)\) onde \(M = \max(a[0], \dotsc, a[n-1])\). 
+
+    Por fim, teremos que 
+    \begin{align*}
+        S &= \max_{0 < i < n - 1}
+        \gcd(
+            \gcd(a[0], \dotsc, a[i-1]),\
+            \gcd(a[i+1], \dotsc, a[n-1])
+        ) \\
+        &=
+        \max_{0 < i < n - 1}\gcd(L[i], R[n-i])
+    \end{align*}
+    o que novamente pode ser calculado em \(O(n \log M)\).
+
+    Portanto, o código da \cref{code-section}, que é exatamente a implementação do algoritmo descrito, fornece uma solução correta em \(O(n \log M)\).
+\end{proof}
+ 
+\end{document}

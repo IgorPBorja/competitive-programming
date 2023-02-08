@@ -1,73 +1,53 @@
 \documentclass{article}
-\usepackage[utf8]{inputenc}
-
-% imports 
-%Prefer 
-%\iff, \implies and \impliedby
-
-%Bibliography stuff
-%For adding hyperlinks
-\usepackage[hyphens]{url} % avoids too large urls by allowing line breaking at hyphens
-% (best loaded BEFORE hyperref)
-
-\usepackage{parskip} %avoid margins in the beginning of paragraphs
-%Math symbols
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{amssymb}
-%Paper geometry
-\usepackage{geometry}
-\geometry{a4paper, margin = 1cm}
-%For adding images
-\usepackage{graphicx}
-%Defining floor symbols
-\usepackage{mathtools}
-\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
-\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
-%Fixing parenthesis sizes
-% \usepackage{physics} %use \qty before parenthesis % NOT DOWNLOADED YET
-%Adjustable margins
-\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
-\let\endchangemargin=\endlist %allows you to create an environment \begin{changemargin}{x cm}{y cm} \end{changemargin} - where x is the adjust to left margin and y to the right margin 
-\usepackage{changepage}
-\newtheorem{theorem}{Teorema}[section] %Delimit "the numbered theorem" environment
-%the [section] counter establishes that counting resets every section, i.e second theorem in section 7 will be 7.2. 
-\newtheorem{lemma}{Lema}[section]
-\newtheorem{corollary}{Corolário}[theorem]
-\newtheorem{definition}{Definição}[section]
-\newtheorem{example}{Exemplo}[section]
-\usepackage{hyperref} %To be able to label lemmas and theorems with \label{} and automate the process of referring to them with \cref{} 
-%Names for referrencing
-\usepackage{cleveref}
-\crefname{lemma}{Lema}{Lemas}
-\crefname{theorem}{Teorema}{Teoremas}
-\crefname{corollary}{Corolário}{Corolários}
-\crefname{definition}{Definição}{Definições}
-\crefname{example}{Exemplo}{Exemplos}
-%Proof, solution, claim and case environments
-\newenvironment{proofenv}{\begin{adjustwidth}{0.25cm}{0.25cm}\begin{proof}[Prova]}{\end{proof}\end{adjustwidth}}
-\newenvironment{solutionenv}{\begin{adjustwidth}{0.25cm}{0.25cm}\begin{proof}[Solução]}{\end{proof}\end{adjustwidth}}
-\newenvironment{case}[1][1]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{Caso #1: }}{\end{adjustwidth}}
-%[1] is the first paramater (case num), [1] is its default value
-\newenvironment{claim}[1][1]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{Afirmação #1: }}{\end{adjustwidth}}
-\newcommand{\vect}[1]{\mathbf{#1}}
-\newcommand{\Bij}{\operatorname{Bij}} % default value = empty, for first parameter
-\newcommand{\sgn}{\operatorname{sgn}}
-\newenvironment{generic}[2]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{#1 #2: }}{\end{adjustwidth}}
-\newcommand{\inner}[2]{\langle #1, #2 \rangle}
-\newcommand{\emptyinner}[0]{\langle , \rangle}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\K}{\mathbb{K}}
-
-% NOT DOWNLOADED YET
-% \usepackage{algorithm}
-% \usepackage{algpseudocode}
+\input{templates.tex}
 
 \begin{document}
 \section{Enunciado}
 O problema é o \textbf{1703F}, do contest 806 (Div4), da plataforma CodeForces, disponível em \url{https://codeforces.com/contest/1703/problem/F}
 
 \section{Solução (em C++)}
+
+\begin{code}[C++]
+#include <bits/stdc++.h>
+using namespace std;
+    
+template <typename T> 
+void ps(T a[], int n){
+    for (int i = 1; i < n; i++){
+        a[i] += a[i-1];
+    }
+}
+  
+void solve(){
+    int n;
+    cin >> n;
+    int a[n+1]; // to solve 1-indexing we prepend 0 to the array
+    a[0] = 0;
+    for (int i = 1; i < n + 1; i++) cin >> a[i];
+    
+    vector<int> s;
+    for (int i = 0; i < n + 1; i++){
+        if (a[i] < i) s.emplace_back(i);
+    } // guaranteed 0 not in s 
+    
+    /*calculating #(s intersection [0, a[j])) fast with prefix sums*/
+    long long b[n + 1] = {0ll}; // avoid OVERFLOW
+    for (int i : s) ++b[i];
+    ps(b, n + 1);
+    // then #(s \cap [0, a[j])) = b[a[j] - 1]
+    
+    long long ans = 0; // avoid OVERFLOW
+    for (int i: s){
+        if (a[i] > 0){
+              ans += b[a[i] - 1];
+        } 
+        // else if a[i] == 0 then there is no j in S with j < a[i]
+    }
+    cout << ans << '\n';
+}
+\end{code}  
+
+
 
 \section{Demonstração}
 Defina por \(S\) o conjunto de índices \(S = \{i: a[i] < i\}\). Então temos que \((i, j)\) é um par válido, isto é, que satisfaz \(a[i] < i < a[j] < j\), se e só se \(i \in S, j \in S\) e \(i < a[j]\).

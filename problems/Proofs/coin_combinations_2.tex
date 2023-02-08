@@ -1,70 +1,44 @@
 \documentclass{article}
-\usepackage[utf8]{inputenc}
-
-% imports 
-%Prefer 
-%\iff, \implies and \impliedby
-
-%Bibliography stuff
-%For adding hyperlinks
-\usepackage[hyphens]{url} % avoids too large urls by allowing line breaking at hyphens
-% (best loaded BEFORE hyperref)
-
-\usepackage{parskip} %avoid margins in the beginning of paragraphs
-%Math symbols
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{amssymb}
-%Paper geometry
-\usepackage{geometry}
-\geometry{a4paper, margin = 1cm}
-%For adding images
-\usepackage{graphicx}
-%Defining floor symbols
-\usepackage{mathtools}
-\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
-\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
-%Fixing parenthesis sizes
-% \usepackage{physics} %use \qty before parenthesis % NOT DOWNLOADED YET
-%Adjustable margins
-\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
-\let\endchangemargin=\endlist %allows you to create an environment \begin{changemargin}{x cm}{y cm} \end{changemargin} - where x is the adjust to left margin and y to the right margin 
-\usepackage{changepage}
-\newtheorem{theorem}{Teorema}[section] %Delimit "the numbered theorem" environment
-%the [section] counter establishes that counting resets every section, i.e second theorem in section 7 will be 7.2. 
-\newtheorem{lemma}{Lema}[section]
-\newtheorem{corollary}{Corolário}[theorem]
-\newtheorem{definition}{Definição}[section]
-\newtheorem{example}{Exemplo}[section]
-\usepackage{hyperref} %To be able to label lemmas and theorems with \label{} and automate the process of referring to them with \cref{} 
-%Names for referrencing
-\usepackage{cleveref}
-\crefname{lemma}{Lema}{Lemas}
-\crefname{theorem}{Teorema}{Teoremas}
-\crefname{corollary}{Corolário}{Corolários}
-\crefname{definition}{Definição}{Definições}
-\crefname{example}{Exemplo}{Exemplos}
-%Proof, solution, claim and case environments
-\newenvironment{proofenv}{\begin{adjustwidth}{0.25cm}{0.25cm}\begin{proof}[Prova]}{\end{proof}\end{adjustwidth}}
-\newenvironment{solutionenv}{\begin{adjustwidth}{0.25cm}{0.25cm}\begin{proof}[Solução]}{\end{proof}\end{adjustwidth}}
-\newenvironment{case}[1][1]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{Caso #1: }}{\end{adjustwidth}}
-%[1] is the first paramater (case num), [1] is its default value
-\newenvironment{claim}[1][1]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{Afirmação #1: }}{\end{adjustwidth}}
-\newcommand{\vect}[1]{\mathbf{#1}}
-\newcommand{\Bij}{\operatorname{Bij}} % default value = empty, for first parameter
-\newcommand{\sgn}{\operatorname{sgn}}
-\newenvironment{generic}[2]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{#1 #2: }}{\end{adjustwidth}}
-\newcommand{\inner}[2]{\langle #1, #2 \rangle}
-\newcommand{\emptyinner}[0]{\langle , \rangle}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\K}{\mathbb{K}}
-
-% NOT DOWNLOADED YET
-% \usepackage{algorithm}
-% \usepackage{algpseudocode}
+\input{templates.tex}
 
 \begin{document}
+\section{Introdução}
+Esse problema foi retirado de \url{https://cses.fi/problemset/task/1636}, da plataforma de programação competitiva CSES. 
+
+
 \section{Código em C++}
+
+\begin{code}[C++]
+#include<bits/stdc++.h>
+using namespace std;
+	
+/*
+Construct solutions from array: 
+* every ordered solution can be represented as a n-uple (k_1, ... k_n)
+	where k_i is the amount of times c[i] appears in the sum
+* however, code this solution BOTTOM UP
+*/
+	
+	
+void solve(){
+	const int MOD = 1e9 + 7;
+	int n, x;
+	cin >> n >> x;
+	int c[n];
+	for (int i = 0; i < n; i++){
+	cin >> c[i];
+	}
+	int dp[x + 1] = {0};
+	dp[0] = 1;
+	
+	for (int i = 0; i < n; i++){
+	for (int s = c[i]; s <= x; s++){
+		dp[s] = (dp[s] + dp[s - c[i]]) % MOD;
+	}
+	}
+	cout << dp[x];
+}	
+\end{code}
 
 
 \section{Demonstração}

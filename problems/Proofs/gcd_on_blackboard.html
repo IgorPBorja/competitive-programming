@@ -1,0 +1,341 @@
+<script
+      type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    ></script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+      });
+</script>
+
+<h1 id="introdução">Introdução</h1>
+<p>Esse problema é o problema C do <em>AtCoder Begginer Contest
+125</em>, da plataforma de programação competitiva AtCoder. Disponível
+em: <a href="https://atcoder.jp/contests/abc125/tasks/abc125_c"
+class="uri">https://atcoder.jp/contests/abc125/tasks/abc125_c</a>.</p>
+<h1 id="code-section">Solução: código em C++</h1>
+<div class="code">
+    <pre><code>
+        #include &lt;bits/stdc++.h&gt; 
+        using namespace std;</p>
+        /* left[i] = gcd(a[0], ..., a[i-1]) right[i] = gcd(a[i + 1], ..., a[n - 1]) */
+        
+        int gcd(int a, int b){
+             int m, M;
+             while (a != 0 &amp;&amp; b != 0){
+                m = min(a,b); 
+                M = max(a,b); 
+                b = M; 
+                a = m;  
+                return max(a,b);
+             } 
+        }  
+        void solve(){
+            int n; 
+            cin &gt;&gt; n; 
+            int a[n];
+            for (int i = 0; i &lt; n; i++)
+                cin &gt;&gt; a[i];  
+            
+            int left[n], right[n]; 
+            left[0] = 0; right[n - 1] = 0; 
+            for (int i = 1; i &lt; n; i++) 
+                left[i] = gcd(left[i - 1], a[i - 1]);  
+            for (int i = n - 2; i &gt;= 0; i--) 
+                right[i] = gcd(right[i + 1], a[i + 1]); 
+        
+            int ans = 0; 
+            for (int i = 0; i &lt; n; i++) 
+                ans = max(ans, gcd(left[i], right[i]));  
+            
+            cout &lt;&lt; ans;
+        }
+    </code></pre>
+</div>
+
+<h1 id="demonstração">Demonstração</h1>
+<h2 id="lemas-importantes-sobre-gcd">Lemas importantes sobre
+<em>gcd</em></h2>
+<div id="associativity" class="theorem">
+<p><strong>Teorema 1</strong>. <em>A função <span
+class="math inline">\(\gcd: \mathbb{N}\to \mathbb{N}\)</span> é
+associativa: <span class="math display">\[\gcd(a, \gcd(b, c)) =
+\gcd(\gcd(a, b), c)\]</span> Ademais, ela é simétrica em relação a seus
+argumentos: <span class="math inline">\(\gcd(a, b) = \gcd(b,
+a)\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Prova.</em> Pelo Teorema Fundamental da Aritmética, temos <span
+class="math display">\[\begin{aligned}
+        a = \prod_{1 \leq i \leq n}p_i^{\alpha_i} \\
+        b = \prod_{1 \leq i \leq n}p_i^{\beta_i} \\
+        c = \prod_{1 \leq i \leq n}p_i^{\gamma_i}
+    
+\end{aligned}\]</span> em que <span class="math inline">\(p_1 &lt;
+\dotsc, &lt; p_n\)</span> são os <span
+class="math inline">\(n\)</span>-primeiros primos e um dos três
+expoentes <span class="math inline">\(\alpha_n, \beta_n,
+\gamma_n\)</span> é diferente de <span class="math inline">\(0\)</span>.
+Assim o lema segue da <strong>associatividade da função <span
+class="math inline">\(\boldsymbol{\min}\)</span></strong>: <span
+class="math display">\[\gcd(a, \gcd(b, c)) = \prod_{1 \leq i \leq
+n}p_i^{\min(\alpha_i, \min(\beta_i, \gamma_i))} = \prod_{1 \leq i \leq
+n}p_i^{\min(\min(\alpha_i, \beta_i), \gamma_i)} = \gcd(\gcd(a, b),
+c)\]</span> A associatividade da função <span
+class="math inline">\(\min\)</span>, por sua vez, pode ser provada
+analisando caso a caso dentre as possíveis ordenação de três números, e
+portanto sua demonstração é omitida aqui. ◻</p>
+</div>
+<p>Assim, podemos definir, para todo <span class="math inline">\(k \geq
+2\)</span>, a função <span class="math inline">\(\gcd_k: \mathbb{N}^k
+\to \mathbb{N}\)</span> definida recursivamente por</p>
+<div id="n-ary-gcd" class="definition">
+<p><strong>Definição 1</strong>. <em><span
+class="math display">\[\gcd_{k+1}(a_1, \dotsc, a_{k+1}) =
+\gcd(\gcd_{k}(a_1, \dotsc, a_k), a_{k+1})\]</span></em></p>
+</div>
+<p>a qual denotaremos apenas por <span
+class="math inline">\(\gcd\)</span>, ficando a quantidade de parâmetros
+implícita.</p>
+<p>Como corolário, vale a seguinte generalização da associatividade:</p>
+<div id="complete-associativity" class="corollary">
+<p><strong>Corolário 1</strong>. <em>Para todos <span
+class="math inline">\(1 \leq i &lt; n\)</span>: <span
+class="math display">\[\gcd_n(a_1, \dotsc, a_n) = \gcd(\gcd_{i}(a_1,
+\dotsc, a_{i}),\ \gcd_{n-i}(a_{i+1}, \dotsc, a_n))\]</span> em que
+definimos <span class="math inline">\(\gcd_1(a) = a\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Prova.</em> Provamos por indução sobre <span
+class="math inline">\(n - i\)</span>. O caso <span
+class="math inline">\(n - i = 1\)</span> segue da própria
+<strong>definição</strong> de <span
+class="math inline">\(\gcd_n\)</span>. Além disso, usando a <a href="#associativity">Definição 1</a> e o <a href="#associativity">Teorema 1</a>: <span
+class="math display">\[\begin{aligned}
+        \gcd(
+            \gcd_i(a_1, \dotsc, a_i),
+            \gcd_{n - i}(a_{i+1}, \dotsc, a_{n-i})
+        )
+        &amp;=
+        %%
+        \gcd(
+            \gcd(\gcd_{i-1}(a_1, \dotsc, a_{i-1}), a_i), \
+            \gcd_{n-i}(a_{i+1}, \dotsc, a_n)
+        )  
+        \\
+        &amp;=
+        \gcd(
+            \gcd_{i-1}(a_1, \dotsc, a_{i-1}), \
+            \gcd(
+                a_i,
+                \gcd_{n-i}(a_{i+1}, \dotsc, a_n)
+            )
+        )
+        \\
+        &amp;=
+        \gcd(
+            \gcd_{i-1}(a_1, \dotsc, a_{i-1}),\
+            \gcd(
+                \gcd_{n-i}(a_{i+1}, \dotsc, a_{n}),\
+                a_i
+            )
+        )
+        \\
+        &amp;=
+        \gcd(
+            \gcd_{i-1}(a_1, \dotsc, a_{i-1}),\
+            \gcd_{n-i + 1}(a_{i+1}, \dotsc, a_n, a_i)
+        )
+    \end{aligned}\]</span> 
+    porém, como a ordem dos argumentos de <span
+class="math inline">\(\gcd_k\)</span> não importa, para qualquer <span
+class="math inline">\(k\)</span> natural, então a expressão acima é
+simplesmente <span class="math inline">\(\gcd(
+        \gcd_{i-1}(a_1, \dotsc, a_{i-1}),\
+        \gcd_{n-i+1}(a_i,\dotsc,a_n)
+    )\)</span>. Ou seja, usando a hipótese de indução <span
+class="math display">\[\gcd_n(a_1, \dotsc, a_n) = \gcd(
+        \gcd_i(a_1, \dotsc, a_i), \
+        \gcd_{n-i}(a_{i+1}, \dotsc, a_n)
+    )
+    =
+    \gcd(
+        \gcd_{i-1}(a_1, \dotsc, a_{i-1}),\
+        \gcd_{n-i+1}(a_i,\dotsc,a_n)
+    )\]</span> provando o corolário por indução. ◻</p>
+</div>
+<div id="gcd-remainder" class="lemma">
+<p><strong>Lema 1</strong>. <em>Para todos <span
+class="math inline">\(a, b \in \mathbb{N}\)</span>, se <span
+class="math inline">\(b \neq 0\)</span> e <span class="math inline">\(a
+\equiv r \mod b\)</span> então <span class="math display">\[\gcd(a, b) =
+\gcd(r, b)\]</span></em></p>
+</div>
+<div id="gcd-algorithm-efficiency" class="theorem">
+<p><strong>Teorema 2</strong>. <em>O seguinte algoritmo para calcular
+<span class="math inline">\(\gcd\)</span> de dois números</em></p>
+<div class="code">
+    <pre><code>
+        int gcd(int a, int b){
+            while (a != 0 and b != 0){
+                int m = min(a,b); 
+                int M = max(a, b); 
+                a = M;
+                b = m; 
+            }
+            return max(a, b);
+        }
+    </code></pre>
+</div>
+<p><em>termina com o resultado correto em <span
+class="math inline">\(O(\log \min(a, b))\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Prova: <strong>Complexidade</strong>.</em> Seja <span
+class="math inline">\(a_i, b_i\)</span> os valores das variáveis após a
+<span class="math inline">\(i\)</span>-ésima iteração, e <span
+class="math inline">\(a_0 = a, b_0 = b\)</span> seus valores
+iniciais.</p>
+<p>A partir da primeira iteração temos como invariante de loop que <span
+class="math inline">\(a_i \leq b_i\)</span>, uma vez que <span
+class="math inline">\(a_i \gets M \mod m \leq m\)</span> e <span
+class="math inline">\(b_i \gets m\)</span>. Assim, podemos supor sem
+perda de generalidade que <span class="math inline">\(a \leq b\)</span>
+inicialmente (do contrário, basta <span class="math inline">\(1\)</span>
+iteração para valer tal desigualdade).</p>
+<p>Após uma iteração temos <span class="math inline">\(a_{i+1} = b_i
+\bmod a_i\)</span> e <span class="math inline">\(b_{i+1} = a_i\)</span>,
+e logo, após duas iterações temos que <span
+class="math display">\[\begin{aligned}
+        a_{i+2} &amp;= a_i \bmod (b_i \bmod a_i) \\
+        b_{i+2} &amp;= b_i \bmod a_i
+    
+\end{aligned}\]</span> Seja <span class="math inline">\(b_i = q_ia_i +
+r_i\)</span>. Então temos dois casos:</p>
+<div class="adjustwidth">
+<p><strong>Caso 1:</strong> Se
+<span class="math inline">\(r_i \leq \frac{a_i}{2}\)</span> então <span
+class="math display">\[a_{i+2} = a_i \mod r_i &lt; r_i \leq
+\frac{a_i}{2}\]</span></p>
+</div>
+<div class="adjustwidth">
+<p><strong>Caso 2:</strong> Se
+<span class="math inline">\(r_i &gt; \frac{a_i}{2}\)</span>, então <span
+class="math display">\[a_{i+2} = a_i \mod r_i = a_i - r_i &lt; a_i -
+\frac{a_i}{2} = \frac{a_i}{2}\]</span></p>
+</div>
+<p>De qualquer forma temos <span class="math inline">\(a_{i+2} \leq
+2^{-1}a_i\)</span>. Logo, por indução <span
+class="math display">\[a_{2i} \leq 2^{-i}a_0\]</span></p>
+<p>Como <span class="math inline">\(a_{2i}\)</span> é um inteiro
+não-negativo, temos que <span class="math inline">\(i &gt;
+\log_2(a_0)\)</span> implica que <span class="math inline">\(a_{2i} &lt;
+1\)</span>, e portanto <span class="math inline">\(a_{2i} = 0\)</span>,
+o que faz que o algoritmo termine. Como supomos sem perda de
+generalidade <span class="math inline">\(a_0  \leq b_0\)</span>, isso
+mostra que o algoritmo termina em no máximo <span
+class="math inline">\(2(\log_2(a_0) + 1) = 2(\log_2(\min(a, b)) +
+1)\)</span> iterações, isto é, possui complexidade <span
+class="math inline">\(O(\log \min(a, b))\)</span>. ◻</p>
+</div>
+<div class="proof">
+<p><em>Prova: <strong>Corretude</strong>.</em> Precisamos mostrar apenas
+a seguinte invariante de loop: após <span
+class="math inline">\(i\)</span>-ésima iteração <span
+class="math display">\[\gcd(a_i, b_i) = \gcd(a, b)\]</span></p>
+<p>O caso inicial <span class="math inline">\(i = 0\)</span> segue da
+definição dos termos iniciais da sequência, pois <span
+class="math inline">\(a_0 := a\)</span> e <span
+class="math inline">\(b_0 := b\)</span>. Suponha, então, que existe
+<span class="math inline">\(i &gt; 0\)</span> tal que a invariante de
+loop segue válida para todo <span class="math inline">\(0 \leq j \leq
+i\)</span>. Conforme mostramos na parte anterior, e pela condição do
+loop while, temos <span class="math inline">\(0 &lt; a_i \leq
+b_i\)</span>, e portanto <span class="math display">\[\gcd(a_{i+1},
+b_{i+1}) = \gcd(b_i \bmod a_i, a_i) = \gcd(b_i, a_i) = \gcd(a_i,
+b_i)\]</span> pelo <a href="#gcd-remainder" data-reference-type="ref"
+data-reference="gcd-remainder">Lema 1</a>. Pela parte anterior da
+demonstração, após a iteração final <span
+class="math inline">\(i_0\)</span> temos <span
+class="math inline">\(a_{i_0} = 0\)</span> ou <span
+class="math inline">\(b_{i_0} = 0\)</span>, e portanto <span
+class="math display">\[\gcd(a, b) \overset{\text{invariante}}{=}
+\gcd(a_{i_0}, b_{i_0}) = \max(a_{i_0}, b_{i_0})\]</span> provando a
+corretude do algoritmo. ◻</p>
+</div>
+<h2 id="demonstrando-o-algoritmo">Demonstrando o algoritmo</h2>
+<div id="main-result-correctness" class="theorem">
+<p><strong>Teorema 3</strong>. <em>O algoritmo da <a
+href="#code-section" data-reference-type="ref"
+data-reference="code-section">Seção 2</a> fornece a resposta correta em <span
+class="math inline">\(O(n \log M)\)</span>, onde <span
+class="math inline">\(M = \max(a[0], \dotsc, a[n-1])\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Prova.</em> Temos que a resposta que deve ser fornecida, dado um
+vetor <span class="math inline">\(a[]\)</span> de <span
+class="math inline">\(n\)</span> inteiros positivos, é <span
+class="math display">\[S = \max_{b \in \mathbb{Z}_{\geq 0}}\max_{1 \leq
+i \leq n}\gcd(a[0], \dotsc, a[i-1], b, a[i+1], \dotsc, a[n-1])\]</span>
+Porém, temos que para todo <span class="math inline">\(b \geq 0\)</span>
+inteiro, pela <a href="#n-ary-gcd">Definição 1</a> e o <a href="#complete-associativity">Corolário 1</a>: <span class="math display">\[\begin{aligned}
+        \gcd(
+            a[0], \dotsc, a[i-1], b, a[i+1], \dotsc, a[n-1]
+        )  
+        &amp;= \gcd(a[0], \dotsc, a[i-1], a[i+1], \dotsc, a[n-1], b)
+        \\
+        &amp;=
+        \gcd(
+            \gcd(a[0], \dotsc, a[i-1], a[i+1], \dotsc, a[n-1]),\
+            b
+        )
+        \\
+        &amp;\leq
+        \gcd(a[0], \dotsc, a[i-1], a[i+1], \dotsc, a[n-1])
+        \\
+        &amp;=
+        \gcd(
+            \gcd(a[0], \dotsc, a[i-1]),\
+            \gcd(a[i+1], \dotsc, a[n-1])
+        )
+    
+\end{aligned}\]</span> com <strong>caso de igualdade quando, por
+exemplo</strong>, <span class="math inline">\(b = \gcd(a[0], \dotsc,
+a[i-1], a[i+1], \dotsc, a[n-1])\)</span>.</p>
+<p>Assim, podemos definir os seguintes vetores <span
+class="math inline">\(L[n], \ R[n]\)</span>: <span
+class="math display">\[\begin{aligned}
+        L[0] &amp;= 0 \\
+        L[i + 1] &amp;= \gcd(L[i], a[i]) \\
+        \\
+        R[n - 1] &amp;= 0 \\
+        R[i - 1] &amp;= \gcd(R[i], a[i])
+    
+\end{aligned}\]</span> e pela associatividade (<a href="#associativity"
+data-reference-type="ref" data-reference="associativity">Teorema 1</a>) teremos
+<span class="math display">\[\begin{aligned}
+        L[i] = \gcd(a[0], \dotsc, a[i - 1]) \\
+        R[i] = \gcd(a[n - 1], \dotsc, a[n - i])
+    
+\end{aligned}\]</span></p>
+<p>Ademais, novamente pelo <a href="#associativity"
+data-reference-type="ref" data-reference="associativity">Teorema 1</a>, podemos
+calcular ambos os vetor em <span class="math inline">\(O(n) \cdot
+O(\gcd) = O(n\log M)\)</span> onde <span class="math inline">\(M =
+\max(a[0], \dotsc, a[n-1])\)</span>.</p>
+<p>Por fim, teremos que <span class="math display">\[\begin{aligned}
+        S &amp;= \max_{0 &lt; i &lt; n - 1}
+        \gcd(
+            \gcd(a[0], \dotsc, a[i-1]),\
+            \gcd(a[i+1], \dotsc, a[n-1])
+        ) \\
+        &amp;=
+        \max_{0 &lt; i &lt; n - 1}\gcd(L[i], R[n-i])
+    
+\end{aligned}\]</span> o que novamente pode ser calculado em <span
+class="math inline">\(O(n \log M)\)</span>.</p>
+<p>Portanto, o código da <a href="#code-section"
+data-reference-type="ref" data-reference="code-section">Seção 2</a>, que é
+exatamente a implementação do algoritmo descrito, fornece uma solução
+correta em <span class="math inline">\(O(n \log M)\)</span>. ◻</p>
+</div>
