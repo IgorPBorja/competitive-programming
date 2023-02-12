@@ -1,0 +1,119 @@
+\documentclass{article}
+\input{templates.tex}
+
+\begin{document}
+\section{Problema}
+O problema a seguir é o \emph{Codeforces 632C}, do \emph{Educational Codeforces Round 9}. Disponível em \url{https://codeforces.com/problemset/problem/632/C}.
+
+
+\begin{problem}
+    You're given a list of \(n\) strings \(a_1, a_2, \dotsc, a_n\). You'd like to concatenate them together in some order such that the resulting string would be lexicographically smallest.
+
+    Given the list of strings, output the lexicographically smallest concatenation.
+    
+    \textbf{Input} \\
+    The first line contains integer n — the number of strings \(1 \leq n \leq 5 \cdot 10^4\).
+    
+    Each of the next n lines contains one string ai (\(1 \leq |a_i| \leq 50\)) consisting of only lowercase English letters. The sum of string lengths will not exceed \(5 \cdot 10^4\).
+    
+    \textbf{Output} \\
+    Print the only string \(a\) — the lexicographically smallest string concatenation.
+\end{problem}
+\begin{solutionenv}
+    Primeiro, precisamos definir uma relação de ordem importante. Seja \(\Omega^*\) o alfabeto de palavras finitas contendo apenas as 26 letras minúsculas do alfabeto latino (exceto a palavra vazia), e denote por \(\oplus: (\Omega^*)^2 \to \Omega^*\) como a operação de concatenação.
+    \begin{lemma}
+        A relação \(\prec\) definida em \(\Omega^*\) por %% opposite is \succ. Variants with equal sign under are \preceq and \succeq
+        \[a \prec b \iff a \oplus b <_L b \oplus a\]
+        (em que \(<_L\) é a ordem lexicográfica tradicional) é uma relação de ordem estrita em \(\Omega^*\).         
+    \end{lemma}
+    \begin{proof}[Prova da Afirmação]
+        Interprete uma string em \(\Omega^*\) como um número em base-26, isto é, dada a função única função monótona (com relação à ordem lexicográfica) \(\eta:\{'a',\dots, 'z'\} \to \{0, \dotsc, 25\}\) 
+        podemos construir a (única) bijeção monótona (isomorfismo de ordem) \(f: \Omega \to \mathbb{N}\) dada recursivamente por 
+        \begin{align*}
+            f(\alpha) &= \eta(\alpha) \text{ se } \alpha \in \{'a', \dotsc, 'z'\} \\
+            f(\alpha \oplus \beta) &= 26f(\alpha) + \eta(\beta) \text{ para todo } \beta \in \{'a',\dotsc, 'z'\}
+        \end{align*}
+
+        Então para todos \(\alpha, \beta \in \Omega^*\), vale \(f(\alpha \oplus \beta) = 26^{|\beta|}f(\alpha) + f(\beta)\). Portanto:
+        \begin{align*}
+            \alpha \prec \beta &\iff \alpha \oplus \beta <_L \beta \oplus \alpha \\
+            %
+            &\iff 26^{|\beta|}f(\alpha) + f(\beta) < 26^{|\alpha|}f(\beta) +f(\alpha) \\
+            %
+            &\iff \dfrac{f(\alpha)}{26^{|\alpha|} - 1} < \dfrac{f(\beta)}{26^{|\beta|} - 1} 
+        \end{align*}
+        
+        Isso já mostra trivialmente a assimetria de \(\prec\). Por fim, podemos agora provar a transitividade de \(\prec\): suponha que \(\alpha \prec \beta\) e \(\beta \prec \gamma\): então \(\frac{f(\alpha)}{26^{|\alpha|} - 1} < \frac{f(\beta)}{26^{|\beta|} - 1}\) e \(\frac{f(\beta)}{26^{|\beta|} - 1} < \frac{f(\gamma)}{26^{|\gamma|} - 1}\), e segue que
+        \[\frac{f(\alpha)}{26^{|\alpha|} - 1} < \frac{f(\gamma)}{26^{|\gamma|} - 1}\]
+        pela transitivade da ordem em \(\mathbb{Q}\). Logo \(\alpha \prec \gamma\), e \(\prec\) é transitiva. Podemos concluir que \(\prec\) é ordem estrita em \(\Omega^*\).  
+    \end{proof}
+
+    Defina agora \(\preceq\) como a extensão de \(\prec\) para o caso da igualdade: \(\alpha \preceq \beta \iff \alpha \prec \beta\) ou \(\alpha = \beta\). Temos então a afirmação principal desse problema:
+    \begin{theorem}
+        (Afirmação principal)
+        Sejam \(\alpha_1, \dots, \alpha_n \in \Omega^*\). Seja \(\tau\) uma permutação tal que \(\alpha_{\tau(1)} \preceq \alpha_{\tau(2)} \preceq \dotsc \preceq \alpha_{\tau(n)}\). Então a menor (lexicograficamente) soma (concatenação) dessas \(n\) palavras, dentre todas as ordens possíveis, é aquela feita respeitando a ordem \(\preceq\): 
+        \[\min_{\sigma}\bigoplus_{1 \leq i \leq n}\alpha_{\sigma(i)} = \bigoplus_{1 \leq i \leq n}\alpha_{\tau(i)}\]
+    \end{theorem}
+    % proof by contradiction
+    % movement like insertion sort
+    \begin{lemma}\label{mid-component}
+    Sejam \(b, b' \in \Omega^*\). Então \(b <_L b'\) implica que para todas as palavras \(a, c \in \Omega^* \cup \{\epsilon\}\) (em que \(\epsilon\) é a palavra vazia)
+    \[a \oplus b \oplus c <_L a \oplus b' \oplus c\]        
+    \end{lemma}
+
+    \begin{proof}[Prova do teorema principal]
+        Suponha que o valor mínimo ocorre para uma permutação \(\sigma \neq \tau\). Seja \(i\) o maior índice tal que \(\sigma(j) = \tau(j)\) para todo \(1 \leq j \leq i\). Como \(\sigma \neq \tau\) temos \(i \neq n\), e também \(i \neq n-1\), pois se duas permutações de \(n\) elementos coincidem em \(n-1\) pontos, coincidem também no último.
+
+        Assim, segue imediatamente que pela definição de \(i\) que \(\tau^{-1}(\sigma(i + 1)) > i + 1\) (se fosse igual a \(i+1\), teríamos uma subsequência ainda maior de posições coincidentes entre as permutações). Logo, pela ordenação gerada por \(\tau\), concluímos que \(\alpha_{\sigma(i + 1)} \geq_L \tau(i + 2)\). O mesmo vale para todas as outras posições maiores que \(i\), com exceção da pré-imagem de \(\tau(i + 1)\) por \(\sigma\), a qual, é claro, é maior ou igual a \(i + 2\). 
+
+        Seja \(j = \sigma^{-1}(\tau(i + 1))\). Então
+        \[\alpha_{\sigma(k)} \succeq (\alpha_{\sigma(j)} = \alpha_{\tau(i + 1)})
+        \implies
+        \alpha_{\sigma(k)} \oplus \alpha_{\tau(i + 1)} \geq_L \alpha_{\tau(i + 1)} \oplus \alpha_{\sigma(k)}\]
+        para todo \(i < k < j\). Porém pelo \cref{mid-component} isso implica na seguinte sequência de desigualdades:
+        \begin{align*}
+            \left(\bigoplus_{1 \leq k \leq n} \alpha_{\sigma(k)}\right)
+            &=
+            \left(\bigoplus_{1 \leq k \leq j - 2} \alpha_{\sigma(k)}\right) 
+            \oplus 
+            (\alpha_{\sigma(j - 1)} \oplus \alpha_{\tau(i + 1)}) 
+            \oplus 
+            \left(\bigoplus_{j + 1 \leq k \leq n}\alpha_{\sigma(k)}\right)
+            \\
+            %%%%
+            &\geq_L 
+            %%%%
+            \left(\bigoplus_{1 \leq k \leq j - 2} \alpha_{\sigma(k)}\right) 
+            \oplus 
+            (\alpha_{\tau(i + 1)} \oplus \alpha_{\sigma(j - 1)}) 
+            \oplus 
+            \left(\bigoplus_{j + 1 \leq k \leq n}\alpha_{\sigma(k)}\right) \\
+            %%%%
+            &\geq_L \dotsc \\
+            %%%%
+            &\geq_L 
+            %%%%
+            \left(\bigoplus_{1 \leq k \leq i} \alpha_{\sigma(k)}\right) 
+            \oplus 
+            (\alpha_{\tau(i + 1)} \oplus \alpha_{\sigma(i + 1)} \oplus \alpha_{\sigma(i + 2)} \oplus \dotsc \oplus \oplus \alpha_{\sigma(j - 1)}) 
+            \oplus 
+            \left(\bigoplus_{j + 1 \leq k \leq n}\alpha_{\sigma(k)}\right)\\
+            %%%%
+            &\overset{\text{usando a definição de \(i\)}}{=}
+            %%%%
+            \left(\bigoplus_{1 \leq k \leq i + 1} \alpha_{\tau(k)}\right) 
+            \oplus 
+            \left(\bigoplus_{i + 1 \leq k \leq n, \ k \neq j}\alpha_{\sigma(k)}\right)
+        \end{align*}
+        e portanto após o deslocamento de \(\alpha_{\tau(i + 1)}\) para seu devido lugar, a \(i + 1\)-ésima posição, obtemos uma nova permutação \(\sigma'\) que coincide com \(\tau\) nas \(i + 1\) primeiras posições, em vez de apenas nas \(i\) primeiras, e que produz uma concatenação lexicograficamente menor ou igual àquela de \(\sigma\).
+
+        Logo, é evidente que repetindo esse processo \(n - i\) vezes obteremos a permutação \(\tau\), e uma sequência decrescente (lexicograficamente) de somas (concatenações). Como a permutação \(\sigma\) foi \textbf{arbitrária} temos que para toda permutação \(\sigma\)
+        \[\bigoplus_{1 \leq i \leq n}\alpha_{\sigma(i)} \geq_L \bigoplus_{1 \leq i \leq n}\alpha_{\tau(i)}\]
+        e portanto
+        \[\bigoplus_{1 \leq i \leq n}\alpha_{\tau(i)} = \min_{\sigma}\bigoplus_{1 \leq i \leq n}\alpha_{\sigma(i)}\]
+        como queríamos demonstrar.
+    \end{proof}
+\end{solutionenv}
+
+
+\end{document}
