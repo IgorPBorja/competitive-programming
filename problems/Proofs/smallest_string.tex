@@ -28,7 +28,7 @@ O problema a seguir é o \emph{Codeforces 632C}, do \emph{Educational Codeforces
     \end{lemma}
     \begin{proof}[Prova da Afirmação]
         Interprete uma string em \(\Omega^*\) como um número em base-26, isto é, dada a função única função monótona (com relação à ordem lexicográfica) \(\eta:\{'a',\dots, 'z'\} \to \{0, \dotsc, 25\}\) 
-        podemos construir a (única) bijeção monótona (isomorfismo de ordem) \(f: \Omega \to \mathbb{N}\) dada recursivamente por 
+        podemos construir a (única) bijeção monótona (isomorfismo de ordem) \(f: \Omega^* \to \mathbb{N}\) dada recursivamente por 
         \begin{align*}
             f(\alpha) &= \eta(\alpha) \text{ se } \alpha \in \{'a', \dotsc, 'z'\} \\
             f(\alpha \oplus \beta) &= 26f(\alpha) + \eta(\beta) \text{ para todo } \beta \in \{'a',\dotsc, 'z'\}
