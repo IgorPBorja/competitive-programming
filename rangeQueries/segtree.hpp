@@ -2,22 +2,35 @@
 #include <iostream>
 #include <assert.h>
 
+/**
+ * @brief 
+ * @tparam T 
+ */
+
 template <typename T>
 class SegmentTree
 {
 public:
     std::vector<T> st;
-    T (*op)
-    (T, T);
+    T (*op)(T, T);
+    T (*f)(T) = nullptr;
     int size;
 
     template <typename RandomAccessIterator>
     T build_from(int pos,
-                 RandomAccessIterator left, RandomAccessIterator right)
+                 RandomAccessIterator left, 
+                 RandomAccessIterator right
+                 )
     {
         if (left + 1 == right)
         {
-            st[pos] = *left;
+            if (this->f == nullptr)
+            {
+                st[pos] = *left;
+            } else 
+            {
+                st[pos] = this->f(*left);
+            }
             return st[pos];
         }
         else
@@ -33,11 +46,13 @@ public:
     template <typename RandomAccessIterator>
     SegmentTree(RandomAccessIterator first,
                 RandomAccessIterator last,
-                T (*op)(T, T))
+                T (*op)(T, T),
+                T (*f)(T) = nullptr)
     {
         // FACT: A segment tree has at most 4*n nodes
         this->st.resize(4 * (last - first));
         this->op = op;
+        this->f = f;
         this->size = last - first;
         this->build_from(0, first, last);
     }
@@ -107,4 +122,135 @@ public:
     {
         return __range_query(0, this->size, 0, l, r);
     }
+};
+
+/**
+ * @brief The range query operation in this segment tree returns the smallest index i
+ * such that a[i] >= x
+ * 
+ * @tparam T: type with >= operator 
+ */
+template <typename T>
+class LowerBoundSegmentTree: public SegmentTree<T>
+{
+    private:
+        const int INF = 2e9;
+
+    public:
+
+        template <typename RandomAccessIterator>
+        LowerBoundSegmentTree(RandomAccessIterator first,
+                              RandomAccessIterator last,
+                              T (*f)(T) = nullptr)
+        : SegmentTree<T>(
+                        first, 
+                        last, 
+                        [](T a, T b){if (a >= b) return a; else return b;}, 
+                        f)
+        {
+            // calls base class constructor with op == max for type T
+        }
+
+        int __lower_bound_query(T x, int l, int r, int node)
+        {
+            if (l + 1 == r)
+            {
+                if (this->st[node] >= x)
+                {
+                    return l;
+                } else 
+                {
+                    return INF; 
+                }
+            } else 
+            {
+                int mid = l + (r - l)/2;
+                // case 1: there is a lower bound on left half
+                if (SegmentTree<T>::range_query(l, mid) >= x)
+                {
+                    return __lower_bound_query(x, l, mid, 2*node + 1);
+                } 
+                // case 2: no lower bound on left half, but there is lower bound on right half
+                else if (SegmentTree<T>::range_query(mid, r) >= x)
+                {
+                    return __lower_bound_query(x, mid, r, 2*node + 2);
+                } 
+                // case 3: did not found lower bound (max(i=1...n) a[i] < x)
+                else {
+                    return INF;
+                }
+            }
+        }
+
+        int lower_bound_query(T x)
+        {
+            return __lower_bound_query(x, 0, this->size, 0);
+        }
+};
+
+/**
+ * @brief The range query operation in this segment tree returns the smallest index i
+ * such that a[i] <= x
+ *
+ * @tparam T: type with >= operator
+ */
+template <typename T>
+class UpperBoundSegmentTree : public SegmentTree<T>
+{
+    private:
+        const int INF = 2e9;
+
+    public:
+        template <typename RandomAccessIterator>
+        UpperBoundSegmentTree(RandomAccessIterator first,
+                              RandomAccessIterator last,
+                              T (*f)(T) = nullptr)
+            : SegmentTree<T>(
+                  first,
+                  last,
+                  [](T a, T b)
+                  {if (a <= b) return a; else return b; },
+                  f)
+        {
+            // calls base class constructor with op == min for type T
+        }
+
+        int __upper_bound_query(T x, int l, int r, int node)
+        {
+            if (l + 1 == r)
+            {
+                if (this->st[node] >= x)
+                {
+                    return l;
+                }
+                else
+                {
+                    return INF;
+                }
+            }
+            else
+            {
+                int mid = l + (r - l) / 2;
+                // case 1: there is a upper bound on left half
+                if (SegmentTree<T>::range_query(l, mid) <= x)
+                {
+                    return __upper_bound_query(x, l, mid, 2 * node + 1);
+                }
+                // case 2: no upper bound on left half, but there is upper bound on right half
+                else if (SegmentTree<T>::range_query(mid, r) <= x)
+                {
+                    return __upper_bound_query(x, mid, r, 2 * node + 2);
+                }
+                // case 3: did not found upper bound (min(i=1...n) a[i] > x)
+                else
+                {
+                    return INF;
+                }
+            }
+        }
+
+        int upper_bound_query(T x)
+        {
+            return __upper_bound_query(x, 0, this->size, 0);
+        }
 };
