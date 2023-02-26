@@ -65,7 +65,7 @@ public:
         }
         else if (left + 1 == right && left == update_pos)
         {
-            st[node] = value;
+            st[node] = this->f(value); // always apply the function before assigning to leaf vertex
         }
         else
         {
