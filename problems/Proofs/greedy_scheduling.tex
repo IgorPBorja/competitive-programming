@@ -1,0 +1,148 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+% imports
+%Prefer
+%\iff, \implies and \impliedby
+
+%Bibliography stuff
+%For adding hyperlinks
+\usepackage[hyphens]{url} % avoids too large urls by allowing line breaking at hyphens
+% (best loaded BEFORE hyperref)
+
+\usepackage{parskip} %avoid margins in the beginning of paragraphs
+%Math symbols
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Paper geometry
+\usepackage{geometry}
+\geometry{a4paper, margin = 1cm}
+
+% CODE LISTING
+\usepackage{listings}
+\lstnewenvironment{code}[1][C++]
+{\lstset{language=C++,numbers=left,numberstyle=\tiny}
+  \minipage{\dimexpr\textwidth-2em}
+}
+{\endminipage}
+
+%For adding images
+\usepackage{graphicx}
+%Defining floor symbols
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+%Fixing parenthesis sizes
+% \usepackage{physics} %use \qty before parenthesis % NOT DOWNLOADED YET
+%Adjustable margins
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist %allows you to create an environment \begin{changemargin}{x cm}{y cm} \end{changemargin} - where x is the adjust to left margin and y to the right margin
+\usepackage{changepage}
+\newtheorem{theorem}{Teorema}[section] %Delimit "the numbered theorem" environment
+%the [section] counter establishes that counting resets every section, i.e second theorem in section 7 will be 7.2.
+\newtheorem{lemma}{Lema}[section]
+\newtheorem{corollary}{Corolário}[theorem]
+\newtheorem{definition}{Definição}[section]
+\newtheorem{example}{Exemplo}[section]
+\newtheorem{problem}{Problema}
+\usepackage{hyperref} %To be able to label lemmas and theorems with \label{} and automate the process of referring to them with \cref{}
+%Names for referrencing
+\usepackage{cleveref}
+\crefname{lemma}{Lema}{Lemas}
+\crefname{theorem}{Teorema}{Teoremas}
+\crefname{corollary}{Corolário}{Corolários}
+\crefname{definition}{Definição}{Definições}
+\crefname{example}{Exemplo}{Exemplos}
+\crefname{problem}{Problema}{Problemasx}
+\crefname{section}{Seção}{Seções}
+\crefname{subsection}{Subseção}{Subseções}
+
+%Proof, solution, claim and case environments
+\newenvironment{proofenv}{\begin{adjustwidth}{0.25cm}{0.25cm}\begin{proof}[Prova]}{\end{proof}\end{adjustwidth}}
+\newenvironment{solutionenv}{\begin{adjustwidth}{0.25cm}{0.25cm}\begin{proof}[Solução]}{\end{proof}\end{adjustwidth}}
+\newenvironment{case}[1][1]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{Caso #1: }}{\end{adjustwidth}}
+%[1] is the first paramater (case num), [1] is its default value
+\newenvironment{claim}[1][1]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{Afirmação #1: }}{\end{adjustwidth}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\Bij}{\operatorname{Bij}} % default value = empty, for first parameter
+\newcommand{\sgn}{\operatorname{sgn}}
+\newenvironment{generic}[2]{\begin{adjustwidth}{0.25cm}{0.25cm}\textbf{#1 #2: }}{\end{adjustwidth}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\emptyinner}[0]{\langle , \rangle}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\N}{\mathbb{N}}
+
+% NOT DOWNLOADED YET
+% \usepackage{algorithm}
+% \usepackage{algpseudocode}
+\title{Argumentos gulosos comuns}
+\author{Igor Borja}
+
+\begin{document}
+\maketitle
+\begin{problem} (Ver \url{https://cses.fi/problemset/task/1629})
+  Sejam \((a_{1}, b_{1}), \dotsc, (a_{n}, b_{n})\) pares de números tais que \(a_{i} < b_{i}\) para todo \(1 \leq i \leq n\). Queremos um algoritmo eficiente para encontrar o \textbf{maior} \(k\) tal que existem \(i_{1} \leq \dotsc \leq i_{k}\) com
+  \[a_{i_{1}} \leq b_{i_{1}} \leq a_{i_{2}} \leq \dotsc \leq a_{i_{k}} \leq b_{i_{k}}\]
+\end{problem}
+\begin{solutionenv}
+  Podemos pensar na seguinte analogia: \textbf{temos uma lista de processos - cada um com seu tempo de início e término, e queremos determinar qual a maior quantidade de processos que podem ser realizados sem sobreposição.}
+
+  Assim, resolveremos utilizando um algoritmo guloso: tomamos sempre, dentre os processos restantes possíveis, aquele que \textbf{termina primeiro}.
+
+  \begin{theorem}
+    Suponha que temos um conjunto de processos \(R\) e queremos escolher o maior subconjunto desses processos que pode ter seus elementos executados (em alguma ordem) sem sobreposição, e que o tempo inicial do primeiro processo é maior ou igual a \(x\). Então, devemos escolher como primeiro processo aquele que termina mais cedo.
+  \end{theorem}
+  \begin{proofenv}
+    Seja \(S(x, U)\) a melhor solução começando do tempo \(x\) (isto é, o primeiro processo tem que ter tempo inicial maior ou igual a \(x\)) e escolhendo dentre o subconjunto de processos \(U\).
+
+    É óbvio que se \(U \subseteq V\), \(S(x, U) \leq S(x, V)\) pelo simples fato de que a melhor solução para o primeiro caso é válida para o segundo caso. Analogamente, se \(y \leq x\), \(S(x, U) \leq S(y, U)\). Logo, se \(p_{j} \in R\) é o processo que acaba mais cedo, e escolhemos o processo \(p_{i} \neq p_{j} \in R\), não podemos escolher \(p_{j}\) em seguida, uma vez que \(b_{i} \geq b_{j} > a_{j}\) (começa antes do término de \(p_{i}\)). Segue que a melhor solução que podemos obter é
+    \[1 + S(b_{i}, R \setminus \{p_{i}, p_{j}\}) \leq 1 + S(b_{j}, R\setminus\{p_{i}, p_{j}\}) \leq 1 + S(b_{j}, R \setminus{p_{j}})\]
+    Isso mostra que escolher \(p_{j}\) fornece uma solução pelo menos equivalente e possivelmente melhor.
+  \end{proofenv}
+\end{solutionenv}
+
+\begin{problem} (Ver \url{https://cses.fi/problemset/task/1630})
+  Sejam \((d_{1}, f_{1}), \dotsc (d_{n}, f_{n})\) pares de números. Queremos encontrar a permutação \(\sigma: \{1,\dotsc,n\} \to \{1,\dotsc,n\}\) que maximiza
+  \[\sum_{1 \leq i \leq n}\left(f_{\sigma(i)} - \sum_{1 \leq j \leq i}d_{\sigma(j)}\right)\]
+
+  Podemos aplicar a seguinte analogia: \textbf{cada par \(\mathbf{(d_{i}, f_{i})}\) é uma tarefa - com \(\mathbf{d_{i}}\) sendo sua duração e \(\mathbf{f_{i}}\) seu prazo final - e cada tarefa \(\mathbf{i}\) é pontudada por \(\mathbf{f_{i} - f}\), em que \(\mathbf{f}\) é o tempo em que ela foi finalizada. Assim, queremos a ordem de processamento das tarefas que maximiza a pontuação}.
+\end{problem}
+\begin{solutionenv} (Matemática)
+
+  Temos que a pontuação é
+  \begin{align*}
+    p &= \sum_{1 \leq i \leq n}\left(f_{\sigma(i)} - \sum_{1 \leq j \leq i}d_{\sigma(j)}\right) = \sum_{1 \leq i \leq n}f_{i} - \sum_{1 \leq i \leq n}\sum_{1 \leq j \leq i}d_{\sigma(j)}
+  \end{align*}
+  onde \(K\) é uma constante. Porém note que \(d_{\ell} = d_{\sigma(\sigma^{-1}(\ell))}\), e portanto \(d_{\ell}\) aparece na soma acima para cada \(i \geq \sigma^{-1}(\ell)\). Em outras palavras
+  \begin{align*}
+    p &= K - \sum_{1 \leq i \leq n}(n + 1 - \sigma^{-1}(i))d_{i} = K - \sum_{1 \leq i \leq n}(n + 1)d_{i} + \sum_{1 \leq i \leq n}\sigma^{-1}(i)d_{i}
+    \\
+    &= K + K' - \sum_{1 \leq i \leq n}i\cdot d_{\sigma(i)}
+  \end{align*}
+  em que \(K'\) é outra constante. Para maximizar \(p\), logo, precisamos minimizar a soma \(\sum i\cdot d_{\sigma(i)}\). \textbf{Pela desigualdade do rearranjo} torna-se evidente que a permutação escolhida deve ser aquela que satisfaz
+  \[d_{\sigma(1)} \leq \dotsc \leq d_{\sigma(n)}\]
+  Em outras palavras, devemos escolher as tarefas por ordem crescente de duração, provando o algoritmo guloso.
+\end{solutionenv}
+
+\begin{solutionenv}(Algorítimica)
+  Seja \(\sigma\) uma permutação tal que \(\sigma(i) > \sigma(i + 1)\) para algum \(1 \leq i < n\). Mostremos que trocar os dois de posição melhora a pontuação final.
+
+  Seja \(p\) o preço antes da troca e \(p'\) o preço depois da troca. Suponha que a tarefa \(T_{\sigma(i)}\) em questão começa em um tempo \(t\). Note que trocar as duas tarefas não interfere no tempo em que as duas vão ter finalizado (que é \(t + d_{\sigma(i)} + d_{\sigma(i + 1)}\), independente da ordem), e portanto não interfere na pontuação gerada pelas tarefas seguintes - equivalentemente, não interfere nas tarefas anteriores. Seja \(K\) a pontuação gerada pelas outras \(n - 2\) tarefas. Logo
+  \begin{align*}
+    p' = K + \left(f_{\sigma(i + 1)} - (t + d_{\sigma(i + 1)})\right) + \left(f_{\sigma(i)} - (t + d_{\sigma(i + 1)} + d_{\sigma(i)})\right)
+    \\
+    p = K + \left(f_{\sigma(i)} - (t + d_{\sigma(i)})\right) + \left(f_{\sigma(i + 1)} - (t + d_{\sigma(i)} + d_{\sigma(i + 1)})\right)
+    \\
+    p' - p = \left(-2d_{\sigma(i + 1)} - d_{\sigma(i)}\right) - \left(-2d_{\sigma(i)} - d_{\sigma(i + 1)}\right)
+          = d_{\sigma(i)} - d_{\sigma(i + 1)} > 0
+  \end{align*}
+  mostrando que trocar melhora a pontuação final.
+
+  Portanto, como desfazer uma inversão sempre melhora a pontuação, é fácil verificar que isso implica que a solução ótima é a permutação \(\sigma_{0}\) tal que
+  \[d_{\sigma_{0}(1)} \leq \dotsc \leq d_{\sigma_{0}(n)}\]
+  Ou seja, devemos processar as tarefas em \textbf{ordem crescente de distância}, provando o algoritmo guloso.
+\end{solutionenv}
+
+\end{document}
