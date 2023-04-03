@@ -20,7 +20,7 @@ void read(ForwardIterator itr, int n)
     {
         cin >> *itr;
         ++itr;
-    } 
+    }
 }
 template <typename ForwardIterator>
 void print(ForwardIterator itr, int n, string sep=" ")
@@ -34,7 +34,7 @@ void print(ForwardIterator itr, int n, string sep=" ")
 template <typename ForwardIterator, typename T>
 void setval(ForwardIterator itr, int n, T v)
 {
-    for (int i = 0; i < n; i++) 
+    for (int i = 0; i < n; i++)
     {
         *itr = v;
         ++itr;
@@ -53,4 +53,23 @@ void read_pairs(ForwardIterator itr, int n)
 
 int main(){
     fastio;
+    // O(n log n) approach
+    multiset<int> m;
+    int n, p, q;
+    cin >> n >> q;
+
+    for (int i = 0; i < n; i++){
+        cin >> p;
+        m.insert(-p);
+    }
+    for (int i = 0; i < q; i++){
+        cin >> p;
+        multiset<int>::iterator lb = m.lower_bound(-p);
+        if (lb == m.end()){
+            cout << -1 << '\n';
+        } else {
+            cout << - *lb << '\n';
+            m.erase(lb);
+        }
+    }
 }
