@@ -13,7 +13,7 @@ void spf(int N, int ans[]){
   }
   
   int is_prime[N+1]; // 0 means is prime, 1 means is composite
-  memset(is_prime, is_prime + N + 1, 0);
+  memset(is_prime, N + 1, 0);
   is_prime[0] = 1; is_prime[1] = 1;
   for (int i = 2; i <= N; i++){
     if (is_prime[i] == 0){
