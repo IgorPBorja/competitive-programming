@@ -23,20 +23,13 @@
 # tex temporary file ?
 *.auctex-auto
 
+.idea
+.vimspector.json
+
+# ignore pdfs
+*.pdf
 
 # temporaries ignores for unsolved/not finished problems
-# not finished yet
-*sum_of_three_values_two_pointers.cpp
-# not finished yet
-problems/Atcoder/DP/M.cpp
-# not finished yet
-*lazy_segtree.hpp
-# not working yet
-*breed_counting.cpp
-# not working yet
-*polynomial_queries.cpp
-# not finished yet
-*stick_divisions.cpp
 
 # local version has to be different from remote version 
 # (to hide username/profile name)

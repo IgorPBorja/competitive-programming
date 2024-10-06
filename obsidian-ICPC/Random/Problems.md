@@ -1,0 +1,11 @@
+*  [x] [Div3D. GCD-sequence](https://codeforces.com/problemset/problem/1980/D)
+*  [x] [Div2C. Job Interview](https://codeforces.com/problemset/problem/1976/C)
+*  [x] [CSES - Additional - Xor Pyramid](https://cses.fi/problemset/task/2419/)
+*  [x] [CSES - Graph Algorithms - Planet Queries](https://cses.fi/problemset/task/1750)
+*  [x] [Div2D. Good Trip](https://codeforces.com/contest/1925/problem/D) - combinatória + probabilidade
+*  [x] [Global Round 26 - C1. Magnitude (Easy Version)](https://codeforces.com/contest/1984/problem/C1)
+*  [x] [Global Round 26 - C2. Magnitude (Hard Version)](https://codeforces.com/contest/1984/problem/C2)
+*  [x] [Div3F. Kirei and the Linear Function](https://codeforces.com/problemset/problem/1729/F)
+*  [ ] [Div3G. Cut Substrings](https://codeforces.com/contest/1729/problem/G)
+*  [ ] [Div4G. D-Function](https://codeforces.com/problemset/problem/1985/G)
+*  [ ] [Global Round 26 - D. "a" String Problem](https://codeforces.com/problemset/problem/1984/D)

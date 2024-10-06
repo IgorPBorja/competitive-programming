@@ -1,0 +1,238 @@
+{
+  "main": {
+    "id": "5aec5bf4b5c5d73f",
+    "type": "split",
+    "children": [
+      {
+        "id": "6adbb20cae874575",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b879b3286331fa9a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "LCA/Problems.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "5e208b6b244a9cf1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Welcome.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1024fb50241f926c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "DSU/Notes and links.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "5420d4add6806a82",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "GruPro - aulas/Aulas - Avançado 2024/Fenwick tree (BIT).md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "9edf3044eec7c538",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Contests/Current contests.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "8acf892676535223",
+    "type": "split",
+    "children": [
+      {
+        "id": "bc8b18ede2da07c5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5c515c54a1077046",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "5dfd566c0870f3e0",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "f56537c5f38b6aaf",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300.5
+  },
+  "right": {
+    "id": "7cf81e43fa104811",
+    "type": "split",
+    "children": [
+      {
+        "id": "2880fdc9f2f30331",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d2a7e591de26d145",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Contests/Current contests.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "8f0de73e93846c74",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Contests/Current contests.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "8f35a161da8b327f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "6749d20d5a676738",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Contests/Current contests.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "9edf3044eec7c538",
+  "lastOpenFiles": [
+    "Algoritmos de string/Tries/Theory.md",
+    "Algoritmos de string/Tries/Problems.md",
+    "Algoritmos de string/KMP/Problems.md",
+    "Welcome.md",
+    "2024-06-13.md",
+    "Trees/Problems.md",
+    "SCC, pontes e articulações/Problems.md",
+    "SCC, pontes e articulações/2-SAT.md",
+    "Range queries (Segtree, BIT, etc)/Lazy Seg.md",
+    "Number theory/Problems.md",
+    "GruPro - aulas/Aulas - Avançado 2024/Binary lifting.md",
+    "GruPro - aulas/Aulas - Avançado 2024/Detecção de ciclos e Toposort.md",
+    "GruPro - aulas/Aulas - Avançado 2024/SCC.md",
+    "GruPro - aulas/Aulas - Avançado 2024/Pontes e Articulações.md",
+    "GruPro - aulas/Aulas - Avançado 2024/LCA com binary lifting.md",
+    "GruPro - aulas/Aulas - Avançado 2024/Fenwick tree (BIT).md",
+    "GruPro - aulas/Aulas - Avançado 2024/DSU.md",
+    "GruPro/Aulas - Avançado 2024/DSU.md",
+    "Contests/Current contests.md",
+    "Algoritmos de string/KMP",
+    "Untitled",
+    "Algoritmos de string",
+    "Range queries (Segtree, BIT, etc)/Segtree implícita (dinâmica)",
+    "Algoritmos de string/Tries",
+    "DSU/Problems.md",
+    "Number theory",
+    "Random/Problems.md",
+    "Range queries (Segtree, BIT, etc)",
+    "LCA/Problems.md",
+    "DP/Problems.md",
+    "DSU/Notes and links.md",
+    "GruPro/Aulas - Avançado 2024",
+    "GruPro",
+    "FFT/Problems.md",
+    "LCA/Blogs.md",
+    "Contests/Div3",
+    "Untitled.canvas"
+  ]
+}

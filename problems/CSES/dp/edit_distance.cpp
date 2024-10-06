@@ -1,66 +1,76 @@
-/*
-suppose n <= m and let A[1..n] and B[1..m] be the strings
-let dp[i][j] be the minimum number of operations to turn a substring of size i of B ending at j into A
-(INF if j < i).
-Then
-
-dp[i+1][j] = INF if j < i+1
-            min(dp[i+1][j], dp[i][j-1] + (B[j] == A[i+1]) ? 0 : 1)  
-
-loop i
-    loop j
-
-then edit(A, B) = min(j){dp[n][j]} + m - n
-
-base case: dp[n][n] = diff(A, B[1..n]) 
-*/
+// #define TESTCASES
+// #define DEBUG
+ 
 #include <bits/stdc++.h>
 using namespace std;
-const int INF = 1e9;
-
-int diff(string& A, string& B){
-    /*needs |s1| <= |s2| */
-    int n = A.size(), m = B.size();
-    if (n > m){
-        return diff(B, A);
-    }
-    int dp[n][m];
-    for (int i = 0; i < n; i++){
-        for (int j = 0; j < m; j++){
-            dp[i][j] = INF;
-        }
-    }
-
-    // base cases: dp[0][j]
-    for (int j = 0; j < m; j++){
-        if (B[j] == A[0]){
-            dp[0][j] = 0;
-        } else {
-            dp[0][j] = 1;
-        }
-    }
-
-    for (int i = 1; i < n; i++){
-        // dp[i][j] =  turn substring of size i + 1 of B ending at j into A[0...i]
-        for (int j = i; j < m; j++){
-            if (A[i] != B[j]){
-                dp[i][j] = min(dp[i][j], dp[i - 1][j - 1] + 1);
-            } else {
-                dp[i][j] = min(dp[i][j], dp[i - 1][j - 1]);                
-            }
-        }
-    }
-
-    // ans = min(j)dp[n-1][j] + m - n
-    int ans = INF;
-    for (int j = 0; j < m; j++){
-        ans = min(ans, dp[n-1][j]);
-    }
-    return ans + m - n;
+#define vi vector<int>
+#define vb vector<bool>
+#define vc vector<char>
+#define vvi vector<vector<int>>
+#define vvb vector<vector<bool>>
+#define vvc vector<vector<char>>
+#define vvpi vector<vector<pair<int, int>>>
+#define pii pair<int, int>
+#define eb emplace_back
+#define ep emplace
+#define fastio ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define endl '\n'
+ 
+#define i64 int64_t
+#define u64 uint64_t
+#define i128 __int128
+#define all(x) begin(x),end(x)
+ 
+#define print(vec) for(auto x: vec){cout << x << "|";} cout << endl;
+ 
+template <typename T, typename U>
+ostream& operator<< (ostream& out, pair<T, U> x)
+{
+	out << x.first << " " << x.second;
+	return out;
 }
 
-int main(){
-    string s1, s2;
-    cin >> s1 >> s2;
-    cout << diff(s1, s2);
+const i64 INF = 2e18;
+
+void solve(){
+    string s, t;
+    cin >> s >> t;
+    const i64 n = s.size(), m = t.size();
+
+    vector<vector<i64>> dp(n + 1, vector<i64>(m + 1, INF));
+
+    for (i64 j = 0; j <= m; j++){
+        // add entire t[j...m-1]
+        dp[n][j] = m - j;
+    }
+    for (i64 i = n - 1; i >= 0; i--){
+        // add entire s[i...n-1]
+        dp[i][m] = n - i;
+        for (i64 j = m - 1; j >= 0; j--){
+            dp[i][j] = min(
+                dp[i + 1][j + 1] + ((s[i] == t[j]) ? 0 : 1), // replace
+                min(
+                    1 + dp[i][j + 1], // remove from t
+                    1 + dp[i + 1][j] // remove from s
+                )
+            );
+        }
+    }
+    cout << dp[0][0] << endl;
+}
+ 
+signed main(){
+	fastio;
+#ifdef DEBUG
+	freopen("/tmp/in", "r", stdin);
+#endif
+	int t;
+#ifdef TESTCASES
+	cin >> t;
+#else
+	t = 1;
+#endif
+	while (t--){
+		solve();
+	}
 }
