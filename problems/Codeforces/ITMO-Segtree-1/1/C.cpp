@@ -24,6 +24,7 @@ using namespace std;
 #define printmsg(msg, first, last) cout << msg; for(auto it = first; it != last; it++){cout << *it << "|";} cout << endl;
 #define print(first, last) for(auto it = first; it != last; it++){cout << *it << "|";} cout << endl;
 #define printgraph(msg, G) cout << msg << endl; for (u64 u = 0; u < G.size(); u++) { printmsg("G[" << u << "]=", G[u].begin(), G[u].end()) };
+#define debug(x) cerr << #x << "=" << x << endl
  
 template <typename T, typename U>
 ostream& operator<< (ostream& out, pair<T, U> x)
@@ -56,7 +57,7 @@ Node merge(Node n1, Node n2){
 
 struct SegMin {
 	const static i64 MAXN = (i64)1e5 + 10; 
-	Node seg[MAXN];
+	Node seg[4 * MAXN];
 	const i64 n;
 
 	SegMin(i64 a[], i64 n) : n(n){
@@ -75,9 +76,10 @@ struct SegMin {
 	}
 
 	Node _query(i64 l, i64 r, i64 tl, i64 tr, i64 node){
-		if (l == r && tl == tr){
+		if (l == tl && r == tr){
 			return seg[node];
 		} else {
+			// debug(l); debug(r); debug(tl); debug(r); debug(node);
 			const i64 tm = tl + (tr - tl) / 2;
 			if (r <= tm){
 				return _query(l, r, tl, tm, 2 * node + 1);
@@ -125,12 +127,10 @@ void solve(){
 		cin >> mode;
 		if (mode == 1){
 			cin >> p >> v;
-			--p;
 			seg.update(p, v, 0, n - 1, 0);
 		} else {
 			cin >> l >> r;
-			--l; --r;
-			auto[vmin, cnt] = seg.query(l, r);
+			auto[vmin, cnt] = seg.query(l, r - 1);
 			cout << vmin << " " << cnt << endl;
 		}
 	}
