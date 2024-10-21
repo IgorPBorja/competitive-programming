@@ -91,7 +91,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Algoritmos de string/Z-function/Z algorithm.md",
+                "file": "Contests/Current contests.md",
                 "mode": "source",
                 "source": false
               }
@@ -164,7 +164,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Algoritmos de string/Z-function/Z algorithm.md",
+                "file": "Contests/Current contests.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -181,7 +181,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Algoritmos de string/Z-function/Z algorithm.md",
+                "file": "Contests/Current contests.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -204,7 +204,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Algoritmos de string/Z-function/Z algorithm.md"
+                "file": "Contests/Current contests.md"
               }
             }
           }
@@ -228,14 +228,14 @@
   },
   "active": "b0c3127b84e4f0dd",
   "lastOpenFiles": [
-    "Algoritmos de string/Problems.md",
+    "Random/Problems.md",
     "Algoritmos de string/Z-function/Z algorithm.md",
+    "Roadmap.md",
+    "Algoritmos de string/Problems.md",
     "Algoritmos de string/Z-function",
     "Number theory/Problems.md",
     "Algoritmos de string/KMP/Problems.md",
     "Random/Bitmasks e XOR-MST (Codeforces).md",
-    "Roadmap.md",
-    "Random/Problems.md",
     "Algoritmos de string/Tries/Problems.md",
     "Algoritmos de string/Tries/Theory.md",
     "2024-06-13.md",

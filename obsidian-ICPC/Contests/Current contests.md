@@ -55,6 +55,7 @@
 
 * [ ] [A. Card game](https://codeforces.com/group/QlsCcB22aH/contest/553854/problem/A)
 * [ ] [B. Supporting everyone](https://codeforces.com/group/QlsCcB22aH/contest/553854/problem/B)
+* [ ] [C. Metro quiz](https://codeforces.com/group/QlsCcB22aH/contest/553854/problem/C)
 * [x] [E. Nicest view](https://codeforces.com/group/QlsCcB22aH/contest/553854/problem/E)
 * [x] [J. Olympic goodies](https://codeforces.com/group/QlsCcB22aH/contest/553854/problem/J)
 * [x] [K. Team selection](https://codeforces.com/group/QlsCcB22aH/contest/553854/problem/K)
@@ -65,3 +66,6 @@
 * [ ] [D. Speedbreaker](https://codeforces.com/contest/2019/problem/D)
 * [x] [E. Tree Pruning](https://codeforces.com/contest/2019/problem/E)
 
+## [2023-2024 ACM-ICPC Nordic Collegiate Programming Contest (NCPC 2023)](https://codeforces.com/group/QlsCcB22aH/contest/559359)
+
+* [x] [F. Factor-Full Tree](https://codeforces.com/group/QlsCcB22aH/contest/559359/problem/F)
