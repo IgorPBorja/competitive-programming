@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\author{Igor Borja}
+\date{}
+
+\title{Problema K - ETH Zurich Competitive Programming Contest Spring 2024}
+
+\begin{document}
+    \maketitle
+
+    \section{Análise}
+
+    \textbf{Note que nenhuma moeda é paga caso ele seja sorteado}.
+
+    Para que Oli gaste exatamente \(q > 0\) moedas, é necessário que
+    \begin{itemize}
+        \item  \((q - 1) \cdot n\) pessoas não sejam sorteadas, (\((q - 1)\) ciclos completos), para que ele gaste \(q - 1\) moedas
+        \item As \(k - 1\) pessoas na sua frente, e ele próprio, não sejam sorteadas (portanto, \(k\) pessoas)
+        \item Alguma das \(n - k\) pessoas atrás dele seja sorteada, ou ninguém seja sorteado nesse ciclo e uma das \(k - 1\) pessoas na frente dele seja sorteada (ou ele próprio) no ciclo seguinte. Ou seja, (pensando em posições \textbf{zero-indexadas} - sendo que Oli está na \((k - 1)\)-ésima posição) existe um \(0 \leq j \leq n - 1\) tal que \(k, \dotsc, (k + j - 1) \mod n\) não são sorteados e \(k + j \mod n\) é sorteado, depois das duas condições anteriores.
+    \end{itemize}
+
+    Ou seja, pondo \(p = \dfrac{a}{b}\) temos que a probabilidade de ele gastar exatamente \(q\) moedas é:
+
+    \begin{align*}
+        P(X = q)
+        &= \left(1 - p\right)^{(q - 1) \cdot n + k}\sum_{j = 0}^{n - 1}\left(1 - p\right)^{j}p
+        \\
+        &= p\left(1 - p\right)^{(q - 1)\cdot n + k} \dfrac{1 - \left(1 - p\right)^{n}}{1 - \left(1 - p\right)}
+        = \left(1 - p\right)^{(q - 1)\cdot n + k}(1 - (1 - p)^n)
+    \end{align*}
+
+    Portanto, o valor esperado é dado por:
+    \begin{align*}
+        \mathbb{E}[X] &= \sum_{q > 0}q P(q) 
+        = \left(1 - p\right)^{k}(1 - (1 - p)^n)\sum_{q > 0}q\left(1 - p\right)^{(q - 1)n}
+    \end{align*}
+
+    Porém, é fácil mostrar que, para toda P.G de razão \(x\) com \(|x| < 1\):
+    \begin{align*}
+        \sum_{k \geq 0}kx^{k - 1} = \dfrac{d}{dx}\sum_{k \geq 0}x^k = \dfrac{d}{dx}\dfrac{1}{1 - x} = \dfrac{1}{(1 - x)^2}
+    \end{align*}
+    e portanto:
+
+    \begin{align*}
+        \mathbb{E}[X]
+        &= (1 - p)^{k}(1 - (1 - p)^n)\dfrac{1}{\left(1 - \left(1 - p\right)^n\right)^2}
+        = \dfrac{(1 - p)^{k}}{(1 - (1 - p)^n)}
+        \\
+        &= \dfrac{\left(\dfrac{b - a}{b}\right)^{k}}{1 - \left(\dfrac{b - a}{b}\right)^n}
+        = \dfrac{(b - a)^{k}b^{n - k}}{b^n - (b - a)^n}
+    \end{align*}
+
+    \section{Implementação}
+
+    \begin{verbatim}
+#include <bits/stdc++.h>
+using namespace std;
+    
+#define i64 int64_t
+const i64 MOD = (i64)1e9 + 7;
+    
+i64 bexp(i64 a, i64 ex){
+    if (ex == 0) {
+        return 1;
+    } else {
+        i64 b = bexp(a, ex / 2);
+        if (ex % 2 == 0){
+            return (b * b) % MOD;
+        } else {
+            return (a * ((b * b) % MOD)) % MOD;
+        }
+    }
+}
+    
+    
+int main(){
+    i64 n, k, a, b;
+    cin >> n >> k >> a >> b;
+    
+    i64 num = (bexp(b - a, k) * bexp(b, n - k)) % MOD;
+    i64 denum = (bexp(b, n) + MOD - bexp(b - a, n)) % MOD;
+    cout << (num * bexp(denum, MOD - 2)) % MOD << endl;
+}
+    \end{verbatim}
+\end{document}

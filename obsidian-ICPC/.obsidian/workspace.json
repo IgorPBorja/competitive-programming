@@ -16,7 +16,9 @@
                 "file": "LCA/Problems.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "Problems"
             }
           },
           {
@@ -28,7 +30,9 @@
                 "file": "Welcome.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "Welcome"
             }
           },
           {
@@ -40,7 +44,9 @@
                 "file": "DSU/Notes and links.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "Notes and links"
             }
           },
           {
@@ -52,7 +58,9 @@
                 "file": "GruPro - aulas/Aulas - Avançado 2024/Fenwick tree (BIT).md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "Fenwick tree (BIT)"
             }
           },
           {
@@ -64,7 +72,9 @@
                 "file": "Contests/Current contests.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "Current contests"
             }
           },
           {
@@ -82,7 +92,9 @@
                     false
                   ]
                 }
-              }
+              },
+              "icon": "lucide-trello",
+              "title": "Roadmap"
             }
           },
           {
@@ -94,11 +106,25 @@
                 "file": "Contests/Current contests.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "Current contests"
+            }
+          },
+          {
+            "id": "c8cc03cac52bac25",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.7.4"
+              },
+              "icon": "lucide-file",
+              "title": "Release Notes 1.7.4"
             }
           }
         ],
-        "currentTab": 6
+        "currentTab": 7
       }
     ],
     "direction": "vertical"
@@ -118,7 +144,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -133,7 +161,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           },
           {
@@ -141,7 +171,9 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
         ]
@@ -164,7 +196,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Contests/Current contests.md",
+                "file": "LCA/Problems.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -172,7 +204,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Problems"
             }
           },
           {
@@ -181,10 +215,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Contests/Current contests.md",
+                "file": "LCA/Problems.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Problems"
             }
           },
           {
@@ -195,7 +231,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -204,8 +242,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Contests/Current contests.md"
-              }
+                "file": "LCA/Problems.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Problems"
             }
           }
         ]
@@ -226,7 +266,7 @@
       "obsidian-kanban:Create new board": false
     }
   },
-  "active": "b0c3127b84e4f0dd",
+  "active": "c8cc03cac52bac25",
   "lastOpenFiles": [
     "Random/Problems.md",
     "Algoritmos de string/Z-function/Z algorithm.md",
