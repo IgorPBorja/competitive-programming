@@ -24,3 +24,9 @@ https://usaco.guide/adv/string-search?lang=cpp
 
 *  [ ] [Yosupo - Z algorithm](https://judge.yosupo.jp/problem/zalgorithm)
 *  [ ] [EDU52 - E - Vasya and Big Integers](https://codeforces.com/contest/1051/problem/E)
+*  [x] [Testing Round 19C2. Message Transmission Error (hard version)](https://codeforces.com/problemset/problem/2010/C2)
+
+# Suffix array
+
+*  [x] [Yosupo - Suffix Array](https://judge.yosupo.jp/problem/suffixarray)
+*  [x] [Yosupo - Number of substrings](https://judge.yosupo.jp/problem/number_of_substrings)

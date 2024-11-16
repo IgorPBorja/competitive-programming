@@ -115,12 +115,14 @@
             "id": "c8cc03cac52bac25",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.7.4"
+                "file": "Algoritmos de string/Problems.md",
+                "mode": "source",
+                "source": false
               },
               "icon": "lucide-file",
-              "title": "Release Notes 1.7.4"
+              "title": "Problems"
             }
           }
         ],
@@ -268,10 +270,10 @@
   },
   "active": "c8cc03cac52bac25",
   "lastOpenFiles": [
-    "Random/Problems.md",
     "Algoritmos de string/Z-function/Z algorithm.md",
-    "Roadmap.md",
     "Algoritmos de string/Problems.md",
+    "Random/Problems.md",
+    "Roadmap.md",
     "Algoritmos de string/Z-function",
     "Number theory/Problems.md",
     "Algoritmos de string/KMP/Problems.md",
