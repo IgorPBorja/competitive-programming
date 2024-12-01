@@ -3,16 +3,6 @@
  
 #include <bits/stdc++.h>
 using namespace std;
-#define vi vector<int>
-#define vb vector<bool>
-#define vc vector<char>
-#define vvi vector<vector<int>>
-#define vvb vector<vector<bool>>
-#define vvc vector<vector<char>>
-#define vvpi vector<vector<pair<int, int>>>
-#define pii pair<int, int>
-#define eb emplace_back
-#define ep emplace
 #define fastio ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 #define endl '\n'
  

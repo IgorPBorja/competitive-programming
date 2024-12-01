@@ -130,8 +130,8 @@ struct DSU {
 			swap(x, y);
 		}
 		sz[y] += sz[x];
-		for (int z: elements[y]){
-			elements[x].emplace_back(z);
+		for (int z: elements[x]){
+			elements[y].emplace_back(z);
 		}
 		parent[x] = y;
 	}
