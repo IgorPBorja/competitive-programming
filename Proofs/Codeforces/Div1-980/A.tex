@@ -1,0 +1,83 @@
+\documentclass{article}
+\input{../../templates.tex}
+
+\begin{document}
+\section{Enunciado}
+O problema é o \textbf{2023A}, do contest 980 (Div1), da plataforma CodeForces, disponível em \url{https://codeforces.com/problemset/problem/2023/A}
+
+\section{Solução (em C++)}
+
+\begin{code}[C++]
+    #define TESTCASES
+    #include <bits/stdc++.h>
+    using namespace std;
+     
+    #define i64 int64_t
+     
+    void solve(){
+        i64 n;
+        cin >> n;
+        pair<i64, i64> a[n];
+        for (i64 i = 0; i < n; i++){
+            cin >> a[i].first >> a[i].second;
+        }
+        auto cmp = [](pair<i64, i64> p1, pair<i64, i64> p2){
+            return p1.first + p1.second < p2.first + p2.second;
+        };
+        sort(a, a + n, cmp);
+        for (i64 i = 0; i < n; i++){
+            cout << a[i].first << " " << a[i].second << " ";
+        }
+        cout << endl;
+    }
+     
+    signed main(){
+        int t;
+    #ifdef TESTCASES
+        cin >> t;
+    #endif
+        while (t--){
+            solve();
+        }
+    }
+\end{code}  
+
+\section{Demonstração}
+
+Basicamente, o argumento (guloso) que queremos mostrar é que o ideal é ordenar os pares por ordem não-decrescente de soma.
+Para tanto, empregamos um argumento de troca: de fato, suponha que uma solução ótima \(S\) (que é simplesmente representada por
+uma permutação \(\sigma: \{1, \dotsc, n\} \to \{1, \dotsc, n\}\) dos índices) não segue a ordem não-decrescente de soma dos pares.
+Isso significa que a permutação associada a \(S\) da sequência original de somas \((a_{1, 1} + a_{1, 2}, \dotsc, a_{n, 1} + a_{n, 2})\)
+possui alguma inversão - e é fato conhecido que, \textbf{se uma permutação possui uma inversão, então existe um par de elementos
+adjacentes que forma uma inversão} (isto é, existe um par de elementos adjacentes fora de ordem).
+
+Seja então \(i < n - 1\) tal que \(a_{\sigma(i), 1} + a_{\sigma(i), 2} > a_{\sigma(i + 1), 1} + a_{\sigma(i + 1), 2}\).
+Para simplificar notação, denote por \(s(x, y) = (x > y) - (y > x)\) - que é \(1\) quando \(x > y\) e \(-1\) quando \(x < y\),
+e denote por \(a_{\sigma(i)}\) por \(\alpha\) e \(a_{\sigma(i + 1)}\) por \(\beta\).
+
+Então, considerando a solução \(S^{*}\) obtida trocando as posições \(i\) e \(i + 1\) temos que o número de inversões
+de \(S^{*}\) é igual ao número de inversões de \(S\) mais
+\[\Delta = s(\beta_1, \alpha_1) + s(\beta_1, \alpha_2) + s(\beta_2, \alpha_1) + s(\beta_2, \alpha_2)\]
+
+Como as inversões internas (entre dois elementos de um mesmo par) não importam, pois existem independente da ordenação
+dos pares em si, podemos supor sem perda de generalidade que \(\alpha_1 \leq \alpha_2\) e \(\beta_1 \leq \beta_2\). Então temos dois casos:
+
+\begin{enumerate}
+    \item Se \(\beta_2 > \alpha_2\) então como \(\alpha_1 + \alpha_2 > \beta_1 + \beta_2\) temos que \(\beta_1 < \alpha_1\)
+    e portanto a ordem dos elementos é \(\beta_1 < \alpha_1 < \alpha_2 < \beta_2\). Assim:
+    \[
+        \Delta = -1 + (-1) + 1 + 1 = 0
+    \]
+    \item Se \(\beta_2 < \alpha_2\) então \(\beta_1 < \alpha_2\) também, e com isso:
+    \[
+        \Delta = s(\beta_1, \alpha_1) + (-1) + s(\beta_2, \alpha_1) + (-1) \leq -2 + 2 = 0
+    \]
+    \item Se \(\beta_2 = \alpha_2\) então \(\beta_1 < \alpha_1\) e portanto
+    \[
+        \Delta = -1 + (-1) + 1 + 0 < 0
+    \]
+\end{enumerate}
+Em todo caso, \(S^{*}\) é melhor ou igual a \(S\) e possui menos inversões no vetor de somas dos pares, mostrando
+que ordenar os pares por ordem não-decrescente de soma é ótimo.
+
+\end{document}
