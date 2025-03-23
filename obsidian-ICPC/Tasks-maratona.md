@@ -4,20 +4,21 @@ kanban-plugin: board
 
 ---
 
-## Done
+## CP Roadmap
 
 - [ ] Codeforces EDU - Suffix array
-- [ ] Introdução a fluxo
 - [ ] USACO - geometry primitives e convex hull
+- [ ] USACO - string searching
 
 
 ## Doing
 
-- [ ] USACO - string searching
+- [ ] 5 problemas básicos sobre fluxo (Dinic)
 
 
-## CP Roadmap
+## Done
 
+- [ ] Introdução a fluxo
 
 
 
