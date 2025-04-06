@@ -6,14 +6,16 @@ kanban-plugin: board
 
 ## CP Roadmap
 
-- [ ] Codeforces EDU - Suffix array
 - [ ] USACO - geometry primitives e convex hull
-- [ ] USACO - string searching
 
 
 ## Doing
 
 - [ ] 5 problemas básicos sobre fluxo (Dinic)
+- [ ] Codeforces 2071C. Trapmigiano Reggiano
+- [ ] Codeforces 2069D. Palindrome Shuffle
+- [ ] Codeforces 2074D. Counting Points
+- [ ] Codeforces 2075D. Equalization
 
 
 ## Done
