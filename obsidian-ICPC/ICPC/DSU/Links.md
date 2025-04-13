@@ -1,4 +1,3 @@
-# Notes: [[GruPro/Aulas - Avançado 2024/DSU|DSU]]
 
 
 # Problems

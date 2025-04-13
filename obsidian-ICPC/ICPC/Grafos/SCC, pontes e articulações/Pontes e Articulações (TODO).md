@@ -6,8 +6,6 @@
 >  Ponte é uma **aresta que, se removida, aumenta a quantidade de componentes conexos**
 
 
-Grafo biconexo
-
 # Algoritmo de Tarjan
 
 

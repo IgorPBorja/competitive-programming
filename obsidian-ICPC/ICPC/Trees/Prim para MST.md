@@ -1,6 +1,9 @@
+
 # Algoritmo de Prim para minimum spanning tree (MST)
 
 ## Pseudo-código
+
+
 ```
 bool vis[] = {false, ..., false}
 set<Edge> S = empty  // (ordered by edge cost)

@@ -1,6 +1,9 @@
 # Codeforces
 
-## Vindos de blog em [[Blogs#Codeforces blog with some LCA problems]]
+Codeforces blog with some LCA problems
+
+> [!Link to the blog]
+> [https://codeforces.com/blog/entry/43917](https://codeforces.com/blog/entry/43917)
 
 - [x] [Div2E. Blood cousins](https://codeforces.com/contest/208/problem/E)
 - [x] [ABBYY Cup 2.0 - Hard - B3. Greedy Merchants](https://codeforces.com/contest/178/problem/B3)] **Interessante!**
