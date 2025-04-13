@@ -11,17 +11,17 @@ kanban-plugin: board
 
 ## Doing
 
-- [ ] 5 problemas básicos sobre fluxo (Dinic)
 - [ ] Codeforces 2071C. Trapmigiano Reggiano
 - [ ] Codeforces 2069D. Palindrome Shuffle
 - [ ] Codeforces 2074D. Counting Points
 - [ ] Codeforces 2075D. Equalization
-- [ ] Centroid Decomposition e Problema I do treino de 12/04
+- [ ] Centroid decomposition: escrever anotação básica e resolver mais um ou dois problemas
 
 
 ## Done
 
 - [ ] Introdução a fluxo
+- [ ] Centroid Decomposition: Problema I do treino de 12/04
 
 
 

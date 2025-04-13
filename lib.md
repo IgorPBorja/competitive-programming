@@ -17,7 +17,7 @@ void binary_lifting(const vector<vector<int>> &forest){
 	for (int u = 0; u < n; u++){
 		lift[0][u] = parent[u];
 	}
-	for (int k = 1; i <= LOGN; i++){
+	for (int k = 1; k <= LOGN; k++){
 		for (int u = 0; u < n; u++){
 			lift[k][u] = lift[k - 1][lift[k - 1][u]];
 		}
@@ -73,7 +73,7 @@ vector<int> BIT(const vector<int> &a){
 	vector<int> B(n + 1, 0);
 
 	for (int i = 0; i < n; i++){
-		bit_update(B, i, x);  // sum x to position i+1 of the BIT
+		update(B, i, a[i]);  // sum a[i] to position i+1 of the BIT
 	}
 	return B;
 }
@@ -88,7 +88,7 @@ int get(const vector<int> &BIT, int i){
 	return s;
 }
 
-void update(int i, int x, const vector<int> &BIT){
+void update(vector<int> &BIT, int i, int x){
 	const int n = BIT.size() - 1;
 	while (i <= n){
 		BIT[i] += x;
@@ -101,27 +101,27 @@ void update(int i, int x, const vector<int> &BIT){
 
 ```c++
 struct DSU {
-	vector<i64> parent, sz;
-	vector<vector<i64>> elements;
+	vector<int> parent, sz;
+	vector<vector<int>> elements;
 
-	DSU(i64 n){
+	DSU(int n){
 		parent.resize(n);
 		iota(parent.begin(), parent.end(), 0);
 		sz.assign(n, 1);
 		elements.resize(n);
-		for (i64 i = 0; i < n; i++){
+		for (int i = 0; i < n; i++){
 			elements[i].emplace_back(i);
 		}
 	}
 
-	i64 find(i64 x){
+	int find(int x){
 		if (parent[x] != x){
 			parent[x] = find(parent[x]);  // path-compression
 		}
 		return parent[x];
 	}
 
-	void unite(i64 x, i64 y){
+	void unite(int x, int y){
 		x = find(x);
 		y = find(y);
 		if (x == y){
@@ -148,7 +148,7 @@ bool has_cycle = false;
 
 void dfs(vector<vector<int>> &g, int u, vector<int> &color){
 	if (color[u] != WHITE){
-		continue;
+		return;
 	}
 	color[u] = GRAY;
 	for (int v: g[u]){
@@ -208,15 +208,15 @@ namespace Graph {
 
 ```c++
 namespace Tarjan {
-    vector<i64> lowlink, t_in;
-    vector<pair<i64, i64>> dfs_tree_edges;
-    i64 timer;
+    vector<int> lowlink, t_in;
+    vector<pair<int, int>> dfs_tree_edges;
+    int timer;
 
-    void dfs(i64 u, const vector<vector<i64>> &g, vector<bool> &vis,
-			i64 parent = -1){
+    void dfs(int u, const vector<vector<int>> &g, vector<bool> &vis,
+			int parent = -1){
         vis[u] = true;
         t_in[u] = lowlink[u] = timer++;
-        for (i64 to: g[u]){
+        for (int to: g[u]){
             if (to == parent) continue;
             else if (vis[to]){
                 // back edge on DFS tree
@@ -230,21 +230,21 @@ namespace Tarjan {
     }
 
     // lowlink(u) = min(t_in(u), min_{p->u}t_in(u), min_{u->to em tree}lowlink(to))
-    vector<vector<pair<i64, i64>>> dfs_tree_bridges(const vector<vector<i64>> &g) {
-        const i64 n = g.size();
+    vector<vector<pair<int, int>>> dfs_tree_bridges(const vector<vector<int>> &g) {
+        const int n = g.size();
         vector<bool> vis(n, false);
-        lowlink = vector<i64>(n, INF);
-        t_in = vector<i64>(n, INF);
+        lowlink = vector<int>(n, INF);
+        t_in = vector<int>(n, INF);
         dfs_tree_edges.clear();
         timer = 0;
 
-        for (i64 u = 0; u < n; u++){
+        for (int u = 0; u < n; u++){
             if (!vis[u]){
                 dfs(u, g, vis);
             }
         }
 
-        vector<vector<pair<i64, i64>>> h(n);
+        vector<vector<pair<int, int>>> h(n);
         for (auto[v, to]: dfs_tree_edges){
             if (lowlink[to] > t_in[v]){
                 h[v].emplace_back(to, 1);
@@ -252,7 +252,6 @@ namespace Tarjan {
                 h[v].emplace_back(to, 0);
             }
         }
-        // printgraph("h=", h);
         return h;
     }
 }
@@ -262,8 +261,8 @@ namespace Tarjan {
 
 ```c++
 namespace SAT2 {
-    vector<vector<i64>> build_graph(const vector<pair<i64, i64>> &clauses, i64 n){
-        vector<vector<i64>> g(2 * n);
+    vector<vector<int>> build_graph(const vector<pair<int, int>> &clauses, int n){
+        vector<vector<int>> g(2 * n);
         for (auto[x, y]: clauses){
             // (x or y) clause = (~x => y) clause and (~y => x) clause
             g[(x + n) % (2 * n)].emplace_back(y);
@@ -271,10 +270,10 @@ namespace SAT2 {
         }
         return g;
     }
-    vector<vector<i64>> transpose(vector<vector<i64>> &g){
-        vector<vector<i64>> gt(g.size());
-        for (i64 u = 0; u < g.size(); u++){
-            for (i64 v: g[u]){
+    vector<vector<int>> transpose(vector<vector<int>> &g){
+        vector<vector<int>> gt(g.size());
+        for (int u = 0; u < g.size(); u++){
+            for (int v: g[u]){
                 gt[v].emplace_back(u);
             }
         }
@@ -282,10 +281,10 @@ namespace SAT2 {
     }
 
     void forward_dfs(
-		const i64 u, vector<vector<i64>> &g, vector<bool> &vis, vector<i64> &stack
+		const int u, vector<vector<int>> &g, vector<bool> &vis, vector<int> &stack
 	){
         vis[u] = true;
-        for (i64 v: g[u]){
+        for (int v: g[u]){
             if (!vis[v]){
                 forward_dfs(v, g, vis, stack);
             }
@@ -294,34 +293,34 @@ namespace SAT2 {
     }
 
     void backward_dfs(
-		const i64 u, vector<vector<i64>> &g, vector<bool> &vis,
-		vector<i64> &comp, i64 c = 0
+		const int u, vector<vector<int>> &g, vector<bool> &vis,
+		vector<int> &comp, int c = 0
 	){
         vis[u] = true;
         comp[u] = c;
-        for (i64 v: g[u]){
+        for (int v: g[u]){
             if (!vis[v]){
                 backward_dfs(v, g, vis, comp, c);
             }
         }
     }
 
-    pair<vector<i64>, i64> scc(const vector<pair<i64, i64>> &clauses, i64 n){
-        vector<vector<i64>> g = build_graph(clauses, n);
-        vector<vector<i64>> gt = transpose(g);
+    pair<vector<int>, int> scc(const vector<pair<int, int>> &clauses, int n){
+        vector<vector<int>> g = build_graph(clauses, n);
+        vector<vector<int>> gt = transpose(g);
 
-        const i64 s = g.size();
-        vector<i64> stack, comp(s);
+        const int s = g.size();
+        vector<int> stack, comp(s);
         vector<bool> vis(s, false);
-        for (i64 u = 0; u < s; u++){
+        for (int u = 0; u < s; u++){
             if (!vis[u]){
                 forward_dfs(u, g, vis, stack);
             }
         }
         reverse(stack.begin(), stack.end());
         fill(vis.begin(), vis.end(), false);
-        i64 c = 0;
-        for (i64 u: stack){
+        int c = 0;
+        for (int u: stack){
             if (!vis[u]){
                 backward_dfs(u, gt, vis, comp, c);
                 ++c;
@@ -330,12 +329,12 @@ namespace SAT2 {
         return {comp, c};
     }
 
-    pair<vector<bool>, bool> solve(const vector<pair<i64, i64>>& clauses, i64 n){
+    pair<vector<bool>, bool> solve(const vector<pair<int, int>>& clauses, int n){
         // run scc (Kosaraju)
         auto[comp, num_comps] = scc(clauses, n);
 
         // build quotient graph
-        vector<vector<i64>> g_scc(num_comps);
+        vector<vector<int>> g_scc(num_comps);
         for (auto[x, y]: clauses){
             // (x or y) = (~x => y) = (~y => x)
             g_scc[comp[(x + n) % (2 * n)]].emplace_back(comp[y]);
@@ -344,7 +343,7 @@ namespace SAT2 {
 
         // build valuation: mark as true the first one that appears
         vector<bool> valuation(n);
-        for (i64 u = 0; u < n; u++){
+        for (int u = 0; u < n; u++){
             if (comp[u] < comp[u + n]){
                 valuation[u] = false;
             } else {
@@ -367,10 +366,10 @@ namespace SAT2 {
 # SCC (Kosaraju)
 
 ```c++
-vector<vector<i64>> transpose(vector<vector<i64>> &g){
-	vector<vector<i64>> gt(g.size());
-	for (i64 u = 0; u < g.size(); u++){
-		for (i64 v: g[u]){
+vector<vector<int>> transpose(const vector<vector<int>> &g){
+	vector<vector<int>> gt(g.size());
+	for (int u = 0; u < g.size(); u++){
+		for (int v: g[u]){
 			gt[v].emplace_back(u);
 		}
 	}
@@ -378,10 +377,10 @@ vector<vector<i64>> transpose(vector<vector<i64>> &g){
 }
 
 void forward_dfs(
-	const i64 u, vector<vector<i64>> &g, vector<bool> &vis, vector<i64> &stack
+	const int u, const vector<vector<int>> &g, vector<bool> &vis, vector<int> &stack
 ){
 	vis[u] = true;
-	for (i64 v: g[u]){
+	for (int v: g[u]){
 		if (!vis[v]){
 			forward_dfs(v, g, vis, stack);
 		}
@@ -390,33 +389,33 @@ void forward_dfs(
 }
 
 void backward_dfs(
-	const i64 u, vector<vector<i64>> &g, vector<bool> &vis,
-	vector<i64> &comp, i64 c = 0
+	const int u, const vector<vector<int>> &g, vector<bool> &vis,
+	vector<int> &comp, int c = 0
 ){
 	vis[u] = true;
 	comp[u] = c;
-	for (i64 v: g[u]){
+	for (int v: g[u]){
 		if (!vis[v]){
 			backward_dfs(v, g, vis, comp, c);
 		}
 	}
 }
 
-pair<vector<i64>, i64> scc(const vector<vector<i64>> &g, i64 n){
-	vector<vector<i64>> gt = transpose(g);
+pair<vector<int>, int> scc(const vector<vector<int>> &g, int n){
+	vector<vector<int>> gt = transpose(g);
 
-	const i64 s = g.size();
-	vector<i64> stack, comp(s);
+	const int s = g.size();
+	vector<int> stack, comp(s);
 	vector<bool> vis(s, false);
-	for (i64 u = 0; u < s; u++){
+	for (int u = 0; u < s; u++){
 		if (!vis[u]){
 			forward_dfs(u, g, vis, stack);
 		}
 	}
 	reverse(stack.begin(), stack.end());
 	fill(vis.begin(), vis.end(), false);
-	i64 c = 0;
-	for (i64 u: stack){
+	int c = 0;
+	for (int u: stack){
 		if (!vis[u]){
 			backward_dfs(u, gt, vis, comp, c);
 			++c;
@@ -429,6 +428,8 @@ pair<vector<i64>, i64> scc(const vector<vector<i64>> &g, i64 n){
 # SegTree padrão (aqui um exemplo de MaxSeg)
 
 ```c++
+const int INF = (int)2e9;
+ 
 struct MaxSegTree {
     vector<i64> seg;
     vector<i64> a;
@@ -486,12 +487,14 @@ private:
 # Dijkstra
 
 ```c++
+const int INF = (int)2e9;
+
 // directed edges are pairs (weight, endpoint)
-void dijkstra(vvpi &adj, int dis[], int s)
+void dijkstra(vector<vector<pair<int, int>>> &adj, int dis[], int s)
 {
     for (int i = 0; i < (int)adj.size(); i++) dis[i] = INF;
 
-    priority_queue< pii, vector<pii>, greater<pii> > pq;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > pq;
     pq.emplace(0, s);
     dis[s] = 0;
     while (!pq.empty())
@@ -521,16 +524,16 @@ void dijkstra(vvpi &adj, int dis[], int s)
 
 ```c++
 // edges: (a, b, c) = directed edge from a to b with weight c
-vector<i64> negative_cycle(const vector<tuple<i64, i64, i64>> edges){
+vector<int> negative_cycle(const vector<tuple<int, int, int>> edges, int n){
     // virtual vertex connects to all others with weight 0
     // so ALL negative cycles are reachable!
     // for that effect we just need to set d[u] = 0 for all u
     // (we don't need an actual new vertex)
-    vector<i64> d(n, 0);
-    vector<i64> source_list;
-    vector<i64> prev(n, -1);
+    vector<int> d(n, 0);
+    vector<int> source_list;
+    vector<int> prev(n, -1);
     // all paths of size s
-    for (i64 s = 0; s <= n; s++){
+    for (int s = 0; s <= n; s++){
         bool any = false;
         for (auto[a, b, c]: edges){
             if (d[a] + c < d[b]){
@@ -543,7 +546,7 @@ vector<i64> negative_cycle(const vector<tuple<i64, i64, i64>> edges){
     }
  
     // run a (single) new iteration of relaxation
-    i64 target = -1;
+    int target = -1;
     for (auto[a, b, c]: edges){
         if (d[a] + c < d[b]){
             target = b;
@@ -551,9 +554,9 @@ vector<i64> negative_cycle(const vector<tuple<i64, i64, i64>> edges){
         }
     }
     if (target != -1){
-        vector<i64> cyc;
+        vector<int> cyc;
         // might be a cycle end or a vertex reachable from a negative cycle
-        i64 curr = target;
+        int curr = target;
         vector<bool> vis(n);
         while (!vis[curr]) {
             cyc.emplace_back(curr);
@@ -570,18 +573,19 @@ vector<i64> negative_cycle(const vector<tuple<i64, i64, i64>> edges){
         }
         return cyc;
     } else {
-		return vector<i64>();
+		return vector<int>();
 	}
+}
 ```
 
 # Floyd-Warshall $O(V^3)$ (from cp-algorithms)
 
 ```c++
-const i64 INF = 1e18;  // might change depending on the problem
+const int INF = (int)2e9;  // might change depending on the problem
 
-vector<vector<i64>> floydWarshall(const vector<tuple<i64, i64, i64>>& edges, i64 n){
-	vector<vector<i64>> d(n, vector<i64>(n, INF));
-	for (i64 i = 0; i < n; i++){
+vector<vector<int>> floydWarshall(const vector<tuple<int, int, int>>& edges, int n){
+	vector<vector<int>> d(n, vector<int>(n, INF));
+	for (int i = 0; i < n; i++){
 		d[i][i] = 0;
 	}
 	for (auto[a, b, w]: edges){
@@ -599,18 +603,16 @@ vector<vector<i64>> floydWarshall(const vector<tuple<i64, i64, i64>>& edges, i64
 }
 ```
 
-\pagebreak
-
 # Binary exponentiation and modular inverse
 
 ```c++
-const i64 MOD = (i64)1e9 + 7;  // NOTE: MIGHT CHANGE
+const int MOD = (int)1e9 + 7;  // NOTE: MIGHT CHANGE
 
-i64 bexp(i64 a, i64 p){
+int bexp(int a, int p){
     if (p == 0){
         return 1;
     } else {
-        i64 m = bexp(a, p / 2);
+        int m = bexp(a, p / 2);
         if (p % 2 == 1){
             return (((m * m) % MOD) * a) % MOD;
         } else {
@@ -619,7 +621,7 @@ i64 bexp(i64 a, i64 p){
     }
 }
 
-i64 inv(i64 a){
+int inv(int a){
     return bexp(a, MOD - 2);
 }
 ```
@@ -683,8 +685,6 @@ vector<int> multiply(vector<int> const& a, vector<int> const& b) {
     return result;
 }
 ```
-
-\pagebreak
 
 # Template (generic) for every problem
 

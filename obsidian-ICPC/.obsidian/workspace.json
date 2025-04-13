@@ -123,12 +123,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ICPC/Trees/Prim para MST.md",
+                "file": "ICPC/Range queries (Segtree, BIT, etc)/Fenwick tree (BIT).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Prim para MST"
+              "title": "Fenwick tree (BIT)"
             }
           },
           {
@@ -303,6 +303,9 @@
   },
   "active": "4a3a924e63e52235",
   "lastOpenFiles": [
+    "Tasks-maratona.md",
+    "ICPC/Trees/Centroid decomposition/Teoria.md",
+    "ICPC/Trees/Prim para MST.md",
     "ICPC/Number theory/Problems.md",
     "ICPC/Grafos/Flow/Flow - definições básicas.md",
     "ICPC/Grafos/Flow/Algoritmo de Dinic.md",
@@ -326,13 +329,10 @@
     "ICPC/Random/Problems.md",
     "ICPC/Random/Bitmasks e XOR-MST (Codeforces).md",
     "ICPC/Trees/Diâmetro de uma árvore (TODO).md",
-    "ICPC/Trees/Prim para MST.md",
     "ICPC/Trees/Problems.md",
     "ICPC/Grafos",
-    "GruPro/Aulas - Avançado 2024/DSU.md",
     "GruPro/Aulas - Avançado 2024",
     "GruPro",
-    "ICPC/Grafos/Bellman-Ford e Floyd Warshall/Teoria.md",
     "ICPC/Trees/Centroid decomposition",
     "ICPC/Grafos/Flow",
     "Untitled 2",

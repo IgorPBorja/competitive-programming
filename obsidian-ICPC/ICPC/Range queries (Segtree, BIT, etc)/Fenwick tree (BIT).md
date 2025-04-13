@@ -33,7 +33,7 @@ vector<int> BIT(const vector<int> &a){
 	vector<int> B(n + 1, 0);
 
 	for (int i = 0; i < n; i++){
-		bit_update(B, i, x);  // sum x to position i+1 of the BIT
+		bit_update(B, i, a[i]);  // sum a[i] to position i+1 of the BIT
 	}
 	return B;
 }
