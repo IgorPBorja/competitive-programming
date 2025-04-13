@@ -16,6 +16,7 @@ kanban-plugin: board
 - [ ] Codeforces 2069D. Palindrome Shuffle
 - [ ] Codeforces 2074D. Counting Points
 - [ ] Codeforces 2075D. Equalization
+- [ ] Centroid Decomposition e Problema I do treino de 12/04
 
 
 ## Done

@@ -121,20 +121,14 @@
             "id": "4a3a924e63e52235",
             "type": "leaf",
             "state": {
-              "type": "kanban",
+              "type": "markdown",
               "state": {
-                "file": "Tasks-maratona.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    false,
-                    false,
-                    false
-                  ]
-                }
+                "file": "ICPC/Centroid decomposition/Teoria.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-trello",
-              "title": "Tasks-maratona"
+              "icon": "lucide-file",
+              "title": "Teoria"
             }
           },
           {
@@ -309,6 +303,9 @@
   },
   "active": "4a3a924e63e52235",
   "lastOpenFiles": [
+    "Tasks-maratona.md",
+    "ICPC/Centroid decomposition/Teoria.md",
+    "ICPC/Centroid decomposition",
     "ICPC/Algoritmos de string/String hashing/Theory.md",
     "ICPC/Algoritmos de string/Z-function/Z algorithm.md",
     "ICPC/Algoritmos de string/Tries/Theory.md",
@@ -324,7 +321,6 @@
     "ICPC/Random/Bitmasks e XOR-MST (Codeforces).md",
     "Welcome.md",
     "Tasks-UFBA.md",
-    "Tasks-maratona.md",
     "ICPC/Flow/Algoritmo de Dinic.md",
     "ICPC/Flow/Flow - definições básicas.md",
     "ICPC/GruPro - aulas/Aulas - Avançado 2024/Binary lifting.md",
@@ -342,9 +338,7 @@
     "Algoritmos de string/KMP/Problems.md",
     "Algoritmos de string/Tries/Problems.md",
     "ICPC/Trees/Problems.md",
-    "ICPC/SCC, pontes e articulações/Problems.md",
     "ICPC/Algoritmos de string/KMP",
-    "ICPC/Algoritmos de string",
-    "ICPC/Range queries (Segtree, BIT, etc)/Segtree implícita (dinâmica)"
+    "ICPC/Algoritmos de string"
   ]
 }
