@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ICPC/Trees/Centroid decomposition/Teoria.md",
+                "file": "ICPC/Trees/Diâmetro de uma árvore (TODO).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Teoria"
+              "title": "Diâmetro de uma árvore (TODO)"
             }
           },
           {
@@ -221,6 +221,10 @@
   },
   "active": "1024fb50241f926c",
   "lastOpenFiles": [
+    "ICPC/Trees/Prim para MST.md",
+    "ICPC/Trees/Diâmetro de uma árvore (TODO).md",
+    "ICPC/Algoritmos de string/Z-function/Z algorithm.md",
+    "ICPC/Trees/Centroid decomposition/Teoria.md",
     "ICPC/Grafos/Detecção de ciclos e Toposort.md",
     "ICPC/Grafos/SCC, pontes e articulações/SCC.md",
     "ICPC/Grafos/SCC, pontes e articulações/Problems.md",
@@ -230,7 +234,6 @@
     "ICPC/Grafos/Bellman-Ford e Floyd Warshall/Teoria.md",
     "ICPC/FFT/Problems.md",
     "ICPC/DP/Problems.md",
-    "ICPC/Trees/Centroid decomposition/Teoria.md",
     "Pasted image 20250606143039.png",
     "ICPC/Trees/Problems.md",
     "note.md",
@@ -239,15 +242,12 @@
     "Tasks-maratona.md",
     "Resources.md",
     "ICPC/Algoritmos de string/KMP/Maximum string period.md",
-    "ICPC/Algoritmos de string/Z-function/Z algorithm.md",
     "ICPC/Algoritmos de string/String hashing/Theory.md",
     "ICPC/Algoritmos de string/String hashing/Problems.md",
     "ICPC/Algoritmos de string/KMP/Theory.md",
     "ICPC/Binary lifting.md",
     "ICPC/Range queries (Segtree, BIT, etc)/Fenwick tree (BIT).md",
-    "ICPC/Trees/Prim para MST.md",
     "ICPC/Number theory/Problems.md",
-    "ICPC/Grafos/Flow/Algoritmo de Dinic.md",
     "ICPC/Trees/LCA",
     "ICPC/Grafos",
     "GruPro/Aulas - Avançado 2024",
