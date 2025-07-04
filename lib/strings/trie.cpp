@@ -63,24 +63,3 @@ struct Trie {
         }
 	}
 }; 
-
-int main(){
-    string s, action;
-    Trie<1000> T;
-
-    while (true){
-        cin >> action;
-        if (action == "insert"){
-            cin >> s;
-            T.insert(s);
-        } else if (action == "search"){
-            cin >> s;
-            cout << "found " << T.search(s) << " occurrences of " << s << endl;
-        } else if (action == "remove"){
-            cin >> s;
-            T.remove(s);
-        } else {
-            break;
-        }
-    }
-}

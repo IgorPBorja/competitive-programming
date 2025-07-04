@@ -78,12 +78,3 @@ vector<i64> rabinKarpMatch(const string& s, const string& t){
     }
     return matches;
 }
-
-signed main(){
-    string s, t;
-    cin >> s >> t;
-    const vector<i64> matches = rabinKarpMatch(s, t);
-    for (const i64 x: matches){
-        cout << "\"" << s << "\" matches \"" << t << "\" at x=" << x + 1 << endl;
-    }
-}

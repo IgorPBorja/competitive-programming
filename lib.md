@@ -734,3 +734,66 @@ signed main(){
 	}
 }
 ```
+
+#!/usr/bin/env python3
+import os
+from pathlib import Path
+
+LIB_DIR = Path('lib')
+OUTPUT_TEX = Path('lib_snippets.tex')
+
+# Recursively find all code files under lib/
+def find_code_files(base_dir):
+    code_files = []
+    for root, dirs, files in os.walk(base_dir):
+        for file in files:
+            if file.endswith(('.cpp', '.hpp', '.h', '.c', '.cc', '.cxx', '.py', '.java', '.txt')):
+                code_files.append(Path(root) / file)
+    return sorted(code_files)
+
+def make_tex_filename(code_path):
+    # Replace / with _ and . with _ for unique tex file names
+    return Path('lib_snippets_' + str(code_path).replace('/', '_').replace('.', '_') + '.tex')
+
+def write_code_tex(code_path, tex_path):
+    with open(code_path, 'r') as f:
+        code = f.read()
+    with open(tex_path, 'w') as f:
+        f.write('% Auto-generated from {}\n'.format(code_path))
+        f.write('\\begin{verbatim}\n')
+        f.write(code)
+        f.write('\n\\end{verbatim}\n')
+
+def main():
+    code_files = find_code_files(LIB_DIR)
+    tex_files = []
+    for code_path in code_files:
+        tex_path = make_tex_filename(code_path)
+        write_code_tex(code_path, tex_path)
+        tex_files.append((code_path, tex_path))
+
+    with open(OUTPUT_TEX, 'w') as f:
+        f.write(r"""
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\begin{document}
+\tableofcontents
+""")
+        for code_path, tex_path in tex_files:
+            rel_code = code_path.relative_to(LIB_DIR)
+            section_title = str(rel_code)
+            if len(rel_code.parts) > 1:
+                f.write(f'\\subsection*{{{section_title}}}\n')
+            else:
+                f.write(f'\\section*{{{section_title}}}\n')
+            f.write(f'\\input{{{tex_path}}}\n')
+        f.write("\n\\end{document}\n")
+
+if __name__ == '__main__':
+    main()

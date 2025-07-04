@@ -39,26 +39,21 @@
             "id": "1024fb50241f926c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "kanban",
               "state": {
-                "file": "ICPC/Trees/Diâmetro de uma árvore (TODO).md",
-                "mode": "source",
-                "source": false
+                "file": "Tasks-maratona.md",
+                "kanbanViewState": {
+                  "kanban-plugin": "board",
+                  "list-collapse": [
+                    false,
+                    false,
+                    false,
+                    false
+                  ]
+                }
               },
-              "icon": "lucide-file",
-              "title": "Diâmetro de uma árvore (TODO)"
-            }
-          },
-          {
-            "id": "bbf35e6956c6544c",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.7.6"
-              },
-              "icon": "lucide-file",
-              "title": "Release Notes 1.7.6"
+              "icon": "lucide-trello",
+              "title": "Tasks-maratona"
             }
           },
           {
@@ -221,10 +216,15 @@
   },
   "active": "1024fb50241f926c",
   "lastOpenFiles": [
-    "ICPC/Trees/Prim para MST.md",
+    "ICPC/Random/Bitmasks e XOR-MST (Codeforces).md",
+    "Tasks-maratona.md",
+    "Resources.md",
     "ICPC/Trees/Diâmetro de uma árvore (TODO).md",
-    "ICPC/Algoritmos de string/Z-function/Z algorithm.md",
+    "ICPC/Trees/Problems.md",
+    "ICPC/Trees/Prim para MST.md",
+    "Untitled.canvas",
     "ICPC/Trees/Centroid decomposition/Teoria.md",
+    "ICPC/Algoritmos de string/Z-function/Z algorithm.md",
     "ICPC/Grafos/Detecção de ciclos e Toposort.md",
     "ICPC/Grafos/SCC, pontes e articulações/SCC.md",
     "ICPC/Grafos/SCC, pontes e articulações/Problems.md",
@@ -235,19 +235,15 @@
     "ICPC/FFT/Problems.md",
     "ICPC/DP/Problems.md",
     "Pasted image 20250606143039.png",
-    "ICPC/Trees/Problems.md",
     "note.md",
     "centroid-decomp-prop1.md",
     "link.md",
-    "Tasks-maratona.md",
-    "Resources.md",
     "ICPC/Algoritmos de string/KMP/Maximum string period.md",
     "ICPC/Algoritmos de string/String hashing/Theory.md",
     "ICPC/Algoritmos de string/String hashing/Problems.md",
     "ICPC/Algoritmos de string/KMP/Theory.md",
     "ICPC/Binary lifting.md",
     "ICPC/Range queries (Segtree, BIT, etc)/Fenwick tree (BIT).md",
-    "ICPC/Number theory/Problems.md",
     "ICPC/Trees/LCA",
     "ICPC/Grafos",
     "GruPro/Aulas - Avançado 2024",
@@ -257,7 +253,6 @@
     "Untitled 2",
     "Projeto - RAG-Maratona",
     "ICPC",
-    "Untitled.canvas",
     "ICPC/Algoritmos de string/String hashing"
   ]
 }
