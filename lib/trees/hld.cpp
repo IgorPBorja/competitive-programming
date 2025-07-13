@@ -17,10 +17,10 @@ struct HLD {
     vector<i64> sz;
     vector<i64> head;  // head[u] = start of heavy path that goes through u
     vector<i64> pos;   // depth of vertex in path. Head has depth 0
-    vector<i64> path_id;  // id of heavy path of vertex
-    vector<i64> path_head;  // head per path
     vector<i64> parent;
-    vector<SegTree> segs;  // NOTE: SegTree is the segment tree implementation
+    // NOTE: SegTree is the segment tree implementation
+    // NOTE: SegTree needs default constructor
+    vector<SegTree> segs;  
     i64 uuid = 0;
 
     HLD(const tree& adj, const vector<i64>& a, i64 root = 0){
@@ -29,21 +29,23 @@ struct HLD {
         sz.resize(n);
         head.resize(n);
         pos.resize(n);
-        path_id.resize(n);
         parent.resize(n);
+        segs.resize(n);
 
         subtree(root, adj);
         dfs(root, adj);
 
         // build segment trees
-        for (i64 h: path_head){
-            vector<i64> path;
-            i64 cur = h;
-            while (cur != -1 && head[cur] == h){
-                path.emplace_back(a[cur]);  // add value
-                cur = heavy[cur];
+        for (i64 h = 0; h < n; h++){
+            if (h == head[h]){
+                vector<i64> path;
+                i64 cur = h;
+                while (cur != -1 && head[cur] == h){
+                    path.emplace_back(a[cur]);  // add value
+                    cur = heavy[cur];
+                }
+                segs[h] = SegTree(path);
             }
-            segs.emplace_back(SegTree(path));
         }
     }
 
@@ -61,14 +63,6 @@ struct HLD {
         pos[u] = d;
         head[u] = h;
         parent[u] = p;
-        if (h == u){
-            // starting new heavy path: on each path use new uuid
-            path_id[u] = uuid++;
-            path_head.emplace_back(u);
-        } else {
-            path_id[u] = path_id[head[u]];
-        }
-
         heavy[u] = -1;
         for (i64 v: adj[u]){
             if (v == p) continue;
@@ -92,16 +86,16 @@ struct HLD {
     i64 query_up(i64 u, i64 k){
         i64 s = 0;
         while (u != -1 && k >= pos[u]){
-            s += segs[path_id[u]].query(0, pos[u]);
+            s += segs[head[u]].query(0, pos[u]);
             u = parent[head[u]];
         }
         if (u != -1){  // k < pos[u]
-            s += segs[path_id[u]].query(pos[u] - k, pos[u]);
+            s += segs[head[u]].query(pos[u] - k, pos[u]);
         }
         return s;
     }
 
     void update(i64 u, i64 x){  // set value to x
-        segs[path_id[u]].update(pos[u], x);
+        segs[head[u]].update(pos[u], x);
     }
 };
