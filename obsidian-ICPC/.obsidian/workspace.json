@@ -4,74 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "6adbb20cae874575",
+        "id": "be6c3de6d2302a8a",
         "type": "tabs",
         "children": [
           {
-            "id": "b879b3286331fa9a",
+            "id": "97519d5f17672354",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "LCA/Problems.md",
+                "file": "ICPC/Game theory/Teoria.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Problems"
-            }
-          },
-          {
-            "id": "5e208b6b244a9cf1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Welcome.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Welcome"
-            }
-          },
-          {
-            "id": "1024fb50241f926c",
-            "type": "leaf",
-            "state": {
-              "type": "kanban",
-              "state": {
-                "file": "Tasks-maratona.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    false,
-                    false,
-                    false,
-                    false
-                  ]
-                }
-              },
-              "icon": "lucide-trello",
-              "title": "Tasks-maratona"
-            }
-          },
-          {
-            "id": "3ebb442538a0d74f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Algoritmos de string/String hashing/Theory.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Theory"
+              "title": "Teoria"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -103,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "theorem",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -128,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300.5
+    "width": 341.5026054382324
   },
   "right": {
     "id": "7cf81e43fa104811",
@@ -214,36 +164,38 @@
       "obsidian-kanban:Create new board": false
     }
   },
-  "active": "1024fb50241f926c",
+  "active": "97519d5f17672354",
   "lastOpenFiles": [
-    "ICPC/Random/Bitmasks e XOR-MST (Codeforces).md",
+    "ICPC/Algoritmos de string/KMP/Maximum string period.md",
+    "ICPC/Grafos/SCC, pontes e articulações/2-SAT.md",
+    "ICPC/Game theory/Teoria.md",
     "Tasks-maratona.md",
+    "ICPC/Game theory",
     "Resources.md",
+    "ICPC/Binary lifting.md",
     "ICPC/Trees/Diâmetro de uma árvore (TODO).md",
+    "ICPC/Trees/Centroid decomposition/Teoria.md",
+    "ICPC/Range queries (Segtree, BIT, etc)/Lazy Seg.md",
+    "ICPC/Range queries (Segtree, BIT, etc)/Fenwick tree (BIT).md",
+    "ICPC/Random/Problems.md",
+    "ICPC/Random/Bitmasks e XOR-MST (Codeforces).md",
+    "Attachements/Pasted image 20250606143039.png",
+    "Attachements",
+    "ICPC/Algoritmos de string/Z-function/Z algorithm.md",
+    "ICPC/DP/Problems.md",
+    "ICPC/FFT/Problems.md",
     "ICPC/Trees/Problems.md",
     "ICPC/Trees/Prim para MST.md",
     "Untitled.canvas",
-    "ICPC/Trees/Centroid decomposition/Teoria.md",
-    "ICPC/Algoritmos de string/Z-function/Z algorithm.md",
     "ICPC/Grafos/Detecção de ciclos e Toposort.md",
     "ICPC/Grafos/SCC, pontes e articulações/SCC.md",
     "ICPC/Grafos/SCC, pontes e articulações/Problems.md",
-    "ICPC/Grafos/SCC, pontes e articulações/2-SAT.md",
     "ICPC/Grafos/SCC, pontes e articulações/Pontes e Articulações (TODO).md",
     "ICPC/Grafos/Flow/Flow - definições básicas.md",
     "ICPC/Grafos/Bellman-Ford e Floyd Warshall/Teoria.md",
-    "ICPC/FFT/Problems.md",
-    "ICPC/DP/Problems.md",
-    "Pasted image 20250606143039.png",
     "note.md",
     "centroid-decomp-prop1.md",
     "link.md",
-    "ICPC/Algoritmos de string/KMP/Maximum string period.md",
-    "ICPC/Algoritmos de string/String hashing/Theory.md",
-    "ICPC/Algoritmos de string/String hashing/Problems.md",
-    "ICPC/Algoritmos de string/KMP/Theory.md",
-    "ICPC/Binary lifting.md",
-    "ICPC/Range queries (Segtree, BIT, etc)/Fenwick tree (BIT).md",
     "ICPC/Trees/LCA",
     "ICPC/Grafos",
     "GruPro/Aulas - Avançado 2024",
@@ -251,8 +203,6 @@
     "ICPC/Trees/Centroid decomposition",
     "ICPC/Grafos/Flow",
     "Untitled 2",
-    "Projeto - RAG-Maratona",
-    "ICPC",
-    "ICPC/Algoritmos de string/String hashing"
+    "Projeto - RAG-Maratona"
   ]
 }

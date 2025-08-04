@@ -7,21 +7,23 @@ kanban-plugin: board
 ## CP Roadmap
 
 - [ ] Contest: European Championship 2024 https://codeforces.com/contest/1949
-- [ ] Contest: Subregional 2022 (DOING) - H, N, L, B
 - [ ] [2025 ICPC Gran Premio de Mexico 2da Fecha](https://codeforces.com/gym/105979) - G, L
+- [ ] UDESC Seletiva 2024 J (hard?)
 
 
 ## Doing
 
-- [ ] Codeforces 2118C. Make It Beautiful (https://codeforces.com/contest/2118/problem/C)
 - [ ] Subregional L. Listing Tedious Paths (https://codeforces.com/gym/103960/problem/L)
 - [ ] Codeforces 1891F. A Growing Tree (https://codeforces.com/problemset/problem/1891/F)
 - [ ] Codeforces GruPro Treino 12/04/2025-J. Robin Hood Archery (dica: double hashing?)
 - [ ] Codeforces 2071C. Trapmigiano Reggiano
+- [ ] UDESC Seletiva 2024 B + deep dive em Nim/game theory
 
 
 ## Done
 
+- [ ] Codeforces Seletiva 2 2025.1 L. Vlad and Trouble at MIT (https://codeforces.com/group/QlsCcB22aH/contest/622184/problem/L)
+- [ ] Codeforces 2118C. Make It Beautiful (https://codeforces.com/contest/2118/problem/C)
 - [ ] Subregional 2022H
 - [ ] Subregional 2022N. Numbers on both Sides (https://codeforces.com/gym/103960/problem/N)
 - [ ] Codeforces 2117G. Omg Graph (https://codeforces.com/problemset/problem/2117/G)
@@ -45,8 +47,10 @@ kanban-plugin: board
 - [ ] Codeforces  GruPro Treino 19/04/2025-G. Dining Hall
 
 
-## Contests done
+## Contests done (first pass)
 
+- [ ] Contest UDESC Seletiva 2024 (https://codeforces.com/gym/105790)
+- [ ] Contest UFPE Seletiva 2025 https://codeforces.com/gym/105791
 
 
 ***
