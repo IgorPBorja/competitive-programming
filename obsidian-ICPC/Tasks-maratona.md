@@ -13,15 +13,16 @@ kanban-plugin: board
 
 ## Doing
 
+- [ ] Subregional 2018-2019 - B.Marbles (https://codeforces.com/gym/101908/problem/B). NOTE: É NIM
 - [ ] Subregional L. Listing Tedious Paths (https://codeforces.com/gym/103960/problem/L)
 - [ ] Codeforces 1891F. A Growing Tree (https://codeforces.com/problemset/problem/1891/F)
 - [ ] Codeforces GruPro Treino 12/04/2025-J. Robin Hood Archery (dica: double hashing?)
 - [ ] Codeforces 2071C. Trapmigiano Reggiano
-- [ ] UDESC Seletiva 2024 B + deep dive em Nim/game theory
 
 
 ## Done
 
+- [ ] UDESC Seletiva 2024 B + deep dive em Nim/game theory
 - [ ] Codeforces Seletiva 2 2025.1 L. Vlad and Trouble at MIT (https://codeforces.com/group/QlsCcB22aH/contest/622184/problem/L)
 - [ ] Codeforces 2118C. Make It Beautiful (https://codeforces.com/contest/2118/problem/C)
 - [ ] Subregional 2022H

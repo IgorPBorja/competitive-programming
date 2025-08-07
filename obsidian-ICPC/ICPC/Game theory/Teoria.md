@@ -131,6 +131,11 @@ Dessa forma, como observamos que $S \approx *n(S)$ para todo estado $S$, temos q
 > $$
 > n(A + B) = n(A) \oplus n(B)
 > $$
+> Mais geralmente, a combinação de dois jogos independentes em estados $S_1, S_2$ respectivamente tem número de Grundy:
+> $$
+> n(S_1 + S_2) = n(S_1) \oplus n(S_2)
+> $$
+(devido à equivalência com o Nim).
 
 Temos agora o material necessário para provar o teorema principal sobre teoria de Sprague-Grundy:
 
@@ -163,3 +168,61 @@ Como $v$ leva aos estados $v_1, \dotsc, v_k$, então pela definição dos númer
 
 $$n(v) = \operatorname{mex}(n(v_1), \dotsc, n(v_k)) = \operatorname{mex}\left\{\bigoplus_{j=1}^{k_i}n(u_{i,j}): \ 1 \leq i \leq k\right\}$$
 provando o teorema.
+
+# Exemplo: [Bit Tenis 2, UDESC Seletiva 2024-1](https://codeforces.com/gym/105790/problem/B)
+
+Analisemos primeiro o caso com apenas uma pilha, calculando os números de Grundy de cada estado. Denotemos esse jogo de uma pilha com $x$ elementos simplesmente por $x$, e jogos com $n$ pilhas $a_1, \dotsc, a_n$ por $(a_1, \dotsc, a_n)$. Naturalmente,  como esse jogo segue a _normal play convention_ (perde quem não consegue mais jogar), $n(0) = 0$. Ademais, trivialmente $n(1) = \operatorname{mex}(0) = 1$ e $n(2) = \operatorname{mex}(1, 0) = 2$. Por outro lado, $n(3) = \operatorname{mex}(2, 1) = 0$. Continuando, podemos perceber um padrão cíclico: os números de Grundy são os restos mod 3.
+
+Afirmamos: $n(k) = k \mod 3$
+Prova: a prova segue por indução.
+
+De fato, temos que $n(k) = \operatorname{mex}(k - 1, k - 2, \dotsc, k - 2^m)$ em que $m = \lfloor \log_2 (k) \rfloor$. Note que, como $2^x \mod 3 \in \{1, 2\}$, sempre teremos que $k - 2^x \not\equiv k \mod 3$, e em especial $k - 1 \not \equiv k-2 \mod 3$. Dessa forma, todos os restos $\mod 3$ diferentes do próprio $k \mod 3$ são atingidos, ou seja, por hipótese indutiva:
+* Se $k \equiv 0 \mod 3$, então $n(k) = \operatorname{mex}(1, 2) = 0$
+* Se $k \equiv 1 \mod 3$, então $n(k) = \operatorname{mex}(0, 2) = 1$
+* Se $k \equiv 2 \mod 3$, então $n(k) = \operatorname{mex}(0, 1) = 2$
+provando a afirmação!
+
+Dessa forma, pelo Lema 1, como $n$ pilhas formam $n$ jogos independentes, o jogo $(a_1, \dotsc, a_n)$ tem número de Grundy
+
+$$n((a_1, \dotsc, a_n)) = (a_1 \mod 3) \oplus (a_2 \mod 3) \oplus \dotsc \oplus (a_n \mod 3)$$
+Julia ganha se e só se esse XOR é diferente de 0. Observe que ao dobrar uma pilha, mapeando $x \mapsto 2x$, temos que o resto muda de $1$ para $2$ (ou vice-versa), ou se mantém em $0$. Dessa forma, se existe $c_r$ índices $i$ com resto $a_i \equiv r \mod 3$, então uma operação sobre alguém com resto diferente de $0$ troca as paridades de ambos $c_1$ e $c_2$, e uma operação em alguém divisível por $3$ não tem efeito algum.
+
+Queremos tornar ambos $c_1$ e $c_2$ pares. Como somos forçados a realizar $X$ operações, temos os seguintes casos:
+
+* Se $c_1$ e $c_2$ são ambos pares, então para Giovana vencer precisamos descartar todas as nossas operações: dessa forma, precisamos que $X$ seja par (para poder repetidamente fazer e desfazer uma operação) ou que $c_0 > 0$, para podermos descartar as operações em alguém divisível por $3$.
+* Se $c_1$ e $c_2$ tem paridades distintas, é impossível tornar ambos pares, e Julia sempre vence.
+* Se $c_1$ e $c_2$ são ambos ímpares, então precisamos que $X > 1$, e que $X$ seja ímpar (para podermos, depois da primeira operação, fazer e desfazer a mesma operação) ou que $c_0 > 0$, para podermos descartar $X - 1$ operações em alguém divisível por $3$.
+
+Isso gera o seguinte código de solução para a questão:
+
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n, x;
+    cin >> n >> x;
+    
+    int mod[3] = {0, 0, 0};
+    for (int i = 0; i < n; i++){
+        int a;
+        cin >> a;
+		++mod[a % 3];
+    }
+	if (mod[1] % 2 != mod[2] % 2){
+		cout << "Julia" << endl;
+	} else if (mod[1] % 2 == 0 && mod[2] % 2 == 0){
+		if (mod[0] > 0 || x % 2 == 0){
+			cout << "Giovana" << endl;
+		} else {
+			cout << "Julia" << endl;
+		}
+	} else if (mod[1] % 2 == 1 && mod[2] % 2 == 1){
+		if (x > 0 && (x % 2 == 1 || mod[0] > 0)){
+			cout << "Giovana" << endl;
+		} else {
+			cout << "Julia" << endl;
+		}
+	}
+}
+```
