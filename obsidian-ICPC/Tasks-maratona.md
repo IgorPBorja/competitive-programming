@@ -9,11 +9,14 @@ kanban-plugin: board
 - [ ] Contest: European Championship 2024 https://codeforces.com/contest/1949
 - [ ] [2025 ICPC Gran Premio de Mexico 2da Fecha](https://codeforces.com/gym/105979) - G, L
 - [ ] UDESC Seletiva 2024 J (hard?)
+- [ ] Contest: https://codeforces.com/contest/1364 (Div2 Completo) - só possui A-E
 
 
 ## Doing
 
-- [ ] Subregional 2018-2019 - B.Marbles (https://codeforces.com/gym/101908/problem/B). NOTE: É NIM
+- [ ] Subregional 2018-2019 - C (Pizza Cutter) -> contando inversões
+- [ ] Codeforces 1364D. Ehab's Last Corollary
+- [ ] Project Euler 400 - Fibonacci Tree Game https://projecteuler.net/problem=400
 - [ ] Subregional L. Listing Tedious Paths (https://codeforces.com/gym/103960/problem/L)
 - [ ] Codeforces 1891F. A Growing Tree (https://codeforces.com/problemset/problem/1891/F)
 - [ ] Codeforces GruPro Treino 12/04/2025-J. Robin Hood Archery (dica: double hashing?)
@@ -22,6 +25,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] Subregional 2018-2019 - B.Marbles (https://codeforces.com/gym/101908/problem/B). NOTE: É NIM
 - [ ] UDESC Seletiva 2024 B + deep dive em Nim/game theory
 - [ ] Codeforces Seletiva 2 2025.1 L. Vlad and Trouble at MIT (https://codeforces.com/group/QlsCcB22aH/contest/622184/problem/L)
 - [ ] Codeforces 2118C. Make It Beautiful (https://codeforces.com/contest/2118/problem/C)
@@ -52,6 +56,7 @@ kanban-plugin: board
 
 - [ ] Contest UDESC Seletiva 2024 (https://codeforces.com/gym/105790)
 - [ ] Contest UFPE Seletiva 2025 https://codeforces.com/gym/105791
+- [ ] Subregional 2018-2019
 
 
 ***
