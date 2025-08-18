@@ -3,6 +3,12 @@
 // Query: sum of vertices from root to v
 // Update: set value of v to x
 
+// Implementation note: there is an implementation where
+// you use a single seg-tree and the node positions are their
+// time of visit in the DFS, where you **visit heavy edges first**
+// (so heavy paths make contiguous ranges)
+// However, this leads to a larger segtree and can be slower!
+
 #include <bits/stdc++.h>
 using namespace std;
 #define i64 int64_t
@@ -21,9 +27,10 @@ struct HLD {
     // NOTE: SegTree is the segment tree implementation
     // NOTE: SegTree needs default constructor
     vector<SegTree> segs;  
-    i64 uuid = 0;
+    vector<i64> a;
+    vector<i64> depth;
 
-    HLD(const tree& adj, const vector<i64>& a, i64 root = 0){
+    HLD(const tree& adj, const vector<i64>& _a, i64 root = 0) : a(a) {
         const i64 n = adj.size();
         heavy.resize(n);
         sz.resize(n);
@@ -49,11 +56,12 @@ struct HLD {
         }
     }
 
-    void subtree(i64 u, const tree& adj, i64 p = -1){
+    void subtree(i64 u, const tree& adj, i64 p = -1, i64 d = 0){
         sz[u] = 1;
+        depth[u] = d;
         for (i64 v: adj[u]){
             if (v == p) continue;
-            subtree(v, adj, u);
+            subtree(v, adj, u, d + 1);
             sz[u] += sz[v];
         }
     }
@@ -93,6 +101,13 @@ struct HLD {
             s += segs[head[u]].query(pos[u] - k, pos[u]);
         }
         return s;
+    }
+
+    i64 query_path(i64 u, i64 v){
+        // find lca
+        i64 l = lca(u, v);
+        // query up. Uses fact that max is idempotent
+        return query_up(u, abs_depth[u] - abs_depth[l]) + query_up(v, abs_depth[v] - abs_depth[l]) - a[l];
     }
 
     void update(i64 u, i64 x){  // set value to x
