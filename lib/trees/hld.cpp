@@ -89,7 +89,7 @@ struct HLD {
         }
     }
 
-    // query from u to p^k(u) inclusive
+    // query from u to p^min(k, depth[u])(u), inclusive
     // NOTE: SUM QUERY HERE, other variations are possible
     i64 query_up(i64 u, i64 k){
         i64 s = 0;
@@ -104,10 +104,9 @@ struct HLD {
     }
 
     i64 query_path(i64 u, i64 v){
-        // find lca
+        // TODO implement LCA!
         i64 l = lca(u, v);
-        // query up. Uses fact that max is idempotent
-        return query_up(u, abs_depth[u] - abs_depth[l]) + query_up(v, abs_depth[v] - abs_depth[l]) - a[l];
+        return query_up(u, depth[u] - depth[l]) + query_up(v, depth[v] - depth[l]) - a[l];
     }
 
     void update(i64 u, i64 x){  // set value to x
