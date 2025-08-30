@@ -26,9 +26,6 @@
 .idea
 .vimspector.json
 
-# ignore pdfs
-*.pdf
-
 # temporaries ignores for unsolved/not finished problems
 
 # local version has to be different from remote version 

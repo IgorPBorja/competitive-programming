@@ -1,6 +1,9 @@
-// Tested on CSES - Police Chases
+// #define TESTCASES
 #include <bits/stdc++.h>
 using namespace std;
+#define fastio ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define endl '\n'
+ 
 #define i64 int64_t
 
 /*
@@ -113,8 +116,8 @@ struct Dinic {
     i64 maxflow(){
         while (true){
             auto[dag, level] = make_dag();
+            // can't assume anyone is blocked, since we might try to unblock by undoing flow
             if (level[t] == INF) break;  // no more augmenting paths
-            // can't assume anyone is blocked (reuse block vector), since we might try to unblock by undoing flow
             vector<i64> blocked(n, false);  // indicates that vertex is blocked: can't push flow from it
             push_flow(s, blocked, level);
         }
@@ -143,3 +146,39 @@ struct Dinic {
         return partition_num;
     }
 };
+
+signed main(){
+	fastio;
+    i64 n, m;
+    cin >> n >> m;
+
+    vector<vector<pair<i64, i64>>> adj(n + 1);
+    vector<pair<i64, i64>> edges;
+    for (i64 i = 0; i < m; i++){
+        i64 u, v;
+        cin >> u >> v;  // already 1-indexed
+        adj[u].emplace_back(1, v);
+        adj[v].emplace_back(1, u);
+        edges.emplace_back(u, v);
+    }
+    adj[0].emplace_back(INF, 1);  // source to start vertex
+
+    Dinic d(adj, 0, n);
+    i64 maxflow = d.maxflow();
+    i64 mincut_value = maxflow;
+    vector<i64> mincut_partition = d.mincut();
+    vector<pair<i64, i64>> cut_edges;
+    for (auto[u, v]: edges){
+        // edges are undirected so if u,v are in different partitions then
+        // there is the edge from the one on partition 0 to the on on partition 1
+        if (mincut_partition[u] == 0 && mincut_partition[v] == 1){
+            cut_edges.emplace_back(u, v);
+        } else if (mincut_partition[u] == 1 && mincut_partition[v] == 0){
+            cut_edges.emplace_back(v, u);
+        }
+    }
+
+    cout << mincut_value << endl;
+    for (auto[u, v]: cut_edges) cout << u << " " << v << endl;
+}
+ 
