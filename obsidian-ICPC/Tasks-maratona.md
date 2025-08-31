@@ -15,7 +15,8 @@ kanban-plugin: board
 
 ## Doing
 
-- [ ] Codeforces 1926G. Vlad and Trouble at MIT (https://codeforces.com/contest/1926/problem/G) **com min-cut (unit network)**
+- [ ] VI UnBalloon F. Fibonacci
+- [ ] VI UnBaloon G. Graph of Love
 - [ ] Codeforces 1530D. Secret Santa (augmenting paths)
 - [ ] Subregional 2022 B. Fun with Stones
 - [ ] Codeforces 1254D. Tree Queries https://codeforces.com/contest/1254/problem/D -> HLD! hard!
@@ -24,11 +25,13 @@ kanban-plugin: board
 - [ ] Subregional 2022 L. Listing Tedious Paths (https://codeforces.com/gym/103960/problem/L)
 - [ ] Codeforces 1891F. A Growing Tree (https://codeforces.com/problemset/problem/1891/F)
 - [ ] Codeforces GruPro Treino 12/04/2025-J. Robin Hood Archery (dica: double hashing?)
-- [ ] Codeforces 2071C. Trapmigiano Reggiano
 
 
 ## Done
 
+- [ ] Codeforces 1926G. Vlad and Trouble at MIT (https://codeforces.com/contest/1926/problem/G) **com min-cut (unit network)**
+	
+	NOTE: does not pass on TL
 - [ ] Codeforces - USP tryouts 2025 - D. The Seals of Shanghai
 - [ ] Codeforces - USP tryouts 2025 - B. The Search for Balance
 - [ ] Codeforces 2133D. Chicken Jockey (é DP)
@@ -70,6 +73,7 @@ kanban-plugin: board
 - [ ] Contest UFPE Seletiva 2025 https://codeforces.com/gym/105791
 - [ ] Subregional 2018-2019
 - [ ] USP Tryouts 2025
+- [ ] VI UnBalloon 2025
 
 
 ***

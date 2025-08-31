@@ -40,66 +40,67 @@ using min_pq = priority_queue<T, vector<T>, greater<T>>;
 template <typename T>
 using max_pq = priority_queue<T>;
 
-i64 c;
-const i64 MOD = (i64)1e9 + 7;
-
-void dfs(i64 u, const vector<vector<i64>>& adj, vector<i64>& order, vector<i64>& vis){
-    vis[u] = true;
-    for (i64 v: adj[u]){
-        if (!vis[v]){
-            dfs(v, adj, order, vis);
+// toposort with bfs, returns the lexicographically smallest topological order
+// Runs in O(n log n) because of sorting. Remove the sort to get a O(n) toposort
+// Returns boolean indicating if topo order exists, and the order in case it does
+pair<bool, vector<i64>> lexicographical_toposort(const vector<vector<i64>>& dag){
+    const i64 n = dag.size();
+    // dependencies_met[i]: how many j such that j->i
+    // have received their order number
+    vector<i64> dependencies_met(n, 0), in_degree(n, 0), order(n, -1);
+    for (i64 u = 0; u < n; u++){
+        for (i64 v: dag[u]){
+            ++in_degree[v];
         }
     }
-    order[u] = c--;
+
+    priority_queue<i64, vector<i64>, greater<i64>> q;
+    // min pq guarentees lexicographical order and topo order
+    // by only pushing when all dependencies are met
+    for (i64 u = 0; u < n; u++){
+        if (!in_degree[u]) {
+            q.emplace(u);
+        }
+    }
+    i64 c = 0;
+    while (!q.empty()){
+        i64 u = q.top();
+        order[u] = c++;
+        q.pop();
+        for (i64 v: dag[u]){
+            ++dependencies_met[v];
+            if (dependencies_met[v] == in_degree[v]){
+                q.emplace(v);
+            }
+        }
+    }
+    for (i64 u = 0; u < n; u++){
+        if (order[u] == -1) { // circular dependencies exist
+            return {false, {}};
+        }
+    }
+    return {true, order};
 }
 
 void solve(){
     i64 n, m;
     cin >> n >> m;
-    vector<vector<i64>> dag(n), rev_dag(n);
+    vector<vector<i64>> dag(n);
     for (i64 i = 0; i < m; i++){
         i64 u, v;
         cin >> u >> v;
         --u; --v;
         dag[u].emplace_back(v);
-        rev_dag[v].emplace_back(u);
     }
-    for (i64 u = 0; u < n; u++) sort(all(dag[u]));
-
-    c = n;
-    i64 start = -1;
-    for (i64 u = 0; u < n; u++){
-        if (rev_dag[u].empty()){
-            start = u;
-            break;
-        }
-    }
-    if (start == -1){
-        cout << -1 << endl;
-        return;
-    }
-    vector<i64> order(n, -1), vis(n, false);
-    dfs(start, dag, order, vis);
-    vector<pair<i64, i64>> ordered_pairs(n);
-    for (i64 u = 0; u < n; u++) ordered_pairs[u] = make_pair(order[u], u);
-    sort(all(ordered_pairs));
-    // assert no cycles
-    bool ok = true;
-    for (i64 u = 0; u < n; u++){
-        for (i64 v: dag[u]){
-            if (order[u] > order[v]){
-                ok = false;
-            }
-        }
-    }
+    auto[ok, order] = lexicographical_toposort(dag);
     if (!ok){
         cout << -1 << endl;
-        return;
+    } else {
+        for (i64 u = 0; u < n; u++){
+            cout << order[u] + 1 << " ";
+        }
+        cout << endl;
     }
-    for (auto[_, u]: ordered_pairs){
-        cout << u + 1 << " ";
-    }
-    cout << endl;
 }
  
 signed main(){
