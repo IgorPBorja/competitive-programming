@@ -9,12 +9,16 @@ TEX_DIR = Path('./tex')
 HEADER = r"""
 \documentclass[11pt, a4paper, twoside]{article}   % two-column layout
 \usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
 \usepackage[landscape, left=0.5cm, right=0.5cm, top=1cm, bottom=1.5cm]{geometry}
 \usepackage{hyperref}
 \usepackage{titlesec}
 \usepackage{verbatim}
 \usepackage{listings}
 \usepackage{color}   % for coloring the code
+
+\usepackage{parskip}
+
 \titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
 \setlength{\columnseprule}{0.2pt} %barra separando as duas colunas
@@ -38,6 +42,7 @@ showstringspaces=false
 stringstyle=\color{blue},
 tabsize=4,
 basicstyle=\ttfamily\footnotesize, % font
+lineskip=-3pt               % reduces vertical space between lines
 }
 \lstset{literate=
 %   *{0}{{{\color{red!20!violet}0}}}1
@@ -56,22 +61,13 @@ basicstyle=\ttfamily\footnotesize, % font
 """
 
 # Recursively find all code files under lib/
-def find_code_files(base_dir):
+def find_code_files(base_dir) -> list[Path]:
     code_files = []
     for root, dirs, files in os.walk(base_dir):
         for file in files:
-            if file.endswith(('.cpp', '.hpp')):
+            if file.endswith(('.cpp', '.hpp', '.tex', '.md')):
                 code_files.append(Path(root) / file)
     return sorted(code_files)
-
-# Recursively find all documentation files under lib/
-def find_doc_files(base_dir):
-    doc_files = []
-    for root, dirs, files in os.walk(base_dir):
-        for file in files:
-            if file.endswith('.tex') or file.endswith('.md'):
-                doc_files.append(Path(root) / file)
-    return sorted(doc_files)
 
 # def make_tex_filename(code_path):
 #     # Replace / with _ and . with _ for unique tex file names
@@ -94,6 +90,25 @@ def cleanup():
         os.remove(Path(TEX_DIR) / filepath)
     os.rmdir(Path(TEX_DIR))
 
+def write_doc(code_path: Path, f):
+    if code_path.suffix == '.tex':
+        with open(code_path, 'r') as code_file:
+            code_content = code_file.read()
+        f.write(code_content + '\n')
+    # If it's a markdown file, we can convert it to LaTeX using pandoc
+    elif code_path.suffix == '.md':
+        import subprocess
+        result = subprocess.run(['pandoc', '-f', 'markdown', '-t', 'latex'], input=doc_content.encode('utf-8'), capture_output=True)
+        if result.returncode != 0:
+            print(f"Error converting {code_path} to LaTeX: {result.stderr.decode('utf-8')}")
+            raise ValueError(f"Error converting {code_path} to LaTeX")
+        doc_content = result.stdout.decode('utf-8')
+        f.write(doc_content + '\n')
+    
+def write_code(code_path: Path, f):
+    include_path = Path("..") / code_path   # compilation happens inside of TEX_DIR
+    f.write(f'\\lstinputlisting{{{include_path}}}\n')
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -104,7 +119,6 @@ def main():
         os.remove(Path(LIB_DIR) / "main.pdf")
     os.makedirs(TEX_DIR, exist_ok=True)
     code_files = find_code_files(LIB_DIR)
-    doc_files = find_doc_files(LIB_DIR)
     
     def escape_fname(fname: str) -> str:
         return fname.replace('-', '_').replace('_', '\\_')
@@ -122,37 +136,31 @@ def main():
         print(r"\date{\today}", file=f)
         print(r"\maketitle", file=f)
         print(r"\tableofcontents", file=f)
+        print(r"\newpage", file=f)
 
-
-        for doc_path in doc_files:
-            doc_path = doc_path.relative_to(LIB_DIR)
-            with open(doc_path, 'r') as doc_file:
-                doc_content = doc_file.read()
-            # If it's a markdown file, we can convert it to LaTeX using pandoc
-            if doc_path.suffix == '.md':
-                import subprocess
-                result = subprocess.run(['pandoc', '-f', 'markdown', '-t', 'latex'], input=doc_content.encode('utf-8'), capture_output=True)
-                if result.returncode != 0:
-                    print(f"Error converting {doc_path} to LaTeX: {result.stderr.decode('utf-8')}")
-                    raise ValueError(f"Error converting {doc_path} to LaTeX")
-                doc_content = result.stdout.decode('utf-8')
-            f.write(doc_content + '\n')
 
         for code_path in code_files:
             code_path = code_path.relative_to(LIB_DIR)
-            include_path = Path("..") / code_path   # compilation happens inside of TEX_DIR
-            snippet_name = escape_fname(str(os.path.basename(code_path)))
             if len(code_path.parts) >= 3:
                 raise ValueError(f"Nesting level should be at most 2, found {len(code_path.parts)} at path={code_path}")
+            elif len(code_path.parts) == 1:
+                if code_path.suffix in ['.cpp', '.hpp']:
+                    snippet_name = escape_fname(str(os.path.basename(code_path)))
+                    f.write(f'\\section{{{snippet_name}}}\n')
+                    write_code(code_path, f)
+                else:
+                    write_doc(code_path, f)
             elif len(code_path.parts) == 2:
                 section_name = escape_section_name(str(code_path.parts[0]))
                 if section_name not in sections:
                     f.write(f'\\section{{{section_name}}}\n')
                     sections.add(section_name)
-                f.write(f'\\subsection{{{snippet_name}}}\n')
-            else:
-                f.write(f'\\section{{{snippet_name}}}\n')
-            f.write(f'\\lstinputlisting{{{include_path}}}\n')
+                if code_path.suffix in ['.md', '.tex']:
+                    write_doc(code_path, f)
+                elif code_path.suffix in ['.cpp', '.hpp']:
+                    snippet_name = escape_fname(str(os.path.basename(code_path)))
+                    f.write(f'\\subsection{{{snippet_name}}}\n')
+                    write_code(code_path, f)
 
         f.write("\n\\end{document}\n")
 

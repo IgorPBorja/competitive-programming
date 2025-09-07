@@ -1,0 +1,11 @@
+\subsection{Fórmula de Legendre}
+
+Para primo $p$, $v_p(n!) = \sum_{k=1}^{\infty} \left\lfloor \frac{n}{p^k} \right\rfloor$, e
+$v_p\left(\binom{n}{k}\right) = v_p(n!) - v_p(k!) - v_p((n-k)!)$.
+
+Para $m = \prod p_i^{e_i}$ composto, $v_m(n!) = \min_i \left\lfloor \dfrac{v_{p_i}(n!)}{e_i} \right\rfloor$.
+
+\subsection{Teorema de Lucas}
+
+Para $p$ primo e $n = n_k p^k + \dotsc + n_1 p + n_0$ e $m = m_k p^k + \dotsc + m_1 p + m_0$,
+\[\binom{n}{m} \equiv \prod_{i=0}^{k}\binom{n_i}{m_i} \mod p\]
