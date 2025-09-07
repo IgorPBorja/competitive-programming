@@ -64,6 +64,15 @@ def find_code_files(base_dir):
                 code_files.append(Path(root) / file)
     return sorted(code_files)
 
+# Recursively find all documentation files under lib/
+def find_doc_files(base_dir):
+    doc_files = []
+    for root, dirs, files in os.walk(base_dir):
+        for file in files:
+            if file.endswith('.tex') or file.endswith('.md'):
+                doc_files.append(Path(root) / file)
+    return sorted(doc_files)
+
 # def make_tex_filename(code_path):
 #     # Replace / with _ and . with _ for unique tex file names
 #     return Path(TEX_DIR) / ('lib_snippets_' + str(code_path).replace('/', '_').replace('.', '_') + '.tex')
@@ -95,11 +104,8 @@ def main():
         os.remove(Path(LIB_DIR) / "main.pdf")
     os.makedirs(TEX_DIR, exist_ok=True)
     code_files = find_code_files(LIB_DIR)
-    # tex_files = []
-    # for code_path in code_files:
-    #     tex_path = make_tex_filename(code_path)
-    #     write_code_tex(code_path, tex_path)
-    #     tex_files.append((code_path, tex_path))
+    doc_files = find_doc_files(LIB_DIR)
+    
     def escape_fname(fname: str) -> str:
         return fname.replace('-', '_').replace('_', '\\_')
     
@@ -116,6 +122,22 @@ def main():
         print(r"\date{\today}", file=f)
         print(r"\maketitle", file=f)
         print(r"\tableofcontents", file=f)
+
+
+        for doc_path in doc_files:
+            doc_path = doc_path.relative_to(LIB_DIR)
+            with open(doc_path, 'r') as doc_file:
+                doc_content = doc_file.read()
+            # If it's a markdown file, we can convert it to LaTeX using pandoc
+            if doc_path.suffix == '.md':
+                import subprocess
+                result = subprocess.run(['pandoc', '-f', 'markdown', '-t', 'latex'], input=doc_content.encode('utf-8'), capture_output=True)
+                if result.returncode != 0:
+                    print(f"Error converting {doc_path} to LaTeX: {result.stderr.decode('utf-8')}")
+                    raise ValueError(f"Error converting {doc_path} to LaTeX")
+                doc_content = result.stdout.decode('utf-8')
+            f.write(doc_content + '\n')
+
         for code_path in code_files:
             code_path = code_path.relative_to(LIB_DIR)
             include_path = Path("..") / code_path   # compilation happens inside of TEX_DIR
@@ -131,6 +153,7 @@ def main():
             else:
                 f.write(f'\\section{{{snippet_name}}}\n')
             f.write(f'\\lstinputlisting{{{include_path}}}\n')
+
         f.write("\n\\end{document}\n")
 
     # Compile twice to generate TOC correctly
