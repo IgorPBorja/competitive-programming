@@ -1,3 +1,4 @@
+// TESTED on first suffix array problem of Codeforces EDU
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -68,4 +69,26 @@ int lcp(int i, int j, const vector<vector<int>>& cls){
         }
     }
     return ans;
+}
+
+// LCS in O(N log N)
+// TESTED on second suffix array problem of Step 2 of Codeforces EDU
+tuple<int, int, int> lcs(string s, string t){
+    auto [p, c] = suffix_array(s + "#" + t);
+    // NOTE: the sentinel must be different to avoid having cyclic shifts breaking stuff
+	const int n = s.size(), m = t.size();
+	const int sz = n + 1 + m + 1;  // middle # and final $
+	vector<int> lcp_array(sz - 1);
+	for (int i = 0; i + 1 < sz; i++) lcp_array[i] = lcp(p[i], p[i + 1], c);
+	int lcs_sz = 0, s_idx = -1, t_idx = -1;
+	for (int i = 0; i + 1 < sz; i++){
+		int left = p[i], right = p[i + 1];
+		if (lcp_array[i] > lcs_sz && min(left, right) < n && max(left, right) > n){
+			// p[i] in s, p[i + 1] in t or vice-versa
+			lcs_sz = lcp_array[i];
+			s_idx = min(left, right);
+			t_idx = max(left, right);
+		}
+	}
+    return {lcs_sz, s_idx, t_idx};
 }

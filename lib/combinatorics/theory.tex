@@ -9,3 +9,13 @@ Para $m = \prod p_i^{e_i}$ composto, $v_m(n!) = \min_i \left\lfloor \dfrac{v_{p_
 
 Para $p$ primo e $n = n_k p^k + \dotsc + n_1 p + n_0$ e $m = m_k p^k + \dotsc + m_1 p + m_0$,
 \[\binom{n}{m} \equiv \prod_{i=0}^{k}\binom{n_i}{m_i} \mod p\]
+
+\subsection{Teorema de Sprague-Grundy e game-theory}
+
+Nim: ganha se e só se o XOR dos números da pilha é maior que $0$: $a_1 \oplus \dotsc \oplus a_n \neq 0$.
+
+Estados terminais tem número de Grundy $n(v) = 0$ e não-terminais tem número de Grundy $n(v) = \operatorname{mex}\limits_{v \to u}n(u)$. Assim,
+um estado é \textbf{vencedor} (em um jogo em que quem não tem movimentos perde) se e só se $n(v) \neq 0$.
+Um único jogo é equivalente a uma \textbf{pilha de Nim com (limitados) acréscimos}.
+
+Assim, se temos dois "sub-jogos" independentes $S_1$ e $S_2$ então seu número de Grundy é o XOR dos números de Grundy individuais, $n(S_1 + S_2) = n(S_1) \oplus n(S_2)$.
