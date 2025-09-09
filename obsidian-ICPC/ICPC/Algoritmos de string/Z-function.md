@@ -1,4 +1,4 @@
-
+#strings 
 
 > [!z-function-def] Definição (função Z)
 > Dada uma string $s = s_0\dotsc s_{n - 1}$, a função $z$ para essa dada string é definida por, para todo $0 \leq i < n$:

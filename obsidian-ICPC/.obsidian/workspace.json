@@ -11,21 +11,14 @@
             "id": "a1c9f6debcb1fa97",
             "type": "leaf",
             "state": {
-              "type": "kanban",
+              "type": "markdown",
               "state": {
-                "file": "Tasks-maratona.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    false,
-                    false,
-                    false,
-                    false
-                  ]
-                }
+                "file": "ICPC/Algoritmos de string/LCS com suffix array.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-trello",
-              "title": "Tasks-maratona"
+              "icon": "lucide-file",
+              "title": "LCS com suffix array"
             }
           },
           {
@@ -188,43 +181,42 @@
   },
   "active": "a1c9f6debcb1fa97",
   "lastOpenFiles": [
-    "ICPC/Grafos/Flow/Min-cut.md",
-    "ICPC/Grafos/Flow/Hopcroft Karp and maximum matching.md",
-    "Tasks-maratona.md",
-    "Resources.md",
+    "ICPC/Algoritmos de string/Suffix array.md",
+    "ICPC/Algoritmos de string/Maximum string period (com KMP).md",
+    "ICPC/Algoritmos de string/LCS com suffix array.md",
+    "Attachements/computing-longest-common-substrings-via-suffix-arrays.pdf",
+    "ICPC/Algoritmos de string/KMP.md",
+    "ICPC/Algoritmos de string/String hashing.md",
+    "ICPC/Algoritmos de string/Z-function.md",
+    "ICPC/Algoritmos de string/Trie.md",
+    "ICPC/Algoritmos de string/Problems.md",
+    "ICPC/Algoritmos de string/String hashing/Problems.md",
+    "ICPC/Untitled.md",
     "ICPC/Grafos/Flow/Flow - definições básicas.md",
-    "ICPC/Grafos/Flow/Algoritmo de Dinic.md",
-    "ICPC/Grafos/Flow/Flow - intuições.md",
-    "ICPC/Grafos/Bellman-Ford e Floyd Warshall/Teoria.md",
-    "ICPC/Game theory/Teoria.md",
-    "ICPC/Algoritmos de string/KMP/Maximum string period.md",
-    "ICPC/Grafos/SCC, pontes e articulações/2-SAT.md",
-    "ICPC/Game theory",
     "ICPC/Binary lifting.md",
+    "ICPC/Trees/LCA/LCA com binary lifting.md",
+    "ICPC/Trees/Prim para MST.md",
     "ICPC/Trees/Diâmetro de uma árvore (TODO).md",
     "ICPC/Trees/Centroid decomposition/Teoria.md",
     "ICPC/Range queries (Segtree, BIT, etc)/Lazy Seg.md",
     "ICPC/Range queries (Segtree, BIT, etc)/Fenwick tree (BIT).md",
-    "ICPC/Random/Problems.md",
-    "ICPC/Random/Bitmasks e XOR-MST (Codeforces).md",
+    "ICPC/Game theory/Teoria.md",
     "Attachements/Pasted image 20250606143039.png",
-    "Attachements",
-    "ICPC/Algoritmos de string/Z-function/Z algorithm.md",
-    "ICPC/DP/Problems.md",
-    "ICPC/FFT/Problems.md",
-    "ICPC/Trees/Problems.md",
-    "ICPC/Trees/Prim para MST.md",
-    "Untitled.canvas",
     "ICPC/Grafos/Detecção de ciclos e Toposort.md",
-    "ICPC/Grafos/SCC, pontes e articulações/SCC.md",
-    "ICPC/Grafos/SCC, pontes e articulações/Problems.md",
+    "ICPC/Grafos/SCC, pontes e articulações/2-SAT.md",
+    "ICPC/Grafos/SCC, pontes e articulações/Pontes e Articulações (TODO).md",
+    "ICPC/Grafos/Flow/Hopcroft Karp and maximum matching.md",
+    "ICPC/Grafos/Flow/Min-cut.md",
+    "Tasks-maratona.md",
+    "ICPC/Game theory",
+    "Attachements",
+    "Untitled.canvas",
     "ICPC/Trees/LCA",
     "ICPC/Grafos",
     "GruPro/Aulas - Avançado 2024",
     "GruPro",
     "ICPC/Trees/Centroid decomposition",
     "ICPC/Grafos/Flow",
-    "Untitled 2",
-    "Projeto - RAG-Maratona"
+    "Untitled 2"
   ]
 }

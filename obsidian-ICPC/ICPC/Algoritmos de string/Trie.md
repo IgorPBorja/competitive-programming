@@ -1,3 +1,4 @@
+#strings 
 # Trie comum
 
 Dado um conjunto $S$ de sequências/strings $s_1, \dotsc, s_n$ em cima de um alfabeto $\Sigma$, podemos montar um **árvore de prefixos** em cima de $S$, para possibilitar busca e/ou contagem de qualquer string em $O(\max_{s \in S}|s|)$.

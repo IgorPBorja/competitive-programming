@@ -1,3 +1,4 @@
+#strings 
 * O objetivo é atribuir valor numérico a strings
 * Utilizaremos *polynomial hashing* (rolling hash)
 

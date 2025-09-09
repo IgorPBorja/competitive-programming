@@ -1,3 +1,4 @@
+#strings 
 # Algoritmo
 
 * Texto $t$, padrão $s$: queremos conseguir todos os matches entre $s$ e uma substring de $t$.
@@ -65,7 +66,7 @@ vector<int> pi(const string& s){
 }
 ```
 
-Porém, para simplificar a implementação, podemos pensar em $j$ como o tamanho do match, em vez da posição final do match - ou seja, o $j$ do algoritmo acima mais $1$.
+Porém, para simplificar a implementação, podemos pensar em $j$ como o tamanho do match, em vez da posição final do match - ou seja, o $j$ do lgoritmo acima mais $1$.
 
 ```c++
 vector<int> pi(const string& s){

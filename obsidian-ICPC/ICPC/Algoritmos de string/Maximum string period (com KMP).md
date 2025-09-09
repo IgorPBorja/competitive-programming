@@ -1,4 +1,4 @@
-
+#strings 
 ## Link:
 
 https://cp-algorithms.com/string/prefix-function.html#compressing-a-string

@@ -15,8 +15,10 @@ kanban-plugin: board
 
 ## Doing
 
-- [ ] VI UnBalloon F. Fibonacci
-- [ ] VI UnBaloon G. Graph of Love
+- [ ] Subregional 2019-2020 - I, G
+- [ ] Subregional 2019-2020: entender solução da D com BFS (provadamente correta)
+- [ ] USP Tryouts 2024 - entender a E e o algoritmo de Golden Section Search
+- [ ] USP Tryouts 2024 - B, K
 - [ ] Codeforces 1530D. Secret Santa (augmenting paths)
 - [ ] Subregional 2022 B. Fun with Stones
 - [ ] Codeforces 1254D. Tree Queries https://codeforces.com/contest/1254/problem/D -> HLD! hard!
@@ -29,6 +31,8 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] VI UnBaloon G. Graph of Love
+- [ ] VI UnBalloon F. Fibonacci
 - [ ] Codeforces 1926G. Vlad and Trouble at MIT (https://codeforces.com/contest/1926/problem/G) **com min-cut (unit network)**
 	
 	NOTE: does not pass on TL
@@ -74,6 +78,8 @@ kanban-plugin: board
 - [ ] Subregional 2018-2019
 - [ ] USP Tryouts 2025
 - [ ] VI UnBalloon 2025
+- [ ] USP Tryouts 2024
+- [ ] Subregional 2019-2020
 
 
 ***
