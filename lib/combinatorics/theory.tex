@@ -19,3 +19,11 @@ um estado é \textbf{vencedor} (em um jogo em que quem não tem movimentos perde
 Um único jogo é equivalente a uma \textbf{pilha de Nim com (limitados) acréscimos}.
 
 Assim, se temos dois "sub-jogos" independentes $S_1$ e $S_2$ então seu número de Grundy é o XOR dos números de Grundy individuais, $n(S_1 + S_2) = n(S_1) \oplus n(S_2)$.
+
+\subsection{Stars and bars}
+
+Número de soluções inteiras para $x_1 + x_2 + \dotsc + x_k = n$ com $x_i \geq 1$ para todo $i$ é $\binom{n - 1}{k - 1}$
+($n-1$ posições - aquelas entre $j$ e $j+1$ para $j=1\dotsc n-1$ - para $k-1$ barras separadoras, sendo que cada posição só pode ser ocupada por no máximo uma barra)
+
+Número de soluções inteiras para $x_1 + x_2 + \dotsc + x_k = n$ com $x_i \geq 0$ para todo $i$ é $\binom {n + k - 1}{k - 1}$
+($n$ unidades, $k-1$ barras separadoras, qualquer permutação é válida).

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ICPC/Algoritmos de string/LCS com suffix array.md",
+                "file": "ICPC/Algoritmos de string/Problems.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "LCS com suffix array"
+              "title": "Problems"
             }
           },
           {
@@ -181,15 +181,16 @@
   },
   "active": "a1c9f6debcb1fa97",
   "lastOpenFiles": [
+    "Tasks-maratona.md",
+    "ICPC/Algoritmos de string/Problems.md",
+    "ICPC/Algoritmos de string/LCS com suffix array.md",
     "ICPC/Algoritmos de string/Suffix array.md",
     "ICPC/Algoritmos de string/Maximum string period (com KMP).md",
-    "ICPC/Algoritmos de string/LCS com suffix array.md",
     "Attachements/computing-longest-common-substrings-via-suffix-arrays.pdf",
     "ICPC/Algoritmos de string/KMP.md",
     "ICPC/Algoritmos de string/String hashing.md",
     "ICPC/Algoritmos de string/Z-function.md",
     "ICPC/Algoritmos de string/Trie.md",
-    "ICPC/Algoritmos de string/Problems.md",
     "ICPC/Algoritmos de string/String hashing/Problems.md",
     "ICPC/Untitled.md",
     "ICPC/Grafos/Flow/Flow - definições básicas.md",
@@ -207,7 +208,6 @@
     "ICPC/Grafos/SCC, pontes e articulações/Pontes e Articulações (TODO).md",
     "ICPC/Grafos/Flow/Hopcroft Karp and maximum matching.md",
     "ICPC/Grafos/Flow/Min-cut.md",
-    "Tasks-maratona.md",
     "ICPC/Game theory",
     "Attachements",
     "Untitled.canvas",

@@ -31,6 +31,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] Regional Central Russia 2023 - D.DNA (https://codeforces.com/gym/105387/problem/D)
 - [ ] VI UnBaloon G. Graph of Love
 - [ ] VI UnBalloon F. Fibonacci
 - [ ] Codeforces 1926G. Vlad and Trouble at MIT (https://codeforces.com/contest/1926/problem/G) **com min-cut (unit network)**
