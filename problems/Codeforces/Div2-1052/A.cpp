@@ -10,7 +10,7 @@ using namespace std;
 #define u64 uint64_t
 #define i128 __int128
 #define all(x) begin(x),end(x)
-#define print(msg, v) debug << msg; for(auto it = v.begin(); it != v.end(); it++){debug << *it << " ";} debug << endl;
+#define printmsg(msg, first, last) debug << msg; for(auto it = first; it != last; it++){debug << *it << " ";} debug << endl;
 #define printgraph(msg, G) debug << msg << endl; \
 	for (u64 u = 0; u < G.size(); u++) { \
 		debug << "G[" << u << "]="; \
@@ -40,8 +40,38 @@ using min_pq = priority_queue<T, vector<T>, greater<T>>;
 template <typename T>
 using max_pq = priority_queue<T>;
 
-void solve(){
+/*
+choose k as size
 
+then value is
+sum (k if c[x] >= k, 0)
+*/
+
+i64 f(const vector<i64>& cnt, i64 k){
+    i64 tot = 0;
+    const i64 n = cnt.size();
+    for (i64 i = 0; i < n; i++){
+        if (cnt[i] >= k) tot += k;
+    }
+    return tot;
+}
+
+// n * n * t = 5e6
+void solve(){
+    i64 n;
+    cin >> n;
+    vector<i64> cnt(n);
+    for (i64 i = 0; i < n; i++){
+        i64 x;
+        cin >> x;
+        --x;
+        ++cnt[x];
+    }
+    i64 ans = 0;
+    for (i64 k = 1; k <= n; k++){
+        ans = max(ans, f(cnt, k));
+    }
+    cout << ans << endl;
 }
  
 signed main(){

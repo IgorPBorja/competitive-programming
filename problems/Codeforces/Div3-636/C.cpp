@@ -10,7 +10,7 @@ using namespace std;
 #define u64 uint64_t
 #define i128 __int128
 #define all(x) begin(x),end(x)
-#define print(msg, v) debug << msg; for(auto it = v.begin(); it != v.end(); it++){debug << *it << " ";} debug << endl;
+#define printmsg(msg, first, last) debug << msg; for(auto it = first; it != last; it++){debug << *it << " ";} debug << endl;
 #define printgraph(msg, G) debug << msg << endl; \
 	for (u64 u = 0; u < G.size(); u++) { \
 		debug << "G[" << u << "]="; \
@@ -41,7 +41,33 @@ template <typename T>
 using max_pq = priority_queue<T>;
 
 void solve(){
+    // earliest sign change
+    // if there is a k-length starting with positive
+    // and k-length starting with negative then there is a k+1
+    // starting with the sign of the earliest
+    // So taking earliest sign work
 
+    vector<i64> sign_blocks;
+    i64 n;
+    cin >> n;
+    vector<i64> a(n);
+    cin >> a[0];
+    i64 sign = (a[0] > 0 ? +1 : -1);
+    i64 cur = a[0];
+    for (i64 i = 1; i < n; i++) {
+        cin >> a[i];
+        i64 new_sign = (a[i] > 0 ? +1 : -1);
+        if (new_sign != sign){
+            sign_blocks.emplace_back(cur);
+            cur = a[i];
+            sign = new_sign;
+        } else {
+            cur = max(cur, a[i]);
+        }
+    }
+    sign_blocks.emplace_back(cur);
+    // cout << sign_blocks.size() << endl;
+    cout << accumulate(all(sign_blocks), (i64)0) << endl;
 }
  
 signed main(){

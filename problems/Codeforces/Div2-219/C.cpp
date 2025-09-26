@@ -1,4 +1,4 @@
-#define TESTCASES
+// #define TESTCASES
 #define debug cerr
 
 #include <bits/stdc++.h>
@@ -10,7 +10,7 @@ using namespace std;
 #define u64 uint64_t
 #define i128 __int128
 #define all(x) begin(x),end(x)
-#define print(msg, v) debug << msg; for(auto it = v.begin(); it != v.end(); it++){debug << *it << " ";} debug << endl;
+#define printmsg(msg, first, last) debug << msg; for(auto it = first; it != last; it++){debug << *it << " ";} debug << endl;
 #define printgraph(msg, G) debug << msg << endl; \
 	for (u64 u = 0; u < G.size(); u++) { \
 		debug << "G[" << u << "]="; \
@@ -40,8 +40,36 @@ using min_pq = priority_queue<T, vector<T>, greater<T>>;
 template <typename T>
 using max_pq = priority_queue<T>;
 
-void solve(){
+/*
+NOTE: an element can't hold an element that already holds someone (no chains are possible)
+*/
 
+void solve(){
+    i64 n;
+    cin >> n;
+
+    multiset<i64> ms;
+    vector<i64> a(n);
+    for (i64 i = 0; i < n; i++){
+        cin >> a[i];
+    }
+
+    sort(all(a));
+    // greedily it is best to make the extra be on the left side
+    // so r starts higher and there is better chance of pairing
+    i64 cnt = (n + 1) / 2;
+    i64 r = (n + 1) / 2;
+    for (i64 l = 0; l < n / 2; l++){
+        while (r < n && a[r] < 2 * a[l]) ++r;
+        if (r < n) {
+            // OK
+        } else {  // can't pair
+            ++cnt;
+        }
+        ++r;
+    }
+    for (; r < n; r++) ++cnt;
+    cout << cnt << endl;
 }
  
 signed main(){

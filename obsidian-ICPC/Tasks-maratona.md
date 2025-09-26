@@ -11,11 +11,15 @@ kanban-plugin: board
 - [ ] UDESC Seletiva 2024 J (hard?)
 - [ ] Contest: https://codeforces.com/contest/1364 (Div2 Completo) - só possui A-E
 - [ ] Subregional 2018-2019: J
+- [ ] GruPro: lista de greedy (https://codeforces.com/group/QlsCcB22aH/contest/572956)
+- [ ] GruPro: lista de TN do Vini Hirschle (https://codeforces.com/group/QlsCcB22aH/contest/541447)
 
 
 ## Doing
 
-- [ ] Subregional 2019-2020 - I, G
+- [ ] Lista TN UFMG - https://codeforces.com/contest/1011/problem/E - https://codeforces.com/gym/103076/problem/A
+- [ ] Subregional 2025-2026 - K
+- [ ] Subregional 2019-2020 - G (weighted matching)
 - [ ] Subregional 2019-2020: entender solução da D com BFS (provadamente correta)
 - [ ] USP Tryouts 2024 - entender a E e o algoritmo de Golden Section Search
 - [ ] USP Tryouts 2024 - B, K
@@ -31,6 +35,10 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] Subregional 2020-2021 - N
+- [ ] Subregional 2025-2026 - A,C,F,I,J,L,M (feitas ao vivo)
+- [ ] Subregional 2025-2026 - D, H
+- [ ] Subregional 2019-2020 - I
 - [ ] Regional Central Russia 2023 - D.DNA (https://codeforces.com/gym/105387/problem/D)
 - [ ] VI UnBaloon G. Graph of Love
 - [ ] VI UnBalloon F. Fibonacci

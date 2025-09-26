@@ -1,4 +1,4 @@
-#define TESTCASES
+// #define TESTCASES
 #define debug cerr
 
 #include <bits/stdc++.h>
@@ -10,7 +10,7 @@ using namespace std;
 #define u64 uint64_t
 #define i128 __int128
 #define all(x) begin(x),end(x)
-#define print(msg, v) debug << msg; for(auto it = v.begin(); it != v.end(); it++){debug << *it << " ";} debug << endl;
+#define printmsg(msg, first, last) debug << msg; for(auto it = first; it != last; it++){debug << *it << " ";} debug << endl;
 #define printgraph(msg, G) debug << msg << endl; \
 	for (u64 u = 0; u < G.size(); u++) { \
 		debug << "G[" << u << "]="; \
@@ -41,7 +41,35 @@ template <typename T>
 using max_pq = priority_queue<T>;
 
 void solve(){
+    i64 n, m, d;
+    cin >> n >> m >> d;
+    vector<i64> c(m);
+    for (i64 i = 0; i < m; i++){
+        cin >> c[i];
+    }
+    i64 s = (m + 1) * (d - 1) + accumulate(all(c), (i64)0);
+    if (s >= n){
+        // maximize gaps
+        i64 missing = n - accumulate(all(c), (i64)0);
+        vector<i64> a(n);
+        i64 idx = 0;
+        for (i64 i = 0; i < m; i++){
+            for (i64 j = 0; j < min(missing, d - 1); j++, idx++){
+                a[idx] = 0;
+            }
+            for (i64 j = 0; j < c[i]; j++, idx++){
+                a[idx] = i + 1;
+            }
+            missing -= min(missing, d - 1);
+        }
+        for (; idx < n; idx++) a[idx] = 0;
 
+        cout << "YES" << endl;
+        for (i64 i = 0; i < n; i++) cout << a[i] << " ";
+        cout << endl;
+    } else {
+        cout << "NO" << endl;
+    }
 }
  
 signed main(){

@@ -10,7 +10,7 @@ using namespace std;
 #define u64 uint64_t
 #define i128 __int128
 #define all(x) begin(x),end(x)
-#define print(msg, v) debug << msg; for(auto it = v.begin(); it != v.end(); it++){debug << *it << " ";} debug << endl;
+#define printmsg(msg, first, last) debug << msg; for(auto it = first; it != last; it++){debug << *it << " ";} debug << endl;
 #define printgraph(msg, G) debug << msg << endl; \
 	for (u64 u = 0; u < G.size(); u++) { \
 		debug << "G[" << u << "]="; \
@@ -41,7 +41,16 @@ template <typename T>
 using max_pq = priority_queue<T>;
 
 void solve(){
+    // (2^k - 1)x = n
 
+    i64 n;
+    cin >> n;
+    for (i64 k = 2; (1ll << k) - 1 <= n; k++){
+        if (n % ((1ll << k) - 1) == 0){
+            cout << n / ((1ll << k) - 1) << endl;
+            return;
+        }
+    }
 }
  
 signed main(){

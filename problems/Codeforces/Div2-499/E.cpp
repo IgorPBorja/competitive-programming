@@ -1,4 +1,4 @@
-#define TESTCASES
+// #define TESTCASES
 #define debug cerr
 
 #include <bits/stdc++.h>
@@ -41,7 +41,19 @@ template <typename T>
 using max_pq = priority_queue<T>;
 
 void solve(){
-
+    i64 n, k;
+    cin >> n >> k;
+    vector<i64> a(n);
+    i64 g = k;
+    for (i64 i = 0; i < n; i++){
+        cin >> a[i];
+        g = gcd(a[i], g);
+    }
+    cout << k / g << endl;
+    for (i64 m = 0; m < k / g; m++){
+        cout << m * g << " ";
+    }
+    cout << endl;
 }
  
 signed main(){
