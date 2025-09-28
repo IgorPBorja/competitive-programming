@@ -17,7 +17,8 @@ kanban-plugin: board
 
 ## Doing
 
-- [ ] Lista TN UFMG - https://codeforces.com/contest/1011/problem/E - https://codeforces.com/gym/103076/problem/A
+- [ ] ICPC Taiwan 2025 - J.Gas Station e K.Move Stone
+- [ ] Number theory - UFPE tryouts A - https://codeforces.com/gym/103076/problem/A
 - [ ] Subregional 2025-2026 - K
 - [ ] Subregional 2019-2020 - G (weighted matching)
 - [ ] Subregional 2019-2020: entender solução da D com BFS (provadamente correta)
@@ -35,6 +36,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] Codeforces 499E Borders https://codeforces.com/contest/1011/problem/E
 - [ ] Subregional 2020-2021 - N
 - [ ] Subregional 2025-2026 - A,C,F,I,J,L,M (feitas ao vivo)
 - [ ] Subregional 2025-2026 - D, H
@@ -89,6 +91,7 @@ kanban-plugin: board
 - [ ] VI UnBalloon 2025
 - [ ] USP Tryouts 2024
 - [ ] Subregional 2019-2020
+- [ ] ICPC Taiwan 2025
 
 
 ***
