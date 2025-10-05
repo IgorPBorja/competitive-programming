@@ -16,43 +16,52 @@ Dinic (overview):
 
 const i64 INF = (i64)2e18;
 struct Edge {
-    i64 u, v;
-    i64 c, f;
-    i64 other(i64 x){
-        return (x == u ? v : u);
-    }
-    i64 cap_from(i64 x){
-        if (x == u){
-            return c - f;
-        } else {
-            return f;
-        }
-    }
-
-    void add_flow(i64 from, i64 dF){
-        if (from == u) { // consume flow
-            f += dF;
-        } else { // undo flow
-            f -= dF;
-        }
-    }
-    Edge(i64 from, i64 to, i64 cap) : u(from), v(to), c(cap), f(0) {}
+    i64 u, v, c, f;
+    i64 cap() const { return c - f; }
+    Edge(i64 from, i64 to, i64 cap, i64 flow) : u(from), v(to), c(cap), f(flow) {}
 };
 
+// for edge indices 0..m-1 in original network
+// we represent forward edge i as 2 * i and backedge as 2*i + 1
+// thus forward and backedge of indices i1, i2 relate in this way:
+// i1 ^ 1 = i2, i2 ^ 1 = i1
 struct Dinic {
     i64 n, s, t;
-    vector<vector<Edge*>> adj;  // [cap, to] pairs
+    vector<vector<i64>> adj;  // maps vertex to edge indices
+    vector<Edge> edges;
+    // performance optimization to push flow possibly more than once
+    // after each bfs/layer graph build
+    vector<i64> cur_edge_ptr;
+    // performance optimization to avoid looking at blocked nodes
+    vector<i64> blocked;
+    vector<i64> level;
+    queue<i64> q;
 
     void add_edge(i64 u, i64 v, i64 c){
-        // must be heap-allocated, or else will disappear when leaving function
-        Edge* e = new Edge(u, v, c);   
-        adj[u].emplace_back(e);
-        adj[v].emplace_back(e);
+        // set flow at c so effective cap of back edge starts at 0
+        Edge forward(u, v, c, 0), backward(v, u, c, c);
+
+        adj[u].emplace_back(edges.size());
+        edges.emplace_back(forward);
+        adj[v].emplace_back(edges.size());
+        edges.emplace_back(backward);
+    }
+
+    Dinic(const i64 n, i64 s, i64 t) : n(n), s(s), t(t){
+        adj.resize(n);
+        level.resize(n);
+        cur_edge_ptr.assign(n, 0);
+        blocked.assign(n, false);
+        edges.reserve(2 * n);
     }
 
     Dinic(const vector<vector<pair<i64, i64>>> g, i64 s, i64 t)
         : n(g.size()), s(s), t(t) {
         adj.resize(n);
+        level.resize(n);
+        cur_edge_ptr.assign(n, 0);
+        blocked.assign(n, false);
+        edges.reserve(2 * n);
         for (i64 u = 0; u < n; u++){
             for (auto[c, v]: g[u]){
                 add_edge(u, v, c);
@@ -60,81 +69,76 @@ struct Dinic {
         }
     }
 
-    // dag adj list, level vector
-    pair<vector<vector<Edge*>>, vector<i64>> make_dag(){
-        vector<vector<Edge*>> dag(n);
-        vector<i64> level(n, INF);
-        queue<i64> q;
-        q.emplace(s);
+    // level vector --> implicit layer graph (by takings edges where d increases by 1)
+    // pass by ref to optimize copies
+    void layer_graph(){
+        fill(level.begin(), level.end(), INF);
         level[s] = 0;
-        vector<i64> vis(n, false);
+        q.emplace(s);
         while (!q.empty()){
             i64 u = q.front();
             q.pop();
-            if (vis[u]) continue;
-            vis[u] = true;
-            for (Edge* e: adj[u]){
-                if (e->cap_from(u) == 0) continue;  // edge does not exist
-                i64 v = e->other(u);
-                if (!vis[v]){
+            for (i64 id: adj[u]){
+                const Edge& e = edges[id];  // u -> v
+                if (e.cap() == 0) continue;  // edge does not exist
+                i64 v = e.v;
+                if (level[v] == INF){
                     level[v] = level[u] + 1;
-                    dag[u].emplace_back(e);
                     q.emplace(v);
                 }
             }
         }
-        return {dag, level};
+        while (!q.empty()) q.pop();
     }
 
     // push_flow on layer dag of residual graph 
-    i64 push_flow(i64 u, vector<i64>& blocked, vector<i64>& level, i64 dF = INF){
+    i64 push_flow(i64 u, vector<i64>& blocked, vector<i64>& level, i64 dF){
         if (u == t){
             return dF;  // already at sink
         }
-        bool all_neighbors_blocked = true;
-        i64 pushedF = 0;
-        for (Edge* e: adj[u]){
-            if (dF == 0) break;
-            i64 v = e->other(u);
+        bool all_neighbors_blocked = true;  // performance optimization
+        i64 total_pushed = 0;
+        for (; cur_edge_ptr[u] < (i64)adj[u].size() && dF > 0; cur_edge_ptr[u]++){
+            i64 id = adj[u][cur_edge_ptr[u]];
+            // edges[id] is forward edge (relative to u): u -> v
+            i64 v = edges[id].v;
             if (level[v] != level[u] + 1) continue;  // not dag edge
-            if (e->cap_from(u) == 0 || blocked[v]) continue;
-            
-            // NOTE: this push_flow might block v!
-            i64 delta = push_flow(v, blocked, level, min(e->cap_from(u), dF));
-            e->add_flow(u, delta);
-            dF -= delta;
-            pushedF += delta;
+            if (edges[id].cap() == 0 || blocked[v]) continue;  // edge does not exist
+            i64 pushed = push_flow(v, blocked, level, min(edges[id].cap(), dF));
+            edges[id].f += pushed;
+            edges[id ^ 1].f -= pushed;
+            total_pushed += pushed;
+            dF -= pushed;
 
-            if (e->cap_from(u) > 0 && !blocked[v]){  // still valid after pushing
+            if (edges[id].cap() > 0 && !blocked[v]) {  // edge still valid
                 all_neighbors_blocked = false;
             }
         }
         if (all_neighbors_blocked) blocked[u] = true;
-        return pushedF;
+        return total_pushed;
     }
 
     i64 maxflow(){
         while (true){
-            auto[dag, level] = make_dag();
-            // can't assume anyone is blocked, since we might try to unblock by undoing flow
-            if (level[t] == INF) break;  // no more augmenting paths
-            vector<i64> blocked(n, false);  // indicates that vertex is blocked: can't push flow from it
-            push_flow(s, blocked, level);
+            layer_graph();
+            if (level[t] == INF) {
+                break;
+            }  // no more augmenting paths
+            // can't assume anyone is blocked (reuse block vector), since we might try to unblock by undoing flow
+            fill(cur_edge_ptr.begin(), cur_edge_ptr.end(), 0);  // reset edge ptr
+            fill(blocked.begin(), blocked.end(), false);  // reset blocked
+            while (push_flow(s, blocked, level, INF)) {}
         }
         i64 maxFlow = 0;
-        for (Edge* e: adj[s]){
-            if (s == e->u){  // is origin vertex: forward edge
-                maxFlow += e->f;
-            } else {  // backward edge
-                maxFlow -= e->f; 
-            }
+        for (i64 id: adj[s]) {
+            maxFlow += edges[id].f;
         }
         return maxFlow;
     }
 
     // assumes dinic was called first
     vector<i64> mincut(){
-        auto[_, level] = make_dag();
+        layer_graph();
         vector<i64> partition_num(n);
         for (i64 u = 0; u < n; u++){
             if (level[u] < INF){
@@ -154,16 +158,16 @@ signed main(){
 
     vector<vector<pair<i64, i64>>> adj(n + 1);
     vector<pair<i64, i64>> edges;
+    Dinic d(n + 1, 0, n);
     for (i64 i = 0; i < m; i++){
         i64 u, v;
         cin >> u >> v;  // already 1-indexed
-        adj[u].emplace_back(1, v);
-        adj[v].emplace_back(1, u);
+        d.add_edge(u, v, 1);
+        d.add_edge(v, u, 1);
         edges.emplace_back(u, v);
     }
-    adj[0].emplace_back(INF, 1);  // source to start vertex
+    d.add_edge(0, 1, INF);  // source to start vertex
 
-    Dinic d(adj, 0, n);
     i64 maxflow = d.maxflow();
     i64 mincut_value = maxflow;
     vector<i64> mincut_partition = d.mincut();
