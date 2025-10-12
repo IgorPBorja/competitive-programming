@@ -1,4 +1,4 @@
-#define TESTCASES
+// #define TESTCASES
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -39,8 +39,22 @@ using min_pq = priority_queue<T, vector<T>, greater<T>>;
 template <typename T>
 using max_pq = priority_queue<T>;
 
-void solve(){
+/*
+sum(l=1..N)sum(r=l..N)sum(i=l..r)a[i]
 
+a[i] appears for each l <= i and each r >= i ==> (i+1) * (n - i) times
+*/
+
+void solve(){
+    i64 n;
+    cin >> n;
+    vector<i64> a(n);
+    i64 ans = 0;
+    for (i64 i = 0; i < n; i++){
+        cin >> a[i];
+        ans += (i + 1) * (n - i) * a[i];
+    }
+    cout << ans << endl;
 }
  
 signed main(){

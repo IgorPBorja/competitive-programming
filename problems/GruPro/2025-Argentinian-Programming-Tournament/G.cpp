@@ -1,4 +1,5 @@
-#define TESTCASES
+// #define TESTCASES
+#define debug cerr
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -9,14 +10,14 @@ using namespace std;
 #define u64 uint64_t
 #define i128 __int128
 #define all(x) begin(x),end(x)
-#define print(msg, v) cerr << msg; for(auto it = v.begin(); it != v.end(); it++){cerr << *it << " ";} cerr << endl;
-#define printgraph(msg, G) cerr << msg << endl; \
-	for (i64 u = 0; u < G.size(); u++) { \
-		cerr << "G[" << u << "]="; \
-		for (i64 v: G[u]) { \
-			cerr << v << " "; \
+#define print(msg, v) debug << msg; for(auto it = v.begin(); it != v.end(); it++){debug << *it << " ";} debug << endl;
+#define printgraph(msg, G) debug << msg << endl; \
+	for (u64 u = 0; u < G.size(); u++) { \
+		debug << "G[" << u << "]="; \
+		for (u64 v: G[u]) { \
+			debug << v << " "; \
 		} \
-		cerr << endl; \
+		debug << endl; \
 	}
  
 template <typename T, typename U>
@@ -40,7 +41,9 @@ template <typename T>
 using max_pq = priority_queue<T>;
 
 void solve(){
-
+    i64 a, b, c;
+    cin >> a >> b >> c;
+    cout << (((b - a) % c == 0) ? "S" : "N") << endl;
 }
  
 signed main(){

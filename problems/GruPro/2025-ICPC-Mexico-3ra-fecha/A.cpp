@@ -1,4 +1,4 @@
-#define TESTCASES
+// #define TESTCASES
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -39,8 +39,25 @@ using min_pq = priority_queue<T, vector<T>, greater<T>>;
 template <typename T>
 using max_pq = priority_queue<T>;
 
-void solve(){
+/*
+sum is invariant
+*/
 
+void solve(){
+    i64 n;
+    cin >> n;
+    vector<i64> a(n);
+    i64 s = 0;
+    for (i64 i = 0; i < n; i++) {
+        cin >> a[i];
+        s += a[i];
+    }
+    for (i64 j = n; j >= 1; j--){
+        if (s % j == 0){
+            cout << n - j << endl;
+            return;
+        }
+    }
 }
  
 signed main(){

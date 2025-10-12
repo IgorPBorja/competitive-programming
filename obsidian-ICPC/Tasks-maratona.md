@@ -17,16 +17,16 @@ kanban-plugin: board
 
 ## Doing
 
-- [ ] ICPC Taiwan 2025 - J.Gas Station e K.Move Stone
+- [ ] Estudar min cost flow e hungarian. Ver USACO: https://usaco.guide/adv/min-cost-flow?lang=cpp
+- [ ] ICPC Brazil Finals 2021 - M - Most Ordered Way
+- [ ] ICPC Taiwan 2025 - J.Gas Station
 - [ ] Number theory - UFPE tryouts A - https://codeforces.com/gym/103076/problem/A
 - [ ] Subregional 2025-2026 - K
-- [ ] Subregional 2019-2020 - G (weighted matching)
 - [ ] Subregional 2019-2020: entender solução da D com BFS (provadamente correta)
 - [ ] USP Tryouts 2024 - entender a E e o algoritmo de Golden Section Search
 - [ ] USP Tryouts 2024 - B, K
 - [ ] Codeforces 1530D. Secret Santa (augmenting paths)
 - [ ] Subregional 2022 B. Fun with Stones
-- [ ] Codeforces 1254D. Tree Queries https://codeforces.com/contest/1254/problem/D -> HLD! hard!
 - [ ] Codeforces 1364E.X-OR https://codeforces.com/contest/1364/problem/E
 - [ ] Project Euler 400 - Fibonacci Tree Game https://projecteuler.net/problem=400
 - [ ] Subregional 2022 L. Listing Tedious Paths (https://codeforces.com/gym/103960/problem/L)
@@ -36,6 +36,9 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] ICPC Brazil Finals 2021 H - Hamilton - The Musical
+- [ ] SOS DP: resolver alguns (poucos) problemas desse blog - https://codeforces.com/blog/entry/45223
+- [ ] ICPC Taiwan 2025 - K.Move Stone
 - [ ] Codeforces 499E Borders https://codeforces.com/contest/1011/problem/E
 - [ ] Subregional 2020-2021 - N
 - [ ] Subregional 2025-2026 - A,C,F,I,J,L,M (feitas ao vivo)
@@ -92,6 +95,7 @@ kanban-plugin: board
 - [ ] USP Tryouts 2024
 - [ ] Subregional 2019-2020
 - [ ] ICPC Taiwan 2025
+- [ ] ICPC Brazill Finals 2021
 
 
 ***

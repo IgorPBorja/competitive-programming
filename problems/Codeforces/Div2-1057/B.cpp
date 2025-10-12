@@ -39,8 +39,29 @@ using min_pq = priority_queue<T, vector<T>, greater<T>>;
 template <typename T>
 using max_pq = priority_queue<T>;
 
-void solve(){
+/*
+a & b = x
 
+then a and b have x
+
+b & c = y
+so b and c have y
+
+c & a = z
+so c and a have z
+
+a = x | y
+*/
+
+void solve(){
+    i64 x, y, z;
+    cin >> x >> y >> z;
+    i64 a = x | z, b = x | y, c = y | z;
+    if (((a & b) == x) && ((b & c) == y) && ((c & a) == z)){
+        cout << "YES" << endl;
+    } else {
+        cout << "NO" << endl;
+    }
 }
  
 signed main(){

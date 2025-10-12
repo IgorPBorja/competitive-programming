@@ -40,7 +40,9 @@ template <typename T>
 using max_pq = priority_queue<T>;
 
 void solve(){
-
+    i64 a, b, c, d;
+    cin >> a >> b >> c >> d;
+    cout << max(min(b, d) - max(a, c), (i64)0) << endl;
 }
  
 signed main(){

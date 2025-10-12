@@ -29,6 +29,27 @@
             }
           },
           {
+            "id": "52c655c7a57a85a0",
+            "type": "leaf",
+            "state": {
+              "type": "kanban",
+              "state": {
+                "file": "Tasks-maratona.md",
+                "kanbanViewState": {
+                  "kanban-plugin": "board",
+                  "list-collapse": [
+                    false,
+                    false,
+                    false,
+                    false
+                  ]
+                }
+              },
+              "icon": "lucide-trello",
+              "title": "Tasks-maratona"
+            }
+          },
+          {
             "id": "1dff07d6bb11e514",
             "type": "leaf",
             "state": {
@@ -42,7 +63,8 @@
               "title": "Flow - definições básicas"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -186,10 +208,11 @@
       "obsidian-kanban:Create new board": false
     }
   },
-  "active": "a1c9f6debcb1fa97",
+  "active": "52c655c7a57a85a0",
   "lastOpenFiles": [
-    "ICPC/Algoritmos de string/Problems.md",
+    "ICPC/Grafos/Flow/Flow - definições básicas.md",
     "Tasks-maratona.md",
+    "ICPC/Algoritmos de string/Problems.md",
     "ICPC/Algoritmos de string/LCS com suffix array.md",
     "ICPC/Algoritmos de string/Suffix array.md",
     "ICPC/Algoritmos de string/Maximum string period (com KMP).md",
@@ -200,7 +223,6 @@
     "ICPC/Algoritmos de string/Trie.md",
     "ICPC/Algoritmos de string/String hashing/Problems.md",
     "ICPC/Untitled.md",
-    "ICPC/Grafos/Flow/Flow - definições básicas.md",
     "ICPC/Binary lifting.md",
     "ICPC/Trees/LCA/LCA com binary lifting.md",
     "ICPC/Trees/Prim para MST.md",

@@ -40,7 +40,16 @@ template <typename T>
 using max_pq = priority_queue<T>;
 
 void solve(){
+    i64 n;
+    cin >> n;
+    vector<i64> a(n);
+    set<i64> s;
+    for (i64 i = 0; i < n; i++) {
+        cin >> a[i];
+        s.insert(a[i]);
+    }
 
+    cout << s.size() << endl;
 }
  
 signed main(){
