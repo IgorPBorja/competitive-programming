@@ -45,11 +45,9 @@ void solve(){
  
 signed main(){
 	fastio;
-	int t;
+	int t = 1;
 #ifdef TESTCASES
 	cin >> t;
-#else
-	t = 1;
 #endif
 	while (t--){
 		solve();
