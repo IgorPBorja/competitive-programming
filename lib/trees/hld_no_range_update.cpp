@@ -1,28 +1,21 @@
-// HLD implementation
+// HLD implementation: no range updates
 // Tested on CSES Path Queries (https://cses.fi/problemset/task/1138)
 // Query: sum of vertices from root to v
 // Update: set value of v to x
 
-// Implementation note: there is an implementation where
-// you use a single seg-tree and the node positions are their
-// time of visit in the DFS, where you **visit heavy edges first**
-// (so heavy paths make contiguous ranges)
-// However, this leads to a larger segtree and can be slower!
+// uses multiple seg trees. Marginally faster than a single segtree
+// see hld_with_range_update for better descriptions
 
 #include <bits/stdc++.h>
 using namespace std;
 #define i64 int64_t
 
-// uses some modifications: now the heavy edge is the edge with the largest subtree
-// instead of the restriction s(c) >= s(v) / 2
-// Still, going through light (i.e not heavy) edge reduces size by half
-// Heavy path goes up to just the vertex before light edge
 using tree = vector<vector<i64>>;
 struct HLD {
-    vector<i64> heavy;   // heavy[u] = v <==> uv is heavy edge
+    vector<i64> heavy;
     vector<i64> sz;
-    vector<i64> head;  // head[u] = start of heavy path that goes through u
-    vector<i64> pos;   // depth of vertex in path. Head has depth 0
+    vector<i64> head;
+    vector<i64> pos;
     vector<i64> parent;
     // NOTE: SegTree is the segment tree implementation
     // NOTE: SegTree needs default constructor
@@ -104,7 +97,7 @@ struct HLD {
     }
 
     i64 query_path(i64 u, i64 v){
-        // TODO implement LCA!
+        // NOTE: need to implement LCA separetely!
         i64 l = lca(u, v);
         return query_up(u, depth[u] - depth[l]) + query_up(v, depth[v] - depth[l]) - a[l];
     }

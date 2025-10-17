@@ -6,7 +6,6 @@ using namespace std;
 #define endl '\n'
  
 #define i64 int64_t
-#define u64 uint64_t
 #define i128 __int128
 #define all(x) begin(x),end(x)
 #define print(msg, v) cerr << msg; for(auto it = v.begin(); it != v.end(); it++){cerr << *it << " ";} cerr << endl;
@@ -39,9 +38,7 @@ using min_pq = priority_queue<T, vector<T>, greater<T>>;
 template <typename T>
 using max_pq = priority_queue<T>;
 
-void solve(){
-
-}
+void solve(){}
  
 signed main(){
 	fastio;
