@@ -1,17 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int INF = (int)2e9;
- 
 // default seg tree (in this example, a Max Seg)
-struct MaxSegTree {
+struct SegTree {
     vector<int> seg;
     vector<int> a;
     int n;
 
-    MaxSegTree(int n, int val = -INF) : n(n) {
-        seg.assign(4 * n, val);
-        a.assign(n, val);
+    SegTree(const vector<int>& a) : a(a), n(a.size()) {
+        seg.resize(4 * n);
+        build(0, n - 1, 0);
+    }
+
+    inline int merge(int a, int b){
+        return max(a, b);  // <--- CHANGE HERE
+    }
+
+    void build(int l, int r, int node){
+        if (l == r) seg[node] = a[l];
+        else {
+            const int m = l + (r - l) / 2;
+            build(l, m, 2 * node + 1);
+            build(m + 1, r, 2 * node + 2);
+            seg[node] = merge(seg[2 * node + 1], seg[2 * node + 2]);
+        }
     }
 
     int query(int l, int r){
@@ -22,7 +34,6 @@ struct MaxSegTree {
         _update(p, x, 0, n - 1, 0);
     }
 
-private:
     int _query(int l, int r, int tl, int tr, int node){
         if (l == tl && r == tr){
             return seg[node];
@@ -33,7 +44,7 @@ private:
             } else if (l > tm){
                 return _query(l, r, tm + 1, tr, 2 * node + 2);
             } else {
-                return max(
+                return merge(
 					_query(l, tm, tl, tm, 2 * node + 1),
 					_query(tm + 1, r, tm + 1, tr, 2 * node + 2)
 				);
@@ -52,7 +63,7 @@ private:
             } else {
                 _update(p, x, tm + 1, tr, 2 * node + 2);
             }
-            seg[node] = max(seg[2 * node + 1], seg[2 * node + 2]);
+            seg[node] = merge(seg[2 * node + 1], seg[2 * node + 2]);
         }
     }
 };
