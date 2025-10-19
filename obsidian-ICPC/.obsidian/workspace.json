@@ -63,8 +63,7 @@
               "title": "Flow - definições básicas"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -208,7 +207,7 @@
       "obsidian-kanban:Create new board": false
     }
   },
-  "active": "52c655c7a57a85a0",
+  "active": "a1c9f6debcb1fa97",
   "lastOpenFiles": [
     "ICPC/Grafos/Flow/Flow - definições básicas.md",
     "Tasks-maratona.md",

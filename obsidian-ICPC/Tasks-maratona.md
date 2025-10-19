@@ -17,8 +17,10 @@ kanban-plugin: board
 
 ## Doing
 
-- [ ] Estudar min cost flow e hungarian. Ver USACO: https://usaco.guide/adv/min-cost-flow?lang=cpp
+- [ ] Estudar OR/AND Convolution via esse blog: https://codeforces.com/blog/entry/115438
+- [ ] ICPC Gran Mexico 3ra Fecha - E. El juego del Calamar
 - [ ] ICPC Brazil Finals 2021 - M - Most Ordered Way
+- [ ] Estudar min cost flow e hungarian. Ver USACO: https://usaco.guide/adv/min-cost-flow?lang=cpp
 - [ ] ICPC Taiwan 2025 - J.Gas Station
 - [ ] Number theory - UFPE tryouts A - https://codeforces.com/gym/103076/problem/A
 - [ ] Subregional 2025-2026 - K
@@ -36,6 +38,8 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] ICPC Gran Mexico 3ra Fecha - I. MOD Convolution
+- [ ] Corrigr LCA e HLD na lib
 - [ ] ICPC Brazil Finals 2021 H - Hamilton - The Musical
 - [ ] SOS DP: resolver alguns (poucos) problemas desse blog - https://codeforces.com/blog/entry/45223
 - [ ] ICPC Taiwan 2025 - K.Move Stone
