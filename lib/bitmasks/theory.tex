@@ -1,0 +1,38 @@
+\subsection{OR convolution}
+
+Seja:
+
+$$C[i] = \sum_{j \cup k = i} A[j] \cdot B[k]$$
+
+Tome a SOSDP de $C$:
+
+\begin{align*}
+SOSDP(C)[i] &= \sum_{(j \cup k) \subseteq i} A[j] \cdot B[k] = \sum_{j \subseteq i}A[j]\sum_{k \subseteq i}B[k] = SOSDP(A)[i] \cdot SOSDP(B)[i]
+\end{align*}
+
+Logo: $C = SOSDP^{-1}(SOSDP(A) \cdot SOSDP(B))$.
+
+\subsection{AND Convolution}
+
+$$C[i] = \sum_{j \cap k = i} A[j] \cdot B[k] = \sum_{j^c \cup k^c = i^c} A[j] \cdot B[k] = \sum_{j \cup k = i^c}A^c[j] \cdot B^c[k]$$
+
+com $A^c[j] = A[j^c]$ e $B^c[k] = B[k^c]$ para todos os conjuntos $j, k$. Basta aplicar então OR Convolution.
+
+\subsection{GCD Convolution}
+
+Definição:
+
+$$C[i] = \sum_{\gcd(j, k) = i} A[j] \cdot B[k]$$
+
+Então defina $S(A)[i] = \sum_{i \mid j}A[j]$ para qualquer array $A$. Isso pode ser computado pela própria definição em $O(n \log n)$ (somando $A[ki]$ na posição $ki$ para $1 \leq k \leq \lfloor \frac{n}{i} \rfloor$).
+
+\begin{align*}
+S(C)[i] &= \sum_{i \mid \gcd(j, k)}A[j]B[k] = \left(\sum_{i \mid j}A[j]\right)\left(\sum_{i \mid k}B[k]\right) = S(A)[i] \cdot S(B)[i] \\
+\implies C &= S^{-1}(S(A) \cdot S(B))
+\end{align*}
+
+pois $i \mid \gcd(j, k) \iff i \mid j \text{ e } i \mid k$.
+
+Para recuperar $C$ podemos usar DP:
+
+$$C[i] = \sum_{i \mid j}C[j] - \sum_{i \mid j, i < j}C[j] = S(C)[i] - \sum_{k=2}^{\lfloor n/i \rfloor}C[ki]$$
