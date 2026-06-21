@@ -11,21 +11,14 @@
             "id": "a1c9f6debcb1fa97",
             "type": "leaf",
             "state": {
-              "type": "kanban",
+              "type": "markdown",
               "state": {
-                "file": "Tasks-maratona.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    false,
-                    false,
-                    false,
-                    false
-                  ]
-                }
+                "file": "Resources.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-trello",
-              "title": "Tasks-maratona"
+              "icon": "lucide-file",
+              "title": "Resources"
             }
           },
           {
@@ -209,8 +202,8 @@
   },
   "active": "a1c9f6debcb1fa97",
   "lastOpenFiles": [
-    "ICPC/Grafos/Flow/Flow - definições básicas.md",
     "Tasks-maratona.md",
+    "ICPC/Grafos/Flow/Flow - definições básicas.md",
     "ICPC/Algoritmos de string/Problems.md",
     "ICPC/Algoritmos de string/LCS com suffix array.md",
     "ICPC/Algoritmos de string/Suffix array.md",

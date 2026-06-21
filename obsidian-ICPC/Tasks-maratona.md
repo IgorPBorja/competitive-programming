@@ -100,6 +100,9 @@ kanban-plugin: board
 - [ ] Subregional 2019-2020
 - [ ] ICPC Taiwan 2025
 - [ ] ICPC Brazill Finals 2021
+- [ ] ICPC Gran Mexico 2025 3ra fecha
+- [ ] ICPC Gran Mexico 2024 2a fecha
+- [ ] ICPC Gran Mexico 2025 Repechaje
 
 
 ***
